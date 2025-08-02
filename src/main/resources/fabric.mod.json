@@ -1,0 +1,45 @@
+{
+	"schemaVersion": 1,
+	"id": "hattened",
+	"version": "${version}",
+	"name": "Hattened",
+	"description": "Adds a magic hat! For Modfest 2025: Toybox.",
+	"authors": [
+		"miyucomics"
+	],
+	"contact": {
+		"homepage": "https://fabricmc.net/",
+		"sources": "https://github.com/FabricMC/fabric-example-mod"
+	},
+	"license": "MIT",
+	"icon": "assets/hattened/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			{
+				"value": "HattenedMain",
+				"adapter": "kotlin"
+			}
+		],
+		"client": [
+			{
+				"value": "HattenedClient",
+				"adapter": "kotlin"
+			}
+		]
+	},
+	"mixins": [
+		"hattened.mixins.json",
+		{
+			"config": "hattened.client.mixins.json",
+			"environment": "client"
+		}
+	],
+	"depends": {
+		"fabricloader": ">=0.16.14",
+		"minecraft": "~1.21.8",
+		"java": ">=21",
+		"fabric-api": "*",
+		"fabric-language-kotlin": "*"
+	}
+}
