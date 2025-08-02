@@ -2,7 +2,7 @@
 	"schemaVersion": 1,
 	"id": "hattened",
 	"version": "${version}",
-	"name": "Hattened",
+	"name": "The Mad Hatter",
 	"description": "Adds a magic hat! For Modfest 2025: Toybox.",
 	"authors": [
 		"miyucomics"
