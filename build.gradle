@@ -13,22 +13,12 @@ base {
 	archivesName = project.archives_base_name
 }
 
-loom {
-	accessWidenerPath = file("src/main/resources/hattened.accesswidener")
-}
-
 repositories {
 	maven { url "https://maven.kosmx.dev/" }
 }
 
 loom {
-	splitEnvironmentSourceSets()
-	mods {
-		"hattened" {
-			sourceSet sourceSets.main
-			sourceSet sourceSets.client
-		}
-	}
+	accessWidenerPath = file("src/main/resources/hattened.accesswidener")
 }
 
 dependencies {
