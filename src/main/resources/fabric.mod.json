@@ -17,13 +17,13 @@
 	"entrypoints": {
 		"main": [
 			{
-				"value": "HattenedMain",
+				"value": "miyucomics.hattened.HattenedMain",
 				"adapter": "kotlin"
 			}
 		],
 		"client": [
 			{
-				"value": "HattenedClient",
+				"value": "miyucomics.hattened.HattenedClient",
 				"adapter": "kotlin"
 			}
 		]
