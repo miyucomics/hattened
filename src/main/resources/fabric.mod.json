@@ -8,8 +8,8 @@
 		"miyucomics"
 	],
 	"contact": {
-		"homepage": "https://fabricmc.net/",
-		"sources": "https://github.com/FabricMC/fabric-example-mod"
+		"homepage": "https://github.com/miyucomics/hattened",
+		"sources": "https://github.com/miyucomics/hattened"
 	},
 	"license": "MIT",
 	"icon": "assets/hattened/icon.png",
