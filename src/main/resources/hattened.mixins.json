@@ -2,6 +2,10 @@
 	"required": true,
 	"package": "miyucomics.hattened.mixin",
 	"compatibilityLevel": "JAVA_21",
+	"client": [
+		"PlayerEntityRendererMixin",
+		"PlayerEntityRenderStateMixin"
+	],
 	"mixins": [],
 	"injectors": {
 		"defaultRequire": 1
