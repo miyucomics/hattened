@@ -1,10 +1,22 @@
 package miyucomics.hattened.render
 
+import miyucomics.hattened.HattenedMain
 import net.minecraft.client.model.*
+import net.minecraft.client.render.OverlayTexture
 import net.minecraft.client.render.RenderLayer
+import net.minecraft.client.render.VertexConsumerProvider
+import net.minecraft.client.util.math.MatrixStack
 
 class HatModel(root: ModelPart) : Model(root, { texture -> RenderLayer.getEntityCutout(texture) }) {
 	val hat: ModelPart = root.getChild("hat")
+	private val texture = HattenedMain.id("hat")
+
+	constructor() : this(getTexturedModelData().createModel())
+
+	fun render(matrices: MatrixStack, provider: VertexConsumerProvider, light: Int) {
+		val consumer = provider.getBuffer(RenderLayer.getEntityCutoutNoCull(texture))
+		hat.render(matrices, consumer, light, OverlayTexture.DEFAULT_UV)
+	}
 
 	companion object {
 		fun getTexturedModelData(): TexturedModelData {
