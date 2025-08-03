@@ -1,22 +1,24 @@
 package miyucomics.hattened.mixin;
 
+import miyucomics.hattened.misc.HatData;
 import miyucomics.hattened.misc.PlayerEntityRenderStateMinterface;
 import net.minecraft.client.render.entity.state.PlayerEntityRenderState;
+import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 
 @Mixin(PlayerEntityRenderState.class)
 class PlayerEntityRenderStateMixin implements PlayerEntityRenderStateMinterface {
 	@Unique
-	boolean isUsingHat = false;
+	HatData hat = new HatData(false, false);
 
 	@Override
-	public void setIsUsingHat(boolean using) {
-		isUsingHat = using;
+	public void setHat(@NotNull HatData hat) {
+		this.hat = hat;
 	}
 
 	@Override
-	public boolean isUsingHat() {
-		return isUsingHat;
+	public @NotNull HatData getHat() {
+		return this.hat;
 	}
 }

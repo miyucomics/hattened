@@ -19,7 +19,7 @@ object HattenedClient : ClientModInitializer {
 		PlayerAnimationAccess.REGISTER_ANIMATION_EVENT.register { player, stack ->
 			val animation = ModifierLayer(HatPlayerModel(player))
 			PlayerAnimationAccess.getPlayerAssociatedData(player).set(HattenedMain.id("hat"), animation)
-			stack.addAnimLayer(100, animation)
+			stack.addAnimLayer(10000, animation)
 		}
 
 		ClientTickEvents.END_CLIENT_TICK.register { client ->
@@ -27,7 +27,7 @@ object HattenedClient : ClientModInitializer {
 				return@register
 
 			ClientStorage.ticks += 1
-			client.player!!.setAttached(HattenedAttachments.HAT_DATA, HatData(HAT_KEYBIND.isPressed))
+			client.player!!.setAttached(HattenedAttachments.HAT_DATA, HatData(true, HAT_KEYBIND.isPressed))
 		}
 	}
 }

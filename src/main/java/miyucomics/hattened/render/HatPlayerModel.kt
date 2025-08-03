@@ -14,7 +14,7 @@ import kotlin.math.sin
 
 class HatPlayerModel(val player: PlayerEntity) : IAnimation {
 	override fun setupAnim(tickDelta: Float) {}
-	override fun isActive() = player.getAttached(HattenedAttachments.HAT_DATA)?.usingHat == true
+	override fun isActive() = player.getAttached(HattenedAttachments.HAT_DATA)?.isUsingHat() == true
 
 	override fun getFirstPersonConfiguration(tickDelta: Float): FirstPersonConfiguration = FirstPersonConfiguration().setShowLeftItem(false).setShowRightItem(false)
 
