@@ -2,6 +2,7 @@ package miyucomics.hattened.render
 
 import dev.kosmx.playerAnim.api.PartKey
 import dev.kosmx.playerAnim.api.TransformType
+import dev.kosmx.playerAnim.api.firstPerson.FirstPersonConfiguration
 import dev.kosmx.playerAnim.api.layered.IAnimation
 import dev.kosmx.playerAnim.core.util.Vec3f
 import miyucomics.hattened.inits.HattenedAttachments
@@ -15,16 +16,18 @@ class HatPlayerModel(val player: PlayerEntity) : IAnimation {
 	override fun setupAnim(tickDelta: Float) {}
 	override fun isActive() = player.getAttached(HattenedAttachments.HAT_DATA)?.usingHat == true
 
+	override fun getFirstPersonConfiguration(tickDelta: Float): FirstPersonConfiguration = FirstPersonConfiguration().setShowLeftItem(false).setShowRightItem(false)
+
 	override fun get3DTransform(modelKey: PartKey, type: TransformType, tickDelta: Float, original: Vec3f): Vec3f {
 		val time = ClientStorage.ticks + tickDelta
 
 		if (modelKey == PartKey.LEFT_ARM && type == TransformType.ROTATION)
-			return Vec3f(-60f, 45f, 0f).scale(MathHelper.RADIANS_PER_DEGREE)
+			return Vec3f(-50f, 45f, 0f).scale(MathHelper.RADIANS_PER_DEGREE)
 
 		if (modelKey == PartKey.RIGHT_ARM && type == TransformType.ROTATION) {
-			val pitch = sin(time / 2) * 5f
-			val yaw = cos(time / 1.5f) * 5f
-			return Vec3f(-40f + pitch, -30f + yaw, 0f).scale(MathHelper.RADIANS_PER_DEGREE)
+			val pitch = sin(time / 3f) * 2f
+			val yaw = cos(time / 2f) * 2f
+			return Vec3f(-50f + pitch, -25f + yaw, 0f).scale(MathHelper.RADIANS_PER_DEGREE)
 		}
 
 		return original
