@@ -6,6 +6,7 @@ import dev.kosmx.playerAnim.minecraftApi.layers.LeftHandedHelperModifier
 import miyucomics.hattened.misc.HatData
 import miyucomics.hattened.inits.HattenedAttachments
 import miyucomics.hattened.misc.ClientStorage
+import miyucomics.hattened.misc.PeripheralManager
 import miyucomics.hattened.render.HatPlayerModel
 import net.fabricmc.api.ClientModInitializer
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents
@@ -25,9 +26,8 @@ object HattenedClient : ClientModInitializer {
 		ClientTickEvents.END_CLIENT_TICK.register { client ->
 			if (client.player == null)
 				return@register
-
+			PeripheralManager.tick()
 			ClientStorage.ticks += 1
-			client.player!!.setAttached(HattenedAttachments.HAT_DATA, HatData(true, HAT_KEYBIND.isPressed))
 		}
 	}
 }
