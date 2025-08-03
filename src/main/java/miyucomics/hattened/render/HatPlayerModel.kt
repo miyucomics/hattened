@@ -2,8 +2,6 @@ package miyucomics.hattened.render
 
 import dev.kosmx.playerAnim.api.PartKey
 import dev.kosmx.playerAnim.api.TransformType
-import dev.kosmx.playerAnim.api.firstPerson.FirstPersonConfiguration
-import dev.kosmx.playerAnim.api.firstPerson.FirstPersonMode
 import dev.kosmx.playerAnim.api.layered.IAnimation
 import dev.kosmx.playerAnim.core.util.Vec3f
 import miyucomics.hattened.inits.HattenedAttachments
@@ -15,6 +13,7 @@ import kotlin.math.sin
 
 class HatPlayerModel(val player: PlayerEntity) : IAnimation {
 	override fun setupAnim(tickDelta: Float) {}
+	@Suppress("UnstableAPIUsage")
 	override fun isActive() = player.getAttached(HattenedAttachments.HAT_DATA)?.isUsingHat() == true
 
 	override fun get3DTransform(modelKey: PartKey, type: TransformType, tickDelta: Float, original: Vec3f): Vec3f {

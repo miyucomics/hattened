@@ -7,6 +7,7 @@ import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 
+@SuppressWarnings({"unused", "AddedMixinMembersNamePattern"})
 @Mixin(PlayerEntityRenderState.class)
 class PlayerEntityRenderStateMixin implements PlayerEntityRenderStateMinterface {
 	@Unique

@@ -7,7 +7,6 @@ import net.minecraft.client.render.RenderLayer
 import net.minecraft.client.render.VertexConsumerProvider
 import net.minecraft.client.util.math.MatrixStack
 
-
 class HatModel(root: ModelPart) : Model(root, { texture -> RenderLayer.getEntityCutout(texture) }) {
 	val hat: ModelPart = root.getChild("hat")
 

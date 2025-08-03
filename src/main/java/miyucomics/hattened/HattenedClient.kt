@@ -2,9 +2,6 @@ package miyucomics.hattened
 
 import dev.kosmx.playerAnim.api.layered.ModifierLayer
 import dev.kosmx.playerAnim.minecraftApi.PlayerAnimationAccess
-import dev.kosmx.playerAnim.minecraftApi.layers.LeftHandedHelperModifier
-import miyucomics.hattened.misc.HatData
-import miyucomics.hattened.inits.HattenedAttachments
 import miyucomics.hattened.misc.ClientStorage
 import miyucomics.hattened.misc.PeripheralManager
 import miyucomics.hattened.render.HatPlayerModel
