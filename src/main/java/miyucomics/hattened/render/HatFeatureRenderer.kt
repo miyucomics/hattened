@@ -1,5 +1,6 @@
 package miyucomics.hattened.render
 
+import miyucomics.hattened.misc.HatPose
 import miyucomics.hattened.misc.PlayerEntityRenderStateMinterface
 import net.minecraft.client.render.VertexConsumerProvider
 import net.minecraft.client.render.entity.feature.FeatureRenderer
@@ -18,17 +19,30 @@ class HatFeatureRenderer(context: FeatureRendererContext<PlayerEntityRenderState
 			return
 
 		matrices.push()
-		if (hat.isUsingHat()) {
-			contextModel.leftArm.applyTransform(matrices)
-			matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees(-90.0f))
-			matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(180.0f))
-			matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees(30.0f))
-			matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(-30.0f))
-			matrices.scale(0.8f, 0.8f, 0.8f)
-			matrices.translate(0.65f, -0.15f, -1.4f)
-		} else {
-			contextModel.head.applyTransform(matrices)
-			matrices.translate(0.5f, -0.5f, -0.5f)
+		when (hat.hatPose) {
+			HatPose.ON_HEAD -> {
+				contextModel.head.applyTransform(matrices)
+				matrices.translate(0.5f, -0.5f, -0.5f)
+			}
+			HatPose.USING -> {
+				contextModel.leftArm.applyTransform(matrices)
+				matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees(-90.0f))
+				matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(180.0f))
+				matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees(30.0f))
+				matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(-30.0f))
+				matrices.scale(0.8f, 0.8f, 0.8f)
+				matrices.translate(0.65f, -0.15f, -1.4f)
+			}
+			HatPose.VACUUMING -> {
+				matrices.translate(0.5f, 0f, -0.8f)
+				matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees(-90.0f))
+			}
+			HatPose.BOWING -> {
+				contextModel.rightArm.applyTransform(matrices)
+				matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees(-90.0f))
+				matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(180.0f))
+				matrices.translate(0.65f, 0.05f, -1.4f)
+			}
 		}
 		hatModel.render(matrices, vertexConsumers, light)
 		matrices.pop()

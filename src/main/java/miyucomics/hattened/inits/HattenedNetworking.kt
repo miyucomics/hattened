@@ -10,7 +10,7 @@ object HattenedNetworking {
 	fun init() {
 		PayloadTypeRegistry.playC2S().register(HatControlPayload.ID, HatControlPayload.CODEC)
 		ServerPlayNetworking.registerGlobalReceiver(HatControlPayload.ID) { payload, context ->
-			context.player().setAttached(HattenedAttachments.HAT_DATA, HatData(true, payload.isUsingHat))
+			context.player().setAttached(HattenedAttachments.HAT_DATA, HatData(true, payload.hatPose))
 		}
 	}
 }
