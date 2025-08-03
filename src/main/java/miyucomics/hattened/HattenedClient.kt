@@ -7,13 +7,11 @@ import miyucomics.hattened.misc.PeripheralManager
 import miyucomics.hattened.render.HatPlayerModel
 import net.fabricmc.api.ClientModInitializer
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents
-import net.minecraft.client.option.KeyBinding
-import org.lwjgl.glfw.GLFW
 
 object HattenedClient : ClientModInitializer {
-	val HAT_KEYBIND = KeyBinding("key.hattened.hat", GLFW.GLFW_KEY_LEFT_ALT, "key.categories.hattened")
-
 	override fun onInitializeClient() {
+		PeripheralManager.init()
+
 		PlayerAnimationAccess.REGISTER_ANIMATION_EVENT.register { player, stack ->
 			val animation = ModifierLayer(HatPlayerModel(player))
 			PlayerAnimationAccess.getPlayerAssociatedData(player).set(HattenedMain.id("hat"), animation)
