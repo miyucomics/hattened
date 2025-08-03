@@ -23,6 +23,6 @@ class PlayerEntityRendererMixin {
 
 	@Inject(method = "updateRenderState(Lnet/minecraft/client/network/AbstractClientPlayerEntity;Lnet/minecraft/client/render/entity/state/PlayerEntityRenderState;F)V", at = @At("TAIL"))
 	void addExtraPose(AbstractClientPlayerEntity player, PlayerEntityRenderState state, float tickDelta, CallbackInfo ci) {
-		((PlayerEntityRenderStateMinterface) state).setIsUsingHat(player.getAttachedOrSet(HattenedAttachments.HAT_DATA, HatData.DEFAULT).getUsingHat());
+		((PlayerEntityRenderStateMinterface) state).setHat(player.getAttachedOrElse(HattenedAttachments.HAT_DATA, HatData.DEFAULT));
 	}
 }

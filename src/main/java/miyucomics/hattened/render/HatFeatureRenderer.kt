@@ -14,8 +14,12 @@ class HatFeatureRenderer(context: FeatureRendererContext<PlayerEntityRenderState
 	private val hatModel = HatModel()
 
 	override fun render(matrices: MatrixStack, vertexConsumers: VertexConsumerProvider, light: Int, state: PlayerEntityRenderState, limbAngle: Float, limbDistance: Float) {
+		val hat = (state as PlayerEntityRenderStateMinterface).getHat()
+		if (!hat.hasHat)
+			return
+
 		matrices.push()
-		if ((state as PlayerEntityRenderStateMinterface).isUsingHat()) {
+		if (hat.isUsingHat()) {
 			contextModel.leftArm.applyTransform(matrices)
 			matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees(-90.0f))
 			matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(180.0f))
