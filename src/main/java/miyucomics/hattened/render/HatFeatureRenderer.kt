@@ -18,13 +18,14 @@ class HatFeatureRenderer(context: FeatureRendererContext<PlayerEntityRenderState
 		if (!hat.hasHat)
 			return
 
+		val pose = (state as PlayerEntityRenderStateMinterface).getHatState().hatPose
 		matrices.push()
-		when (hat.hatPose) {
-			HatPose.ON_HEAD -> {
+		when (pose) {
+			HatPose.OnHead -> {
 				contextModel.head.applyTransform(matrices)
 				matrices.translate(0.5f, -0.5f, -0.5f)
 			}
-			HatPose.USING -> {
+			HatPose.SearchingHat -> {
 				contextModel.leftArm.applyTransform(matrices)
 				matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees(-90.0f))
 				matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(180.0f))
@@ -33,11 +34,11 @@ class HatFeatureRenderer(context: FeatureRendererContext<PlayerEntityRenderState
 				matrices.scale(0.8f, 0.8f, 0.8f)
 				matrices.translate(0.65f, -0.15f, -1.4f)
 			}
-			HatPose.VACUUMING -> {
+			HatPose.Vacuuming -> {
 				matrices.translate(0.5f, 0f, -0.8f)
 				matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees(-90.0f))
 			}
-			HatPose.BOWING -> {
+			HatPose.Bowing -> {
 				contextModel.rightArm.applyTransform(matrices)
 				matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees(-90.0f))
 				matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(180.0f))
