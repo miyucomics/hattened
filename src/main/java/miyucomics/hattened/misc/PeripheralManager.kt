@@ -1,6 +1,6 @@
 package miyucomics.hattened.misc
 
-import miyucomics.hattened.networking.HatControlPayload
+import miyucomics.hattened.networking.HatInputPayload
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking
 import net.minecraft.client.option.KeyBinding
@@ -18,9 +18,9 @@ object PeripheralManager {
 		ClientStorage.usingTime = (ClientStorage.usingTime + if (HAT_KEYBIND.isPressed) 1 else -1).coerceIn(0, 10)
 
 		if (!previousState && HAT_KEYBIND.isPressed)
-			ClientPlayNetworking.send(HatControlPayload(HatPose.BOWING))
+			ClientPlayNetworking.send(HatInputPayload(UserInput.LeftAltPressed))
 		else if (previousState && !HAT_KEYBIND.isPressed)
-			ClientPlayNetworking.send(HatControlPayload(HatPose.ON_HEAD))
+			ClientPlayNetworking.send(HatInputPayload(UserInput.LeftAltReleased))
 
 		previousState = HAT_KEYBIND.isPressed
 	}
@@ -32,7 +32,13 @@ object PeripheralManager {
 
 	@JvmStatic
 	fun onClick(button: Int, action: Int) {
-
+		when (Pair(button, action)) {
+			Pair(GLFW.GLFW_MOUSE_BUTTON_LEFT, GLFW.GLFW_PRESS) -> ClientPlayNetworking.send(HatInputPayload(UserInput.LeftMousePressed))
+			Pair(GLFW.GLFW_MOUSE_BUTTON_RIGHT, GLFW.GLFW_PRESS) -> ClientPlayNetworking.send(HatInputPayload(UserInput.RightMousePressed))
+			Pair(GLFW.GLFW_MOUSE_BUTTON_LEFT, GLFW.GLFW_RELEASE) -> ClientPlayNetworking.send(HatInputPayload(UserInput.LeftMouseReleased))
+			Pair(GLFW.GLFW_MOUSE_BUTTON_RIGHT, GLFW.GLFW_RELEASE) -> ClientPlayNetworking.send(HatInputPayload(UserInput.RightMouseReleased))
+			else -> {}
+		}
 	}
 
 	@JvmStatic
