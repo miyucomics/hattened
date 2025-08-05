@@ -1,4 +1,4 @@
-package miyucomics.hattened.misc
+package miyucomics.hattened.enums
 
 enum class HatPose {
 	OnHead,

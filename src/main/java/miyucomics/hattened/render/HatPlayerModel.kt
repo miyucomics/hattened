@@ -6,7 +6,7 @@ import dev.kosmx.playerAnim.api.layered.IAnimation
 import dev.kosmx.playerAnim.core.util.Vec3f
 import miyucomics.hattened.inits.HattenedAttachments
 import miyucomics.hattened.misc.ClientStorage
-import miyucomics.hattened.misc.HatPose
+import miyucomics.hattened.enums.HatPose
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.util.math.MathHelper
 import kotlin.math.cos

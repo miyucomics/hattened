@@ -3,8 +3,8 @@ package miyucomics.hattened.attach
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import io.netty.buffer.ByteBuf
-import miyucomics.hattened.misc.HatPose
-import miyucomics.hattened.misc.UserInput
+import miyucomics.hattened.enums.HatPose
+import miyucomics.hattened.enums.UserInput
 import net.minecraft.network.codec.PacketCodec
 import net.minecraft.network.codec.PacketCodecs
 
