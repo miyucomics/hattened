@@ -1,6 +1,6 @@
 package miyucomics.hattened.misc
 
-import miyucomics.hattened.enums.UserInput
+import miyucomics.hattened.structure.UserInput
 import miyucomics.hattened.networking.HatInputPayload
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking
@@ -28,7 +28,10 @@ object PeripheralManager {
 
 	@JvmStatic
 	fun onScroll(delta: Int) {
-
+		when (delta) {
+			-1 -> ClientPlayNetworking.send(HatInputPayload(UserInput.ScrollUp))
+			1 -> ClientPlayNetworking.send(HatInputPayload(UserInput.ScrollDown))
+		}
 	}
 
 	@JvmStatic
