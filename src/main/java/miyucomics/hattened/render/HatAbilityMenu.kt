@@ -1,5 +1,7 @@
 package miyucomics.hattened.render
 
+import miyucomics.hattened.inits.HattenedAbilities
+import miyucomics.hattened.misc.ClientStorage
 import net.minecraft.client.MinecraftClient
 import net.minecraft.client.gui.DrawContext
 import net.minecraft.util.math.MathHelper
@@ -7,8 +9,6 @@ import kotlin.math.cos
 import kotlin.math.sin
 
 object HatAbilityMenu {
-	const val CARD_WIDTH = 60
-	const val CARD_HEIGHT = 90
 	const val FAN_RADIUS = 200f
 	const val FAN_ANGLE = 90f
 
@@ -20,13 +20,14 @@ object HatAbilityMenu {
 		val riseProgress = (progress.coerceAtMost(0.5f) / 0.5f)
 		val spreadProgress = ((progress - 0.5f) * 2f).coerceIn(0f, 1f)
 
+		val abilities = HattenedAbilities.ABILITY_REGISTRY.ids.toList()
+
 		val centerX = width / 2
 		val baseY = height
-		val cardCount = 5
-		val half = cardCount / 2
+		val cardCount = abilities.size
 
 		for (i in 0 until cardCount) {
-			val offset = i - half
+			val offset = i - ClientStorage.animatedAbilityIndex
 
 			val angle = offset * (FAN_ANGLE / cardCount) * spreadProgress
 			val radians = Math.toRadians(angle.toDouble())
@@ -40,7 +41,8 @@ object HatAbilityMenu {
 			matrices.pushMatrix()
 			matrices.translate(x, y)
 			matrices.rotate(angle / 180 * MathHelper.PI)
-			context.fill(-CARD_WIDTH / 2, 0, CARD_WIDTH / 2, CARD_HEIGHT, 0x99_FFFFFF.toInt())
+			val ability = HattenedAbilities.ABILITY_REGISTRY.get(abilities[i])
+			ability?.renderIcon(context, matrices, 0, 0, offset == 0f, spreadProgress)
 			matrices.popMatrix()
 		}
 	}

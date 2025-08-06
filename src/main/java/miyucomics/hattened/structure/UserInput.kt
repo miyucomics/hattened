@@ -1,4 +1,4 @@
-package miyucomics.hattened.enums
+package miyucomics.hattened.structure
 
 enum class UserInput {
 	LeftAltPressed,
@@ -6,5 +6,7 @@ enum class UserInput {
 	LeftMousePressed,
 	LeftMouseReleased,
 	RightMousePressed,
-	RightMouseReleased
+	RightMouseReleased,
+	ScrollUp,
+	ScrollDown
 }
