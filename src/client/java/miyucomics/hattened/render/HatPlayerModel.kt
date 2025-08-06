@@ -6,11 +6,10 @@ import dev.kosmx.playerAnim.api.layered.IAnimation
 import dev.kosmx.playerAnim.core.util.Vec3f
 import miyucomics.hattened.inits.HattenedAttachments
 import miyucomics.hattened.misc.ClientStorage
+import miyucomics.hattened.misc.rotateBody
 import miyucomics.hattened.structure.HatPose
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.util.math.MathHelper
-import kotlin.math.cos
-import kotlin.math.sin
 
 @Suppress("UnstableAPIUsage")
 class HatPlayerModel(val player: PlayerEntity) : IAnimation {
@@ -21,6 +20,6 @@ class HatPlayerModel(val player: PlayerEntity) : IAnimation {
 		if (type != TransformType.ROTATION)
 			return original
 		val time = ClientStorage.ticks + tickDelta
-		return (player.getAttached(HattenedAttachments.HAT_STATE_DATA)?.hatPose ?: HatPose.OnHead).transformBody(modelKey, time)?.scale(MathHelper.RADIANS_PER_DEGREE) ?: original
+		return (player.getAttached(HattenedAttachments.HAT_STATE_DATA)?.hatPose ?: HatPose.OnHead).rotateBody(modelKey, time)?.scale(MathHelper.RADIANS_PER_DEGREE) ?: original
 	}
 }

@@ -2,7 +2,6 @@ package miyucomics.hattened.inits
 
 import miyucomics.hattened.attach.HatState
 import miyucomics.hattened.networking.HatInputPayload
-import miyucomics.hattened.structure.UserInput
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking
 

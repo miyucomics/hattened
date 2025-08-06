@@ -1,8 +1,6 @@
 package miyucomics.hattened.abilities
 
 import miyucomics.hattened.structure.BaseAbility
-import net.minecraft.client.gui.DrawContext
-import net.minecraft.client.util.math.MatrixStack
 import net.minecraft.entity.EntityType
 import net.minecraft.entity.passive.GoatEntity
 import net.minecraft.entity.passive.RabbitEntity

@@ -2,8 +2,6 @@ package miyucomics.hattened.mixin;
 
 import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
-import miyucomics.hattened.misc.ClientStorage;
-import miyucomics.hattened.misc.PeripheralManager;
 import miyucomics.hattened.render.HatAbilityMenu;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.hud.InGameHud;
