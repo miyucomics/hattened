@@ -18,33 +18,8 @@ class HatFeatureRenderer(context: FeatureRendererContext<PlayerEntityRenderState
 		if (!hat.hasHat)
 			return
 
-		val pose = (state as PlayerEntityRenderStateMinterface).getHatState().hatPose
 		matrices.push()
-		when (pose) {
-			HatPose.OnHead -> {
-				contextModel.head.applyTransform(matrices)
-				matrices.translate(0.5f, -0.5f, -0.5f)
-			}
-			HatPose.SearchingHat -> {
-				contextModel.leftArm.applyTransform(matrices)
-				matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees(-90.0f))
-				matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(180.0f))
-				matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees(30.0f))
-				matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(-30.0f))
-				matrices.scale(0.8f, 0.8f, 0.8f)
-				matrices.translate(0.65f, -0.15f, -1.4f)
-			}
-			HatPose.Vacuuming -> {
-				matrices.translate(0.5f, 0f, -0.8f)
-				matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees(-90.0f))
-			}
-			HatPose.Bowing -> {
-				contextModel.rightArm.applyTransform(matrices)
-				matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees(-90.0f))
-				matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(180.0f))
-				matrices.translate(0.65f, 0.05f, -1.4f)
-			}
-		}
+		(state as PlayerEntityRenderStateMinterface).getHatState().hatPose.transformHat(matrices, contextModel)
 		hatModel.render(matrices, vertexConsumers, light)
 		matrices.pop()
 	}
