@@ -1,14 +1,13 @@
 package miyucomics.hattened.render
 
-import miyucomics.hattened.structure.HatPose
 import miyucomics.hattened.misc.PlayerEntityRenderStateMinterface
+import miyucomics.hattened.misc.transformHat
 import net.minecraft.client.render.VertexConsumerProvider
 import net.minecraft.client.render.entity.feature.FeatureRenderer
 import net.minecraft.client.render.entity.feature.FeatureRendererContext
 import net.minecraft.client.render.entity.model.PlayerEntityModel
 import net.minecraft.client.render.entity.state.PlayerEntityRenderState
 import net.minecraft.client.util.math.MatrixStack
-import net.minecraft.util.math.RotationAxis
 
 class HatFeatureRenderer(context: FeatureRendererContext<PlayerEntityRenderState, PlayerEntityModel>) : FeatureRenderer<PlayerEntityRenderState, PlayerEntityModel>(context) {
 	private val hatModel = HatModel()

@@ -41,8 +41,7 @@ object HatAbilityMenu {
 			matrices.pushMatrix()
 			matrices.translate(x, y)
 			matrices.rotate(angle / 180 * MathHelper.PI)
-			val ability = HattenedAbilities.ABILITY_REGISTRY.get(abilities[i])
-			ability?.renderIcon(context, matrices, 0, 0, offset == 0f, spreadProgress)
+			context.fill(x.toInt(), y.toInt(), x.toInt() + 40, y.toInt() + 60, 0xAAFF0000.toInt())
 			matrices.popMatrix()
 		}
 	}

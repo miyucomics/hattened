@@ -1,8 +1,8 @@
 package miyucomics.hattened
 
+import miyucomics.hattened.inits.HattenedAbilities
 import miyucomics.hattened.inits.HattenedAttachments
 import miyucomics.hattened.inits.HattenedNetworking
-import miyucomics.hattened.inits.HattenedAbilities
 import net.fabricmc.api.ModInitializer
 import net.minecraft.util.Identifier
 

@@ -2,8 +2,8 @@ package miyucomics.hattened.mixin;
 
 import miyucomics.hattened.attach.HatData;
 import miyucomics.hattened.attach.HatState;
-import miyucomics.hattened.structure.HatPose;
 import miyucomics.hattened.misc.PlayerEntityRenderStateMinterface;
+import miyucomics.hattened.structure.HatPose;
 import net.minecraft.client.render.entity.state.PlayerEntityRenderState;
 import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Mixin;
