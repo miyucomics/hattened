@@ -7,12 +7,10 @@ object ClientStorage {
 	var ticks = 0
 	@JvmField
 	var usingTime = 0
-	var animatedAbilityIndex = 0f
+	var abilityIndex = 0
 
 	fun tickMenu(state: HatState) {
-		val speed = 0.2f
-		val diff = state.selectedAbilityIndex - animatedAbilityIndex
-		animatedAbilityIndex += diff * speed
+		abilityIndex = state.selectedAbilityIndex
 	}
 
 	@JvmStatic

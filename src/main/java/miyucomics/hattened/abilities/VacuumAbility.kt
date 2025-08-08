@@ -1,9 +1,11 @@
 package miyucomics.hattened.abilities
 
 import miyucomics.hattened.structure.BaseAbility
+import net.minecraft.entity.ItemEntity
 import net.minecraft.entity.player.PlayerEntity
+import net.minecraft.item.ItemStack
 
-class VacuumAbility : BaseAbility("vacuum") {
+class VacuumAbility(val stack: ItemStack) : BaseAbility("spawn_item") {
 	override fun onLeftClick(player: PlayerEntity) {
 		if (!canUse())
 			return
@@ -12,7 +14,6 @@ class VacuumAbility : BaseAbility("vacuum") {
 	override fun onRightClick(player: PlayerEntity) {
 		if (!canUse())
 			return
-
-		player.addVelocity(0.0, 10.0, 0.0)
+		player.world.spawnEntity(ItemEntity(player.world, player.x, player.y, player.z, stack.copy()))
 	}
 }

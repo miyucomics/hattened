@@ -1,6 +1,7 @@
 package miyucomics.hattened.misc
 
 import miyucomics.hattened.networking.HatInputPayload
+import miyucomics.hattened.render.HatAbilityMenu
 import miyucomics.hattened.structure.UserInput
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking
@@ -18,9 +19,10 @@ object PeripheralManager {
 	fun tick() {
 		ClientStorage.usingTime = (ClientStorage.usingTime + if (HAT_KEYBIND.isPressed) 1 else -1).coerceIn(0, 10)
 
-		if (!previousState && HAT_KEYBIND.isPressed)
+		if (!previousState && HAT_KEYBIND.isPressed) {
 			ClientPlayNetworking.send(HatInputPayload(UserInput.LeftAltPressed))
-		else if (previousState && !HAT_KEYBIND.isPressed)
+			HatAbilityMenu.initializeCards()
+		} else if (previousState && !HAT_KEYBIND.isPressed)
 			ClientPlayNetworking.send(HatInputPayload(UserInput.LeftAltReleased))
 
 		previousState = HAT_KEYBIND.isPressed
