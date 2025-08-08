@@ -3,6 +3,7 @@ package miyucomics.hattened.attach
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import io.netty.buffer.ByteBuf
+import miyucomics.hattened.inits.HattenedAbilities
 import miyucomics.hattened.structure.HatPose
 import miyucomics.hattened.structure.UserInput
 import net.minecraft.network.codec.PacketCodec
@@ -41,7 +42,7 @@ data class HatState(val hatPose: HatPose, val selectedAbilityIndex: Int) {
 			else -> 0
 		}
 
-		return HatState(newHatPose, newSelectedAbilityIndex)
+		return HatState(newHatPose, newSelectedAbilityIndex.mod(HattenedAbilities.ABILITY_REGISTRY.size()))
 	}
 
 	companion object {
