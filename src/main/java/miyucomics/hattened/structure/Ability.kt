@@ -8,4 +8,5 @@ interface Ability {
 	fun onLeftClick(player: PlayerEntity) {}
 	fun onRightClick(player: PlayerEntity) {}
 	fun onTick(player: PlayerEntity) {}
+	fun getPose(): HatPose
 }

@@ -8,48 +8,32 @@ import miyucomics.hattened.structure.HatPose
 import miyucomics.hattened.structure.UserInput
 import net.minecraft.network.codec.PacketCodec
 import net.minecraft.network.codec.PacketCodecs
+import net.minecraft.server.network.ServerPlayerEntity
 
-data class HatState(val hatPose: HatPose, val selectedAbilityIndex: Int) {
-	constructor(hatPose: Int, selectedAbilityIndex: Int) : this(enumValues<HatPose>()[hatPose], selectedAbilityIndex)
-
-	fun transition(event: UserInput): HatState {
-		val newHatPose = when (hatPose) {
-			HatPose.OnHead -> when (event) {
-				UserInput.LeftAltPressed -> HatPose.SearchingHat
-				else -> hatPose
-			}
-			HatPose.SearchingHat -> when (event) {
-				UserInput.LeftAltReleased -> HatPose.OnHead
-				UserInput.RightMousePressed -> HatPose.Vacuuming
-				UserInput.LeftMousePressed -> HatPose.Bowing
-				else -> hatPose
-			}
-			HatPose.Vacuuming -> when (event) {
-				UserInput.RightMouseReleased -> HatPose.SearchingHat
-				UserInput.LeftAltReleased -> HatPose.OnHead
-				else -> hatPose
-			}
-			HatPose.Bowing -> when (event) {
-				UserInput.LeftMouseReleased -> HatPose.SearchingHat
-				UserInput.LeftAltReleased -> HatPose.OnHead
-				else -> hatPose
-			}
-		}
-
-		val newSelectedAbilityIndex = selectedAbilityIndex + when (event) {
+data class HatState(val selectedAbilityIndex: Int) {
+	fun transition(player: ServerPlayerEntity, event: UserInput): HatState {
+		val newSelectedAbilityIndex = (selectedAbilityIndex + when (event) {
 			UserInput.ScrollUp -> -1
 			UserInput.ScrollDown -> 1
 			else -> 0
+		}).mod(HattenedAbilities.ABILITY_REGISTRY.size())
+
+		val ability = getAbility()
+		when (event) {
+			UserInput.LeftMousePressed -> ability!!.onLeftClick(player)
+			UserInput.RightMousePressed -> ability!!.onRightClick(player)
+			else -> {}
 		}
 
-		return HatState(newHatPose, newSelectedAbilityIndex.mod(HattenedAbilities.ABILITY_REGISTRY.size()))
+		return HatState(newSelectedAbilityIndex)
 	}
+
+	fun getAbility() = HattenedAbilities.ABILITY_REGISTRY.get(selectedAbilityIndex)!!
 
 	companion object {
 		@JvmField
-		var DEFAULT = HatState(HatPose.OnHead, 0)
+		var DEFAULT = HatState(0)
 		var PACKET_CODEC: PacketCodec<ByteBuf, HatState> = PacketCodecs.codec(RecordCodecBuilder.create { it.group(
-			Codec.INT.fieldOf("hatPose").forGetter { hat -> hat.hatPose.ordinal },
 			Codec.INT.fieldOf("selectedAbility").forGetter { hat -> hat.selectedAbilityIndex }
 		).apply(it, ::HatState) })
 	}
