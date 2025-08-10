@@ -12,8 +12,6 @@ class VacuumAbility(val stack: ItemStack) : BaseAbility("spawn_item") {
 	}
 
 	override fun onRightClick(player: PlayerEntity) {
-		if (!canUse())
-			return
 		player.world.spawnEntity(ItemEntity(player.world, player.x, player.y, player.z, stack.copy()))
 	}
 }

@@ -4,7 +4,6 @@ import miyucomics.hattened.inits.HattenedAbilities
 import miyucomics.hattened.misc.ClientStorage
 import net.minecraft.client.MinecraftClient
 import net.minecraft.client.gui.DrawContext
-import net.minecraft.util.math.MathHelper
 import org.joml.Vector2f
 
 object HatAbilityMenu {

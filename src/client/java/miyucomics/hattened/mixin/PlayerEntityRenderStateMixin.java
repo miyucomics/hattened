@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.Unique;
 @Mixin(PlayerEntityRenderState.class)
 class PlayerEntityRenderStateMixin implements PlayerEntityRenderStateMinterface {
 	@Unique HatData hat = new HatData(false);
-	@Unique HatState state = new HatState(HatPose.OnHead, 0);
+	@Unique HatState state = new HatState(0);
 
 	@Override
 	public void setHat(@NotNull HatData hat) {
