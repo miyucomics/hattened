@@ -1,6 +1,7 @@
 package miyucomics.hattened.inits
 
 import miyucomics.hattened.HattenedMain
+import miyucomics.hattened.abilities.ConfettiAbility
 import miyucomics.hattened.abilities.RabbitAbility
 import miyucomics.hattened.abilities.VacuumAbility
 import miyucomics.hattened.structure.Ability
@@ -17,10 +18,8 @@ object HattenedAbilities {
 	val ABILITY_REGISTRY: SimpleRegistry<Ability> = FabricRegistryBuilder.createSimple(ABILITY_KEY).attribute(RegistryAttribute.MODDED).buildAndRegister()
 
 	fun init() {
+		Registry.register(ABILITY_REGISTRY, HattenedMain.id("confetti"), ConfettiAbility)
 		Registry.register(ABILITY_REGISTRY, HattenedMain.id("rabbit"), RabbitAbility)
-		Registry.register(ABILITY_REGISTRY, HattenedMain.id("apple"), VacuumAbility(ItemStack(Items.APPLE)))
-		Registry.register(ABILITY_REGISTRY, HattenedMain.id("fruit"), VacuumAbility(ItemStack(Items.WATER_BUCKET)))
-		Registry.register(ABILITY_REGISTRY, HattenedMain.id("tree"), VacuumAbility(ItemStack(Items.ACACIA_SAPLING)))
 		Registry.register(ABILITY_REGISTRY, HattenedMain.id("vacuum"), VacuumAbility(ItemStack(Items.WOODEN_SWORD)))
 	}
 }

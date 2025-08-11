@@ -28,7 +28,7 @@ object HatAbilityMenu {
 
 		for (i in 0..<cardCount) {
 			val card = animatedCards[i]
-			val relativeIndex = (i - ClientStorage.abilityIndex).mod(cardCount) - cardCount / 2
+			val relativeIndex = (i - ClientStorage.abilityIndex + cardCount / 2).mod(cardCount) - cardCount / 2
 			card.targetPosition = Vector2f(spreadProgress * relativeIndex * 100, -100f * riseProgress)
 			card.targetAngle = 0f
 
