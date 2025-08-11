@@ -20,8 +20,8 @@ data class HatState(val selectedAbilityIndex: Int) {
 
 		val ability = getAbility()
 		when (event) {
-			UserInput.LeftMousePressed -> ability!!.onLeftClick(player)
-			UserInput.RightMousePressed -> ability!!.onRightClick(player)
+			UserInput.LeftMousePressed -> ability.onLeftClick(player)
+			UserInput.RightMousePressed -> ability.onRightClick(player)
 			else -> {}
 		}
 

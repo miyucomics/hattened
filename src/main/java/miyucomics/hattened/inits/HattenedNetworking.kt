@@ -1,6 +1,7 @@
 package miyucomics.hattened.inits
 
 import miyucomics.hattened.attach.HatState
+import miyucomics.hattened.networking.ConfettiPayload
 import miyucomics.hattened.networking.HatInputPayload
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking
@@ -8,6 +9,7 @@ import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking
 @Suppress("UnstableAPIUsage")
 object HattenedNetworking {
 	fun init() {
+		PayloadTypeRegistry.playS2C().register(ConfettiPayload.ID, ConfettiPayload.CODEC)
 		PayloadTypeRegistry.playC2S().register(HatInputPayload.ID, HatInputPayload.CODEC)
 		ServerPlayNetworking.registerGlobalReceiver(HatInputPayload.ID) { payload, context ->
 			val before = context.player().getAttachedOrSet(HattenedAttachments.HAT_STATE_DATA, HatState.DEFAULT)

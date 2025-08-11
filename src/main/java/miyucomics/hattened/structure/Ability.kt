@@ -1,12 +1,12 @@
 package miyucomics.hattened.structure
 
-import net.minecraft.entity.player.PlayerEntity
+import net.minecraft.server.network.ServerPlayerEntity
 
 interface Ability {
 	val name: String
-	fun onSelected(player: PlayerEntity) {}
-	fun onLeftClick(player: PlayerEntity) {}
-	fun onRightClick(player: PlayerEntity) {}
-	fun onTick(player: PlayerEntity) {}
+	fun onSelected(player: ServerPlayerEntity) {}
+	fun onLeftClick(player: ServerPlayerEntity) {}
+	fun onRightClick(player: ServerPlayerEntity) {}
+	fun onTick(player: ServerPlayerEntity) {}
 	fun getPose(): HatPose
 }
