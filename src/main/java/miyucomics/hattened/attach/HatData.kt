@@ -14,8 +14,8 @@ import net.minecraft.server.network.ServerPlayerEntity
 import net.minecraft.util.Identifier
 
 data class HatData(val hasHat: Boolean, val index: Int, val abilities: List<Identifier>) {
-	val ability: Ability
-		get() = HattenedAbilities.ABILITY_REGISTRY.get(abilities[index])!!
+	val ability: Ability?
+		get() = HattenedAbilities.ABILITY_REGISTRY.get(abilities.getOrNull(index))
 
 	fun toItemStack() = ItemStack(HattenedMain.HAT_ITEM).apply { set(HattenedMain.ABILITY_COMPONENT, abilities) }
 
@@ -24,11 +24,11 @@ data class HatData(val hasHat: Boolean, val index: Int, val abilities: List<Iden
 			UserInput.ScrollUp -> -1
 			UserInput.ScrollDown -> 1
 			else -> 0
-		}).mod(HattenedAbilities.ABILITY_REGISTRY.size())
+		}).mod(abilities.size)
 
 		when (event) {
-			UserInput.LeftMousePressed -> this.ability.onLeftClick(player)
-			UserInput.RightMousePressed -> this.ability.onRightClick(player)
+			UserInput.LeftMousePressed -> this.ability?.onLeftClick(player)
+			UserInput.RightMousePressed -> this.ability?.onRightClick(player)
 			else -> {}
 		}
 

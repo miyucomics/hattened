@@ -1,17 +1,18 @@
 package miyucomics.hattened.render
 
-import miyucomics.hattened.inits.HattenedAbilities
+import miyucomics.hattened.HattenedHelper
 import miyucomics.hattened.misc.ClientStorage
+import miyucomics.hattened.render.Card.Companion.CARD_HEIGHT
 import net.minecraft.client.MinecraftClient
 import net.minecraft.client.gui.DrawContext
 import org.joml.Vector2f
 import kotlin.math.abs
 
 object HatAbilityMenu {
-	private var animatedCards: MutableList<Card> = mutableListOf()
+	private var animatedCards: List<Card> = listOf()
 
 	fun initializeCards() {
-		animatedCards = HattenedAbilities.ABILITY_REGISTRY.keys.map { key -> Card(key.value) }.toMutableList()
+		animatedCards = HattenedHelper.getHatData(MinecraftClient.getInstance().player!!).abilities.map(::Card)
 	}
 
 	@JvmStatic
@@ -21,8 +22,6 @@ object HatAbilityMenu {
 		val cardCount = animatedCards.size
 		val riseProgress = (progress / 0.5f).coerceAtMost(1f)
 		val spreadProgress = ((progress - 0.5f) / 0.5f).coerceIn(0f, 1f)
-
-		context.drawText(MinecraftClient.getInstance().textRenderer, ClientStorage.abilityIndex.toString(), 0, 0, 0xff000000.toInt(), true)
 
 		val matrices = context.matrices
 		matrices.pushMatrix()
@@ -34,12 +33,12 @@ object HatAbilityMenu {
 			var relativeIndex = (i - ClientStorage.abilityIndex).mod(cardCount)
 			if (relativeIndex >= cardCount / 2f)
 				relativeIndex -= cardCount
-			card.targetPosition = Vector2f(spreadProgress * relativeIndex * 70, -50f * riseProgress)
+			card.targetPosition = Vector2f(spreadProgress * relativeIndex * 70, CARD_HEIGHT.toFloat() + -100f * riseProgress)
 			card.targetAngle = spreadProgress * relativeIndex * 10f
 			card.targetScale = 1f / (abs(relativeIndex) + 1)
 
 			card.tick()
-			card.render(context, i)
+			card.render(context)
 		}
 
 		matrices.popMatrix()

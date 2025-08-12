@@ -2,6 +2,7 @@ package miyucomics.hattened.render
 
 import miyucomics.hattened.misc.PlayerEntityRenderStateMinterface
 import miyucomics.hattened.misc.transformHat
+import miyucomics.hattened.structure.HatPose
 import net.minecraft.client.render.VertexConsumerProvider
 import net.minecraft.client.render.entity.feature.FeatureRenderer
 import net.minecraft.client.render.entity.feature.FeatureRendererContext
@@ -18,7 +19,7 @@ class HatFeatureRenderer(context: FeatureRendererContext<PlayerEntityRenderState
 			return
 
 		matrices.push()
-		(state as PlayerEntityRenderStateMinterface).getHat().ability.getPose().transformHat(matrices, contextModel)
+		((state as PlayerEntityRenderStateMinterface).getHat().ability?.getPose() ?: HatPose.OnHead).transformHat(matrices, contextModel)
 		hatModel.render(matrices, vertexConsumers, light)
 		matrices.pop()
 	}

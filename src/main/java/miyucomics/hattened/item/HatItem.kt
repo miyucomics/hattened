@@ -10,13 +10,14 @@ import net.minecraft.util.ActionResult
 import net.minecraft.util.Hand
 import net.minecraft.world.World
 
-object HatItem : Item(Settings().maxCount(1).component(HattenedMain.ABILITY_COMPONENT, listOf())) {
+class HatItem(settings: Settings) : Item(settings) {
 	override fun use(world: World, user: PlayerEntity, hand: Hand): ActionResult {
-		val existing = HattenedHelper.getHatData(user)
-		if (existing.hasHat)
-			return ActionResult.FAIL
+//		val existing = HattenedHelper.getHatData(user)
+//		if (existing.hasHat)
+//			return ActionResult.FAIL
 		if (!world.isClient) {
 			val stack = user.getStackInHand(hand)
+			stack.set(HattenedMain.ABILITY_COMPONENT, listOf(HattenedMain.id("confetti"), HattenedMain.id("confetti"), HattenedMain.id("confetti"), HattenedMain.id("confetti"), HattenedMain.id("confetti"), HattenedMain.id("confetti"), HattenedMain.id("confetti")))
 			user.setAttached(HattenedAttachments.HAT_DATA, HatData(true, 0, stack.getOrDefault(HattenedMain.ABILITY_COMPONENT, listOf())))
 		}
 		return ActionResult.SUCCESS

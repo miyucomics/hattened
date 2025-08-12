@@ -15,10 +15,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(PlayerEntityRenderer.class)
 class PlayerEntityRendererMixin {
-	@SuppressWarnings({"unchecked", "rawtypes"})
+	@SuppressWarnings({"unchecked", "rawtypes", "DataFlowIssue"})
 	@Inject(method = "<init>", at = @At("TAIL"))
 	void addHatFeature(EntityRendererFactory.Context ctx, boolean slim, CallbackInfo ci) {
-		//noinspection DataFlowIssue
 		((LivingEntityRenderer) (Object) this).addFeature(new HatFeatureRenderer((PlayerEntityRenderer) (Object) this));
 	}
 
