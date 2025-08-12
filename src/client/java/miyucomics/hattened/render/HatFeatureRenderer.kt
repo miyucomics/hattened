@@ -18,7 +18,7 @@ class HatFeatureRenderer(context: FeatureRendererContext<PlayerEntityRenderState
 			return
 
 		matrices.push()
-		(state as PlayerEntityRenderStateMinterface).getHatState().getAbility().getPose().transformHat(matrices, contextModel)
+		(state as PlayerEntityRenderStateMinterface).getHat().ability.getPose().transformHat(matrices, contextModel)
 		hatModel.render(matrices, vertexConsumers, light)
 		matrices.pop()
 	}

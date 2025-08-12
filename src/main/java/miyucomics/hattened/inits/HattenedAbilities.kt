@@ -21,5 +21,6 @@ object HattenedAbilities {
 		Registry.register(ABILITY_REGISTRY, HattenedMain.id("confetti"), ConfettiAbility)
 		Registry.register(ABILITY_REGISTRY, HattenedMain.id("rabbit"), RabbitAbility)
 		Registry.register(ABILITY_REGISTRY, HattenedMain.id("vacuum"), VacuumAbility(ItemStack(Items.WOODEN_SWORD)))
+		Registry.register(ABILITY_REGISTRY, HattenedMain.id("snowball"), VacuumAbility(ItemStack(Items.SNOWBALL)))
 	}
 }

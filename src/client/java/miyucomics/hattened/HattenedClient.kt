@@ -2,8 +2,6 @@ package miyucomics.hattened
 
 import dev.kosmx.playerAnim.api.layered.ModifierLayer
 import dev.kosmx.playerAnim.minecraftApi.PlayerAnimationAccess
-import miyucomics.hattened.attach.HatState
-import miyucomics.hattened.inits.HattenedAttachments
 import miyucomics.hattened.misc.ClientStorage
 import miyucomics.hattened.misc.ConfettiParticle
 import miyucomics.hattened.misc.PeripheralManager
@@ -32,7 +30,7 @@ object HattenedClient : ClientModInitializer {
 			if (client.player == null)
 				return@register
 			PeripheralManager.tick()
-			ClientStorage.tickMenu(client.player!!.getAttachedOrElse(HattenedAttachments.HAT_STATE_DATA, HatState.DEFAULT))
+			ClientStorage.tickMenu(HattenedHelper.getHatData(client.player!!))
 			ClientStorage.ticks += 1
 		}
 

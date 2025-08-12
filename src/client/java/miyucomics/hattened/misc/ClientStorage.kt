@@ -1,6 +1,6 @@
 package miyucomics.hattened.misc
 
-import miyucomics.hattened.attach.HatState
+import miyucomics.hattened.attach.HatData
 import net.minecraft.client.render.RenderTickCounter
 
 object ClientStorage {
@@ -9,8 +9,8 @@ object ClientStorage {
 	var usingTime = 0
 	var abilityIndex = 0
 
-	fun tickMenu(state: HatState) {
-		abilityIndex = state.selectedAbilityIndex
+	fun tickMenu(state: HatData) {
+		abilityIndex = state.index
 	}
 
 	@JvmStatic
