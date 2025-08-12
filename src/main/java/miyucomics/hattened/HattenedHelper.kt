@@ -7,4 +7,7 @@ import net.minecraft.entity.player.PlayerEntity
 @Suppress("UnstableApiUsage")
 object HattenedHelper {
 	@JvmStatic fun getHatData(player: PlayerEntity): HatData = player.getAttachedOrElse(HattenedAttachments.HAT_DATA, HatData.DEFAULT)
+	@JvmStatic fun setHatData(player: PlayerEntity, hat: HatData) {
+		player.setAttached(HattenedAttachments.HAT_DATA, hat)
+	}
 }
