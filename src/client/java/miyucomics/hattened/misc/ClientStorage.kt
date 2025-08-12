@@ -9,10 +9,6 @@ object ClientStorage {
 	var usingTime = 0
 	var hat = HatData.DEFAULT
 
-	fun updateClientHat(hat: HatData) {
-		this.hat = hat
-	}
-
 	@JvmStatic
 	fun getSmoothUsingTime(tickCounter: RenderTickCounter): Float {
 		val raw = when (PeripheralManager.shouldIntercept()) {

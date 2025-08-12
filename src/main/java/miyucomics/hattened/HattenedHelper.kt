@@ -2,6 +2,7 @@ package miyucomics.hattened
 
 import miyucomics.hattened.attach.HatData
 import miyucomics.hattened.inits.HattenedAttachments
+import miyucomics.hattened.structure.HatPose
 import net.minecraft.entity.player.PlayerEntity
 
 @Suppress("UnstableApiUsage")
