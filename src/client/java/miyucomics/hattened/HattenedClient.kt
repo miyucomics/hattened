@@ -30,8 +30,8 @@ object HattenedClient : ClientModInitializer {
 			if (client.player == null)
 				return@register
 			PeripheralManager.tick()
-			ClientStorage.tickMenu(HattenedHelper.getHatData(client.player!!))
 			ClientStorage.ticks += 1
+			ClientStorage.updateClientHat(HattenedHelper.getHatData(client.player!!))
 		}
 
 		ClientPlayNetworking.registerGlobalReceiver(ConfettiPayload.ID) { payload, context ->

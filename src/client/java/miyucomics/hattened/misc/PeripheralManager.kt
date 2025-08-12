@@ -1,5 +1,6 @@
 package miyucomics.hattened.misc
 
+import miyucomics.hattened.networking.DequipHatPayload
 import miyucomics.hattened.networking.HatInputPayload
 import miyucomics.hattened.render.HatAbilityMenu
 import miyucomics.hattened.structure.UserInput
@@ -10,14 +11,18 @@ import org.lwjgl.glfw.GLFW
 
 object PeripheralManager {
 	val HAT_KEYBIND = KeyBinding("key.hattened.hat", GLFW.GLFW_KEY_LEFT_ALT, "key.categories.hattened")
+	val DEQUIP_HAT_KEYBIND = KeyBinding("key.hattened.dequip", GLFW.GLFW_KEY_H, "key.categories.hattened")
 	var previousState = false
 
 	fun init() {
 		KeyBindingHelper.registerKeyBinding(HAT_KEYBIND)
+		KeyBindingHelper.registerKeyBinding(DEQUIP_HAT_KEYBIND)
 	}
 
 	fun tick() {
 		ClientStorage.usingTime = (ClientStorage.usingTime + if (HAT_KEYBIND.isPressed) 1 else -1).coerceIn(0, 10)
+		if (DEQUIP_HAT_KEYBIND.isPressed)
+			ClientPlayNetworking.send(DequipHatPayload())
 
 		if (!previousState && HAT_KEYBIND.isPressed) {
 			ClientPlayNetworking.send(HatInputPayload(UserInput.LeftAltPressed))
@@ -48,5 +53,5 @@ object PeripheralManager {
 	}
 
 	@JvmStatic
-	fun shouldIntercept() = HAT_KEYBIND.isPressed
+	fun shouldIntercept() = ClientStorage.hat.hasHat && HAT_KEYBIND.isPressed
 }

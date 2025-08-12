@@ -30,7 +30,7 @@ object HatAbilityMenu {
 
 		for (i in 0..<cardCount) {
 			val card = animatedCards[i]
-			var relativeIndex = (i - ClientStorage.abilityIndex).mod(cardCount)
+			var relativeIndex = (i - ClientStorage.hat.index).mod(cardCount)
 			if (relativeIndex >= cardCount / 2f)
 				relativeIndex -= cardCount
 			card.targetPosition = Vector2f(spreadProgress * relativeIndex * 70, CARD_HEIGHT.toFloat() + -100f * riseProgress)

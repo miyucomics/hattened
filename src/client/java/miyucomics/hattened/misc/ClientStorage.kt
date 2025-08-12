@@ -7,10 +7,10 @@ object ClientStorage {
 	var ticks = 0
 	@JvmField
 	var usingTime = 0
-	var abilityIndex = 0
+	var hat = HatData.DEFAULT
 
-	fun tickMenu(state: HatData) {
-		abilityIndex = state.index
+	fun updateClientHat(hat: HatData) {
+		this.hat = hat
 	}
 
 	@JvmStatic
