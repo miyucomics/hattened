@@ -7,6 +7,8 @@ interface Ability {
 	fun onSelected(player: ServerPlayerEntity) {}
 	fun onLeftClick(player: ServerPlayerEntity) {}
 	fun onRightClick(player: ServerPlayerEntity) {}
+	fun onLeftClickReleased(player: ServerPlayerEntity) {}
+	fun onRightClickReleased(player: ServerPlayerEntity) {}
 	fun onTick(player: ServerPlayerEntity) {}
 	fun getPose(): HatPose
 }
