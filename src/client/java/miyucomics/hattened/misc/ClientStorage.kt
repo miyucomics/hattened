@@ -11,6 +11,8 @@ object ClientStorage {
 
 	@JvmStatic
 	fun getSmoothUsingTime(tickCounter: RenderTickCounter): Float {
+		if (!hat.hasHat)
+			return 0f
 		val raw = when (PeripheralManager.shouldIntercept()) {
 			true -> usingTime + tickCounter.getTickProgress(false)
 			false -> usingTime - tickCounter.getTickProgress(false)

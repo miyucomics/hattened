@@ -9,7 +9,6 @@ import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking
 import net.minecraft.util.Hand
 
-@Suppress("UnstableAPIUsage")
 object HattenedNetworking {
 	fun init() {
 		PayloadTypeRegistry.playS2C().register(ConfettiPayload.ID, ConfettiPayload.CODEC)
@@ -24,9 +23,10 @@ object HattenedNetworking {
 
 		ServerPlayNetworking.registerGlobalReceiver(DequipHatPayload.ID) { _, context ->
 			val player = context.player()
-			if (player.getStackInHand(Hand.MAIN_HAND).isEmpty) {
+			val hat = HattenedHelper.getHatData(player)
+			if (player.getStackInHand(Hand.MAIN_HAND).isEmpty && hat.hasHat) {
 				player.swingHand(Hand.MAIN_HAND, true)
-				player.setStackInHand(Hand.MAIN_HAND, HattenedHelper.getHatData(player).toItemStack())
+				player.setStackInHand(Hand.MAIN_HAND, hat.toItemStack())
 				HattenedHelper.setHatData(player, HatData(false, 0, listOf()))
 			}
 		}

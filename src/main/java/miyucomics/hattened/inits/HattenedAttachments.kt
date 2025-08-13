@@ -12,7 +12,7 @@ import net.minecraft.entity.player.PlayerEntity
 
 @Suppress("UnstableAPIUsage")
 object HattenedAttachments {
-	@JvmField val HAT_DATA: AttachmentType<HatData> = AttachmentRegistry.create(HattenedMain.id("hat")) { it.initializer { -> HatData.DEFAULT }.persistent(HatData.CODEC).syncWith(HatData.PACKET_CODEC, AttachmentSyncPredicate.all()) }
+	val HAT_DATA: AttachmentType<HatData> = AttachmentRegistry.create(HattenedMain.id("hat")) { it.initializer { -> HatData.DEFAULT }.persistent(HatData.CODEC).syncWith(HatData.PACKET_CODEC, AttachmentSyncPredicate.all()) }
 
 	fun init() {
 		ServerLivingEntityEvents.AFTER_DEATH.register { entity, _ ->

@@ -4,7 +4,6 @@ import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import io.netty.buffer.ByteBuf
 import miyucomics.hattened.HattenedMain
-import miyucomics.hattened.inits.HattenedAbilities
 import miyucomics.hattened.structure.Ability
 import miyucomics.hattened.structure.HatPose
 import miyucomics.hattened.structure.UserInput
@@ -12,13 +11,12 @@ import net.minecraft.item.ItemStack
 import net.minecraft.network.codec.PacketCodec
 import net.minecraft.network.codec.PacketCodecs
 import net.minecraft.server.network.ServerPlayerEntity
-import net.minecraft.util.Identifier
 
-data class HatData(val hasHat: Boolean, val usingHat: Boolean, val index: Int, val abilities: List<Identifier>) {
-	constructor(hasHat: Boolean, index: Int, abilities: List<Identifier>) : this(hasHat = hasHat, usingHat = false, index, abilities)
+data class HatData(val hasHat: Boolean, val usingHat: Boolean, val index: Int, val abilities: List<Ability>) {
+	constructor(hasHat: Boolean, index: Int, abilities: List<Ability>) : this(hasHat = hasHat, usingHat = false, index, abilities)
 
 	val ability: Ability?
-		get() = HattenedAbilities.ABILITY_REGISTRY.get(abilities.getOrNull(index))
+		get() = abilities.getOrNull(index)
 
 	fun toItemStack() = ItemStack(HattenedMain.HAT_ITEM).apply { set(HattenedMain.ABILITY_COMPONENT, abilities) }
 
@@ -28,10 +26,10 @@ data class HatData(val hasHat: Boolean, val usingHat: Boolean, val index: Int, v
 		when (event) {
 			UserInput.LeftAltPressed -> newHat = newHat.copy(usingHat = true)
 			UserInput.LeftAltReleased -> newHat = newHat.copy(usingHat = false)
-			UserInput.LeftMousePressed -> this.ability?.onLeftClick(player)
-			UserInput.LeftMouseReleased -> this.ability?.onLeftClickReleased(player)
-			UserInput.RightMousePressed -> this.ability?.onRightClick(player)
-			UserInput.RightMouseReleased -> this.ability?.onRightClickReleased(player)
+			UserInput.LeftMousePressed -> this.ability?.onLeftClick(player.world, player)
+			UserInput.LeftMouseReleased -> this.ability?.onLeftClickReleased(player.world, player)
+			UserInput.RightMousePressed -> this.ability?.onRightClick(player.world, player)
+			UserInput.RightMouseReleased -> this.ability?.onRightClickReleased(player.world, player)
 			UserInput.ScrollUp -> newHat = newHat.copy(index = (newHat.index - 1).mod(abilities.size))
 			UserInput.ScrollDown ->  newHat = newHat.copy(index = (newHat.index + 1).mod(abilities.size))
 		}
@@ -52,7 +50,7 @@ data class HatData(val hasHat: Boolean, val usingHat: Boolean, val index: Int, v
 			it.group(
 				Codec.BOOL.fieldOf("hasHat").forGetter(HatData::hasHat),
 				Codec.INT.fieldOf("index").forGetter(HatData::index),
-				Identifier.CODEC.listOf().fieldOf("abilities").forGetter(HatData::abilities)
+				Ability.CODEC.listOf().fieldOf("abilities").forGetter(HatData::abilities)
 			).apply(it, ::HatData)
 		}
 		var PACKET_CODEC: PacketCodec<ByteBuf, HatData> = PacketCodecs.codec(RecordCodecBuilder.create {
@@ -60,7 +58,7 @@ data class HatData(val hasHat: Boolean, val usingHat: Boolean, val index: Int, v
 				Codec.BOOL.fieldOf("hasHat").forGetter(HatData::hasHat),
 				Codec.BOOL.fieldOf("usingHat").forGetter(HatData::usingHat),
 				Codec.INT.fieldOf("index").forGetter(HatData::index),
-				Identifier.CODEC.listOf().fieldOf("abilities").forGetter(HatData::abilities)
+				Ability.CODEC.listOf().fieldOf("abilities").forGetter(HatData::abilities)
 			).apply(it, ::HatData)
 		})
 	}

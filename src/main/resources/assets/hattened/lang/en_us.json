@@ -1,4 +1,6 @@
 {
+	"ability.hattened.confetti": "Confetti",
+	"ability.hattened.item_stack": "Item: %s",
 	"key.categories.hattened": "The Mad Hatter",
 	"key.hattened.hat": "Control Hat",
 	"key.hattened.dequip": "Dequip Hat",
