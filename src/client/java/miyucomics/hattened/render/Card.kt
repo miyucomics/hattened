@@ -1,12 +1,12 @@
 package miyucomics.hattened.render
 
+import miyucomics.hattened.structure.Ability
 import net.minecraft.client.MinecraftClient
 import net.minecraft.client.gui.DrawContext
-import net.minecraft.util.Identifier
 import net.minecraft.util.math.MathHelper
 import org.joml.Vector2f
 
-class Card(val abilityId: Identifier) {
+class Card(val ability: Ability) {
 	private var angle = 0f
 	private var position = Vector2f(0f, CARD_HEIGHT.toFloat())
 	private var scale = 1f
@@ -25,9 +25,10 @@ class Card(val abilityId: Identifier) {
 		context.matrices.translate(this.position.x, this.position.y)
 		context.matrices.rotate(this.angle / 180f * MathHelper.PI)
 		context.matrices.scale(this.scale)
+		val text = ability.getTitle()
+		context.drawText(MinecraftClient.getInstance().textRenderer, text, MinecraftClient.getInstance().textRenderer.getWidth(text) / -2, -CARD_HEIGHT / 2 - 14, 0xffffffff.toInt(), true)
 		context.matrices.translate(-CARD_WIDTH / 2f, -CARD_HEIGHT / 2f)
 		context.fill(0, 0, CARD_WIDTH, CARD_HEIGHT, 0xff000022.toInt())
-		context.drawText(MinecraftClient.getInstance().textRenderer, abilityId.path, 10, 10, 0xffffffff.toInt(), true)
 		context.matrices.popMatrix()
 	}
 

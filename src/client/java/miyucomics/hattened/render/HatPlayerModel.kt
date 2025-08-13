@@ -10,7 +10,6 @@ import miyucomics.hattened.misc.rotateBody
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.util.math.MathHelper
 
-@Suppress("UnstableAPIUsage")
 class HatPlayerModel(val player: PlayerEntity) : IAnimation {
 	override fun setupAnim(tickDelta: Float) {}
 	override fun isActive() = HattenedHelper.getHatData(player).hasHat
