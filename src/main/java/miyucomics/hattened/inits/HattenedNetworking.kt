@@ -24,8 +24,9 @@ object HattenedNetworking {
 
 		ServerPlayNetworking.registerGlobalReceiver(DequipHatPayload.ID) { _, context ->
 			val player = context.player()
-			if (player.getStackInHand(Hand.OFF_HAND).isEmpty) {
-				player.setStackInHand(Hand.OFF_HAND, HattenedHelper.getHatData(player).toItemStack())
+			if (player.getStackInHand(Hand.MAIN_HAND).isEmpty) {
+				player.swingHand(Hand.MAIN_HAND, true)
+				player.setStackInHand(Hand.MAIN_HAND, HattenedHelper.getHatData(player).toItemStack())
 				HattenedHelper.setHatData(player, HatData(false, 0, listOf()))
 			}
 		}

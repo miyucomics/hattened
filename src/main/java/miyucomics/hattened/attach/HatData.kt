@@ -3,14 +3,11 @@ package miyucomics.hattened.attach
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import io.netty.buffer.ByteBuf
-import miyucomics.hattened.HattenedHelper.getHatData
 import miyucomics.hattened.HattenedMain
 import miyucomics.hattened.inits.HattenedAbilities
 import miyucomics.hattened.structure.Ability
 import miyucomics.hattened.structure.HatPose
 import miyucomics.hattened.structure.UserInput
-import net.minecraft.command.argument.EntityArgumentType.player
-import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.ItemStack
 import net.minecraft.network.codec.PacketCodec
 import net.minecraft.network.codec.PacketCodecs

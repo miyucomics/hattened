@@ -2,7 +2,6 @@ package miyucomics.hattened.render
 
 import miyucomics.hattened.misc.PlayerEntityRenderStateMinterface
 import miyucomics.hattened.misc.transformHat
-import miyucomics.hattened.structure.HatPose
 import net.minecraft.client.render.VertexConsumerProvider
 import net.minecraft.client.render.entity.feature.FeatureRenderer
 import net.minecraft.client.render.entity.feature.FeatureRendererContext
