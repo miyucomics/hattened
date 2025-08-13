@@ -4,6 +4,7 @@ import miyucomics.hattened.HattenedHelper
 import miyucomics.hattened.HattenedMain
 import miyucomics.hattened.abilities.ConfettiAbility
 import miyucomics.hattened.abilities.ItemStackAbility
+import miyucomics.hattened.abilities.VacuumAbility
 import miyucomics.hattened.attach.HatData
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.Item
@@ -20,8 +21,8 @@ class HatItem(settings: Settings) : Item(settings) {
 		if (!world.isClient) {
 			val stack = user.getStackInHand(hand)
 			stack.set(HattenedMain.ABILITY_COMPONENT, listOf(
+				VacuumAbility(false),
 				ItemStackAbility(ItemStack(Items.APPLE)),
-				ConfettiAbility(),
 				ConfettiAbility(),
 				ConfettiAbility(),
 				ConfettiAbility()

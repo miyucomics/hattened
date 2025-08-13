@@ -12,9 +12,7 @@ import net.minecraft.server.network.ServerPlayerEntity
 import net.minecraft.server.world.ServerWorld
 import net.minecraft.text.Text
 
-class ItemStackAbility(val stack: ItemStack) : Ability {
-	override val type = TYPE
-
+class ItemStackAbility(val stack: ItemStack) : Ability(TYPE) {
 	override fun getPose() = HatPose.SearchingHat
 	override fun getTitle(): Text = Text.translatable("ability.hattened.item_stack", stack.name)
 

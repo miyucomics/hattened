@@ -20,18 +20,34 @@ data class HatData(val hasHat: Boolean, val usingHat: Boolean, val index: Int, v
 
 	fun toItemStack() = ItemStack(HattenedMain.HAT_ITEM).apply { set(HattenedMain.ABILITY_COMPONENT, abilities) }
 
+	fun tick(player: ServerPlayerEntity) {
+		this.ability?.tick(player.world, player)
+	}
+
 	fun transition(player: ServerPlayerEntity, event: UserInput): HatData {
 		var newHat = this
 
 		when (event) {
-			UserInput.LeftAltPressed -> newHat = newHat.copy(usingHat = true)
-			UserInput.LeftAltReleased -> newHat = newHat.copy(usingHat = false)
+			UserInput.LeftAltPressed -> {
+				this.ability?.switchOff(player.world, player)
+				newHat = newHat.copy(usingHat = true)
+			}
+			UserInput.LeftAltReleased -> {
+				this.ability?.switchOff(player.world, player)
+				newHat = newHat.copy(usingHat = false)
+			}
 			UserInput.LeftMousePressed -> this.ability?.onLeftClick(player.world, player)
 			UserInput.LeftMouseReleased -> this.ability?.onLeftClickReleased(player.world, player)
 			UserInput.RightMousePressed -> this.ability?.onRightClick(player.world, player)
 			UserInput.RightMouseReleased -> this.ability?.onRightClickReleased(player.world, player)
-			UserInput.ScrollUp -> newHat = newHat.copy(index = (newHat.index - 1).mod(abilities.size))
-			UserInput.ScrollDown ->  newHat = newHat.copy(index = (newHat.index + 1).mod(abilities.size))
+			UserInput.ScrollUp -> {
+				this.ability?.switchOff(player.world, player)
+				newHat = newHat.copy(index = (newHat.index - 1).mod(abilities.size))
+			}
+			UserInput.ScrollDown ->  {
+				this.ability?.switchOff(player.world, player)
+				newHat = newHat.copy(index = (newHat.index + 1).mod(abilities.size))
+			}
 		}
 
 		return newHat

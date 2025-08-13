@@ -4,6 +4,7 @@ import com.mojang.serialization.Lifecycle
 import miyucomics.hattened.HattenedMain
 import miyucomics.hattened.abilities.ConfettiAbility
 import miyucomics.hattened.abilities.ItemStackAbility
+import miyucomics.hattened.abilities.VacuumAbility
 import miyucomics.hattened.structure.AbilityType
 import net.minecraft.registry.Registry
 import net.minecraft.registry.RegistryKey
@@ -15,6 +16,7 @@ object HattenedAbilities {
 	fun init() {
 		register(ConfettiAbility.TYPE)
 		register(ItemStackAbility.TYPE)
+		register(VacuumAbility.TYPE)
 	}
 
 	fun register(type: AbilityType<*>) {
