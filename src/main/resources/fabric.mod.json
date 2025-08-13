@@ -32,7 +32,8 @@
 		{
 			"config": "hattened.client.mixins.json",
 			"environment": "client"
-		}
+		},
+		"hattened.mixins.json"
 	],
 	"depends": {
 		"fabricloader": ">=0.16.14",

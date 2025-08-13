@@ -13,9 +13,7 @@ import net.minecraft.server.network.ServerPlayerEntity
 import net.minecraft.server.world.ServerWorld
 import net.minecraft.text.Text
 
-class ConfettiAbility : Ability {
-	override val type = TYPE
-
+class ConfettiAbility : Ability(TYPE) {
 	override fun getPose() = HatPose.SearchingHat
 	override fun getTitle(): Text = Text.translatable("ability.hattened.confetti")
 

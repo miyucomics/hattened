@@ -6,16 +6,31 @@ import net.minecraft.server.network.ServerPlayerEntity
 import net.minecraft.server.world.ServerWorld
 import net.minecraft.text.Text
 
-interface Ability {
-	val type: AbilityType<*>
+abstract class Ability(val type: AbilityType<*>) {
+	var leftClickHeld = false
+	var rightClickHeld = false
 
-	fun getTitle(): Text
-	fun getPose(): HatPose
-	fun onTick(world: ServerWorld, player: ServerPlayerEntity) {}
-	fun onLeftClick(world: ServerWorld, player: ServerPlayerEntity) {}
-	fun onRightClick(world: ServerWorld, player: ServerPlayerEntity) {}
-	fun onLeftClickReleased(world: ServerWorld, player: ServerPlayerEntity) {}
-	fun onRightClickReleased(world: ServerWorld, player: ServerPlayerEntity) {}
+	abstract fun getTitle(): Text
+	abstract fun getPose(): HatPose
+
+	open fun tick(world: ServerWorld, player: ServerPlayerEntity) {
+		if (leftClickHeld)
+			onLeftClickHold(world, player)
+		if (rightClickHeld)
+			onRightClickHold(world, player)
+	}
+
+	open fun onLeftClick(world: ServerWorld, player: ServerPlayerEntity) { leftClickHeld = true }
+	open fun onRightClick(world: ServerWorld, player: ServerPlayerEntity) { rightClickHeld = true }
+	open fun onLeftClickReleased(world: ServerWorld, player: ServerPlayerEntity) { leftClickHeld = false }
+	open fun onRightClickReleased(world: ServerWorld, player: ServerPlayerEntity) { rightClickHeld = false }
+	open fun onLeftClickHold(world: ServerWorld, player: ServerPlayerEntity) {}
+	open fun onRightClickHold(world: ServerWorld, player: ServerPlayerEntity) {}
+
+	fun switchOff(world: ServerWorld, player: ServerPlayerEntity) {
+		onLeftClickReleased(world, player)
+		onRightClickReleased(world, player)
+	}
 
 	companion object {
 		val CODEC: Codec<Ability> = HattenedAbilities.ABILITY_REGISTRY.getCodec().dispatch("type", Ability::type, AbilityType<*>::codec)
