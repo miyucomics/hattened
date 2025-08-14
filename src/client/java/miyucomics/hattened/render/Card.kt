@@ -1,6 +1,6 @@
 package miyucomics.hattened.render
 
-import miyucomics.hattened.structure.Ability
+import miyucomics.hattened.abilities.Ability
 import net.minecraft.client.MinecraftClient
 import net.minecraft.client.gui.DrawContext
 import net.minecraft.util.math.MathHelper

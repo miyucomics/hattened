@@ -1,12 +1,14 @@
-package miyucomics.hattened.structure
+package miyucomics.hattened.abilities
 
 import com.mojang.serialization.Codec
 import miyucomics.hattened.inits.HattenedAbilities
+import miyucomics.hattened.structure.HatPose
 import net.minecraft.server.network.ServerPlayerEntity
 import net.minecraft.server.world.ServerWorld
 import net.minecraft.text.Text
+import java.util.*
 
-abstract class Ability(val type: AbilityType<*>) {
+abstract class Ability(val type: AbilityType<*>, val uuid: UUID) {
 	var leftClickHeld = false
 	var rightClickHeld = false
 

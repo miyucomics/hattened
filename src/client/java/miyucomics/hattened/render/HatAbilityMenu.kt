@@ -9,10 +9,10 @@ import org.joml.Vector2f
 import kotlin.math.abs
 
 object HatAbilityMenu {
-	private var animatedCards: List<Card> = listOf()
+	var animatedCards: MutableList<Card> = mutableListOf()
 
 	fun initializeCards() {
-		animatedCards = HattenedHelper.getHatData(MinecraftClient.getInstance().player!!).abilities.map(::Card)
+		animatedCards = HattenedHelper.getHatData(MinecraftClient.getInstance().player!!).abilities.map(::Card).toMutableList()
 	}
 
 	@JvmStatic

@@ -4,7 +4,7 @@ import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import io.netty.buffer.ByteBuf
 import miyucomics.hattened.HattenedMain
-import miyucomics.hattened.structure.Ability
+import miyucomics.hattened.abilities.Ability
 import miyucomics.hattened.structure.HatPose
 import miyucomics.hattened.structure.UserInput
 import net.minecraft.item.ItemStack
@@ -21,7 +21,8 @@ data class HatData(val hasHat: Boolean, val usingHat: Boolean, val index: Int, v
 	fun toItemStack() = ItemStack(HattenedMain.HAT_ITEM).apply { set(HattenedMain.ABILITY_COMPONENT, abilities) }
 
 	fun tick(player: ServerPlayerEntity) {
-		this.ability?.tick(player.world, player)
+		if (usingHat)
+			this.ability?.tick(player.world, player)
 	}
 
 	fun transition(player: ServerPlayerEntity, event: UserInput): HatData {
@@ -56,7 +57,7 @@ data class HatData(val hasHat: Boolean, val usingHat: Boolean, val index: Int, v
 	fun getPose(): HatPose {
 		if (!this.usingHat)
 			return HatPose.OnHead
-		return this.ability?.getPose() ?: HatPose.OnHead
+		return this.ability?.getPose() ?: HatPose.SearchingHat
 	}
 
 	companion object {
