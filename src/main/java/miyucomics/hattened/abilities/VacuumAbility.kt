@@ -4,18 +4,16 @@ import com.mojang.serialization.Codec
 import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import miyucomics.hattened.HattenedMain
-import miyucomics.hattened.structure.Ability
-import miyucomics.hattened.structure.AbilityType
 import miyucomics.hattened.structure.HatPose
 import net.minecraft.entity.Entity
 import net.minecraft.entity.ItemEntity
 import net.minecraft.server.network.ServerPlayerEntity
 import net.minecraft.server.world.ServerWorld
 import net.minecraft.text.Text
-import kotlin.jvm.java
+import java.util.*
 
-class VacuumAbility() : Ability(TYPE) {
-	constructor(active: Boolean) : this() {
+class VacuumAbility(uuid: UUID, active: Boolean) : Ability(TYPE, uuid) {
+	init {
 		this.rightClickHeld = active
 	}
 
@@ -43,7 +41,7 @@ class VacuumAbility() : Ability(TYPE) {
 		var TYPE: AbilityType<VacuumAbility> = object : AbilityType<VacuumAbility>() {
 			override val argc: Int = 0
 			override val id = HattenedMain.id("vacuum")
-			override val codec: MapCodec<VacuumAbility> = RecordCodecBuilder.mapCodec { it.group(Codec.BOOL.fieldOf("active").forGetter(VacuumAbility::rightClickHeld)).apply(it, ::VacuumAbility) }
+			override val codec: MapCodec<VacuumAbility> = RecordCodecBuilder.mapCodec { builder -> commonCodec(builder).and(Codec.BOOL.fieldOf("active").forGetter(VacuumAbility::rightClickHeld)).apply(builder, ::VacuumAbility) }
 		}
 	}
 }

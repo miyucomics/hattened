@@ -2,7 +2,6 @@ package miyucomics.hattened.misc
 
 import miyucomics.hattened.networking.DequipHatPayload
 import miyucomics.hattened.networking.HatInputPayload
-import miyucomics.hattened.render.HatAbilityMenu
 import miyucomics.hattened.structure.UserInput
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking
@@ -26,7 +25,6 @@ object PeripheralManager {
 
 		if (!previousState && HAT_KEYBIND.isPressed) {
 			ClientPlayNetworking.send(HatInputPayload(UserInput.LeftAltPressed))
-			HatAbilityMenu.initializeCards()
 		} else if (previousState && !HAT_KEYBIND.isPressed)
 			ClientPlayNetworking.send(HatInputPayload(UserInput.LeftAltReleased))
 

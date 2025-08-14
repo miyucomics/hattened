@@ -1,10 +1,10 @@
 package miyucomics.hattened
 
+import miyucomics.hattened.abilities.Ability
 import miyucomics.hattened.inits.HattenedAbilities
 import miyucomics.hattened.inits.HattenedAttachments
 import miyucomics.hattened.inits.HattenedNetworking
 import miyucomics.hattened.item.HatItem
-import miyucomics.hattened.structure.Ability
 import net.fabricmc.api.ModInitializer
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents
 import net.fabricmc.fabric.api.particle.v1.FabricParticleTypes
