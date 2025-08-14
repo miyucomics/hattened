@@ -1,7 +1,7 @@
 package miyucomics.hattened.inits
 
 import miyucomics.hattened.HattenedHelper
-import miyucomics.hattened.attach.HatData
+import miyucomics.hattened.attach.HatDataAttachment
 import miyucomics.hattened.networking.ConfettiPayload
 import miyucomics.hattened.networking.DequipHatPayload
 import miyucomics.hattened.networking.HatInputPayload
@@ -27,7 +27,7 @@ object HattenedNetworking {
 			if (player.getStackInHand(Hand.MAIN_HAND).isEmpty && hat.hasHat) {
 				player.swingHand(Hand.MAIN_HAND, true)
 				player.setStackInHand(Hand.MAIN_HAND, hat.toItemStack())
-				HattenedHelper.setHatData(player, HatData(false, 0, listOf()))
+				HattenedHelper.setHatData(player, HatDataAttachment(false, 0, listOf()))
 			}
 		}
 	}
