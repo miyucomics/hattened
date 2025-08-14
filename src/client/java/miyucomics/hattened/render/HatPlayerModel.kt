@@ -18,6 +18,6 @@ class HatPlayerModel(val player: PlayerEntity) : IAnimation {
 		if (type != TransformType.ROTATION)
 			return original
 		val time = ClientStorage.ticks + tickDelta
-		return HattenedHelper.getHatData(player).getPose().rotateBody(modelKey, time)?.scale(MathHelper.RADIANS_PER_DEGREE) ?: original
+		return HattenedHelper.getPose(player).rotateBody(modelKey, time)?.scale(MathHelper.RADIANS_PER_DEGREE) ?: original
 	}
 }

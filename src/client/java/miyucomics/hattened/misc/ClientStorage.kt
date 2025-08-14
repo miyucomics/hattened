@@ -1,13 +1,13 @@
 package miyucomics.hattened.misc
 
-import miyucomics.hattened.attach.HatData
+import miyucomics.hattened.attach.HatDataAttachment
 import net.minecraft.client.render.RenderTickCounter
 
 object ClientStorage {
 	var ticks = 0
 	@JvmField
 	var usingTime = 0
-	var hat = HatData.DEFAULT
+	var hat = HatDataAttachment.DEFAULT
 
 	@JvmStatic
 	fun getSmoothUsingTime(tickCounter: RenderTickCounter): Float {

@@ -5,6 +5,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder
 import io.netty.buffer.ByteBuf
 import miyucomics.hattened.HattenedMain
 import miyucomics.hattened.abilities.Ability
+import miyucomics.hattened.inits.HattenedAttachments
 import miyucomics.hattened.structure.HatPose
 import miyucomics.hattened.structure.UserInput
 import net.minecraft.item.ItemStack
@@ -12,7 +13,7 @@ import net.minecraft.network.codec.PacketCodec
 import net.minecraft.network.codec.PacketCodecs
 import net.minecraft.server.network.ServerPlayerEntity
 
-data class HatData(val hasHat: Boolean, val usingHat: Boolean, val index: Int, val abilities: List<Ability>) {
+data class HatDataAttachment(val hasHat: Boolean, val usingHat: Boolean, val index: Int, val abilities: List<Ability>) {
 	constructor(hasHat: Boolean, index: Int, abilities: List<Ability>) : this(hasHat = hasHat, usingHat = false, index, abilities)
 
 	val ability: Ability?
@@ -21,11 +22,14 @@ data class HatData(val hasHat: Boolean, val usingHat: Boolean, val index: Int, v
 	fun toItemStack() = ItemStack(HattenedMain.HAT_ITEM).apply { set(HattenedMain.ABILITY_COMPONENT, abilities) }
 
 	fun tick(player: ServerPlayerEntity) {
-		if (usingHat)
+		player.setAttached(HattenedAttachments.HAT_POSE, HatPose.OnHead)
+		if (usingHat) {
 			this.ability?.tick(player.world, player)
+			player.setAttached(HattenedAttachments.HAT_POSE, this.ability?.getPose())
+		}
 	}
 
-	fun transition(player: ServerPlayerEntity, event: UserInput): HatData {
+	fun transition(player: ServerPlayerEntity, event: UserInput): HatDataAttachment {
 		var newHat = this
 
 		when (event) {
@@ -54,29 +58,23 @@ data class HatData(val hasHat: Boolean, val usingHat: Boolean, val index: Int, v
 		return newHat
 	}
 
-	fun getPose(): HatPose {
-		if (!this.usingHat)
-			return HatPose.OnHead
-		return this.ability?.getPose() ?: HatPose.SearchingHat
-	}
-
 	companion object {
 		@JvmField
-		var DEFAULT = HatData(hasHat = false, usingHat = false, index = 0, abilities = listOf())
-		var CODEC: Codec<HatData> = RecordCodecBuilder.create {
+		var DEFAULT = HatDataAttachment(hasHat = false, usingHat = false, index = 0, abilities = listOf())
+		var CODEC: Codec<HatDataAttachment> = RecordCodecBuilder.create {
 			it.group(
-				Codec.BOOL.fieldOf("hasHat").forGetter(HatData::hasHat),
-				Codec.INT.fieldOf("index").forGetter(HatData::index),
-				Ability.CODEC.listOf().fieldOf("abilities").forGetter(HatData::abilities)
-			).apply(it, ::HatData)
+				Codec.BOOL.fieldOf("hasHat").forGetter(HatDataAttachment::hasHat),
+				Codec.INT.fieldOf("index").forGetter(HatDataAttachment::index),
+				Ability.CODEC.listOf().fieldOf("abilities").forGetter(HatDataAttachment::abilities)
+			).apply(it, ::HatDataAttachment)
 		}
-		var PACKET_CODEC: PacketCodec<ByteBuf, HatData> = PacketCodecs.codec(RecordCodecBuilder.create {
+		var PACKET_CODEC: PacketCodec<ByteBuf, HatDataAttachment> = PacketCodecs.codec(RecordCodecBuilder.create {
 			it.group(
-				Codec.BOOL.fieldOf("hasHat").forGetter(HatData::hasHat),
-				Codec.BOOL.fieldOf("usingHat").forGetter(HatData::usingHat),
-				Codec.INT.fieldOf("index").forGetter(HatData::index),
-				Ability.CODEC.listOf().fieldOf("abilities").forGetter(HatData::abilities)
-			).apply(it, ::HatData)
+				Codec.BOOL.fieldOf("hasHat").forGetter(HatDataAttachment::hasHat),
+				Codec.BOOL.fieldOf("usingHat").forGetter(HatDataAttachment::usingHat),
+				Codec.INT.fieldOf("index").forGetter(HatDataAttachment::index),
+				Ability.CODEC.listOf().fieldOf("abilities").forGetter(HatDataAttachment::abilities)
+			).apply(it, ::HatDataAttachment)
 		})
 	}
 }

@@ -1,6 +1,5 @@
 package miyucomics.hattened.abilities
 
-import com.mojang.serialization.Codec
 import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import miyucomics.hattened.HattenedMain
@@ -12,11 +11,7 @@ import net.minecraft.server.world.ServerWorld
 import net.minecraft.text.Text
 import java.util.*
 
-class VacuumAbility(uuid: UUID, active: Boolean) : Ability(TYPE, uuid) {
-	init {
-		this.rightClickHeld = active
-	}
-
+class VacuumAbility(uuid: UUID) : Ability(TYPE, uuid) {
 	override fun getPose() = if (rightClickHeld) HatPose.Vacuuming else HatPose.SearchingHat
 	override fun getTitle(): Text = Text.translatable("ability.hattened.vacuum")
 
@@ -41,7 +36,7 @@ class VacuumAbility(uuid: UUID, active: Boolean) : Ability(TYPE, uuid) {
 		var TYPE: AbilityType<VacuumAbility> = object : AbilityType<VacuumAbility>() {
 			override val argc: Int = 0
 			override val id = HattenedMain.id("vacuum")
-			override val codec: MapCodec<VacuumAbility> = RecordCodecBuilder.mapCodec { builder -> commonCodec(builder).and(Codec.BOOL.fieldOf("active").forGetter(VacuumAbility::rightClickHeld)).apply(builder, ::VacuumAbility) }
+			override val codec: MapCodec<VacuumAbility> = RecordCodecBuilder.mapCodec { builder -> commonCodec(builder).apply(builder, ::VacuumAbility) }
 		}
 	}
 }

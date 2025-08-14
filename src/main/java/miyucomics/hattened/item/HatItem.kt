@@ -2,8 +2,8 @@ package miyucomics.hattened.item
 
 import miyucomics.hattened.HattenedHelper
 import miyucomics.hattened.HattenedMain
-import miyucomics.hattened.abilities.ConfettiAbility
-import miyucomics.hattened.attach.HatData
+import miyucomics.hattened.abilities.VacuumAbility
+import miyucomics.hattened.attach.HatDataAttachment
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
@@ -19,9 +19,9 @@ class HatItem(settings: Settings) : Item(settings) {
 		if (!world.isClient) {
 			val stack = user.getStackInHand(hand)
 			stack.set(HattenedMain.ABILITY_COMPONENT, listOf(
-				ConfettiAbility(UUID.randomUUID())
+				VacuumAbility(UUID.randomUUID())
 			))
-			HattenedHelper.setHatData(user, HatData(true, 0, stack.getOrDefault(HattenedMain.ABILITY_COMPONENT, listOf())))
+			HattenedHelper.setHatData(user, HatDataAttachment(true, 0, stack.getOrDefault(HattenedMain.ABILITY_COMPONENT, listOf())))
 			user.setStackInHand(hand, existingStack)
 		}
 		return ActionResult.SUCCESS
