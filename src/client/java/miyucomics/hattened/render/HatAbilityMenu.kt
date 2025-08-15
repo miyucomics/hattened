@@ -25,7 +25,7 @@ object HatAbilityMenu {
 			var relativeIndex = (card.index - ClientStorage.hat.index).mod(cardCount)
 			if (relativeIndex >= cardCount / 2f)
 				relativeIndex -= cardCount
-			card.targetPosition = Vector2f(spreadProgress * relativeIndex * 70, CARD_HEIGHT.toFloat() + -100f * riseProgress)
+			card.targetPosition = Vector2f(spreadProgress * relativeIndex * 70, CARD_HEIGHT.toFloat() + -150f * riseProgress)
 			card.targetAngle = spreadProgress * relativeIndex * 10f
 			card.targetScale = 1f / (abs(relativeIndex) + 1)
 

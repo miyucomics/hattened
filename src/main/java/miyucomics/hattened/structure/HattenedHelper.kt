@@ -1,8 +1,6 @@
-package miyucomics.hattened
+package miyucomics.hattened.structure
 
-import miyucomics.hattened.attach.HatDataAttachment
 import miyucomics.hattened.inits.HattenedAttachments
-import miyucomics.hattened.structure.HatPose
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.server.network.ServerPlayerEntity
 

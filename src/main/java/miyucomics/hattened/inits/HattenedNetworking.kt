@@ -1,10 +1,10 @@
 package miyucomics.hattened.inits
 
-import miyucomics.hattened.HattenedHelper
-import miyucomics.hattened.attach.HatDataAttachment
 import miyucomics.hattened.networking.ConfettiPayload
 import miyucomics.hattened.networking.DequipHatPayload
 import miyucomics.hattened.networking.HatInputPayload
+import miyucomics.hattened.structure.HatDataAttachment
+import miyucomics.hattened.structure.HattenedHelper
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking
 import net.minecraft.util.Hand

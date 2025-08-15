@@ -1,8 +1,8 @@
 package miyucomics.hattened.mixin;
 
-import miyucomics.hattened.HattenedHelper;
 import miyucomics.hattened.misc.HatDataSmuggler;
 import miyucomics.hattened.render.HatFeatureRenderer;
+import miyucomics.hattened.structure.HattenedHelper;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.LivingEntityRenderer;
