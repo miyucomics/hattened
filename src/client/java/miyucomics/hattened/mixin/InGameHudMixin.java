@@ -3,7 +3,6 @@ package miyucomics.hattened.mixin;
 import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import miyucomics.hattened.misc.ClientStorage;
-import miyucomics.hattened.misc.PeripheralManager;
 import miyucomics.hattened.render.HatAbilityMenu;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.hud.InGameHud;
@@ -15,12 +14,7 @@ import org.spongepowered.asm.mixin.Mixin;
 class InGameHudMixin {
 	@WrapMethod(method = "renderMainHud")
 	void noMoreHud(DrawContext context, RenderTickCounter tickCounter, Operation<Void> original) {
-		if (!PeripheralManager.shouldIntercept() && ClientStorage.usingTime == 0) {
-			original.call(context, tickCounter);
-			return;
-		}
-
-		float progress = ClientStorage.getSmoothUsingTime(tickCounter);
+		float progress = ClientStorage.getProgress(tickCounter);
 
 		Matrix3x2fStack matrices = context.getMatrices();
 		matrices.pushMatrix();

@@ -27,7 +27,7 @@ object HattenedClient : ClientModInitializer {
 				return@register
 			PeripheralManager.tick()
 			ClientStorage.ticks += 1
-			ClientStorage.hat = HattenedHelper.getHatData(client.player!!)
+			ClientStorage.tick(HattenedHelper.getHatData(client.player!!))
 		}
 	}
 }

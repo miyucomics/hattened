@@ -6,10 +6,11 @@ import net.minecraft.client.gui.DrawContext
 import net.minecraft.util.math.MathHelper
 import org.joml.Vector2f
 
-class Card(val ability: Ability) {
+class Card(var index: Int, var ability: Ability) {
 	private var angle = 0f
 	private var position = Vector2f(0f, CARD_HEIGHT.toFloat())
 	private var scale = 1f
+	var removing = false
 	var targetAngle = 0f
 	var targetPosition = Vector2f()
 	var targetScale = 1f
@@ -17,6 +18,8 @@ class Card(val ability: Ability) {
 	fun tick() {
 		this.position = this.position.lerp(targetPosition, LERP_SPEED)
 		this.angle = MathHelper.lerp(LERP_SPEED, this.angle, this.targetAngle)
+		if (this.removing)
+			this.targetScale = 0f
 		this.scale = MathHelper.lerp(LERP_SPEED, this.scale, this.targetScale)
 	}
 
@@ -31,6 +34,8 @@ class Card(val ability: Ability) {
 		context.fill(0, 0, CARD_WIDTH, CARD_HEIGHT, 0xff000022.toInt())
 		context.matrices.popMatrix()
 	}
+
+	fun canRemove() = this.scale <= 0.05f && this.removing
 
 	companion object {
 		private const val LERP_SPEED = 0.15f

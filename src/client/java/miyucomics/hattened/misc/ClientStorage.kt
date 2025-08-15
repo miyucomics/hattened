@@ -1,21 +1,48 @@
 package miyucomics.hattened.misc
 
+import miyucomics.hattened.abilities.Ability
 import miyucomics.hattened.attach.HatDataAttachment
+import miyucomics.hattened.misc.PeripheralManager.HAT_KEYBIND
+import miyucomics.hattened.render.Card
 import net.minecraft.client.render.RenderTickCounter
+import java.util.*
 
 object ClientStorage {
 	var ticks = 0
-	@JvmField
-	var usingTime = 0
+	private var usingTime = 0
 	var hat = HatDataAttachment.DEFAULT
+	val cards: HashMap<UUID, Card> = HashMap()
+
+	fun tick(hat: HatDataAttachment) {
+		this.hat = hat
+		this.usingTime = (this.usingTime + if (HAT_KEYBIND.isPressed) 1 else -1).coerceIn(0, 10)
+
+		hat.abilities.forEachIndexed { index, ability ->
+			if (!cards.containsKey(ability.uuid))
+				cards[ability.uuid] = Card(index, ability)
+			cards[ability.uuid]!!.ability = ability
+		}
+
+		val hatUUIDs = hat.abilities.map(Ability::uuid).toHashSet()
+		val keysToRemove = mutableListOf<UUID>()
+		cards.forEach { (uuid, card) ->
+			if (!hatUUIDs.contains(uuid))
+				card.removing = true
+			if (card.canRemove())
+				keysToRemove.add(uuid)
+		}
+		keysToRemove.forEach { ClientStorage.cards.remove(it) }
+	}
 
 	@JvmStatic
-	fun getSmoothUsingTime(tickCounter: RenderTickCounter): Float {
-		if (!hat.hasHat)
+	fun getProgress(tickCounter: RenderTickCounter): Float {
+		if (!this.hat.hasHat)
+			return 0f
+		if (!PeripheralManager.shouldIntercept() && this.usingTime == 0)
 			return 0f
 		val raw = when (PeripheralManager.shouldIntercept()) {
-			true -> usingTime + tickCounter.getTickProgress(false)
-			false -> usingTime - tickCounter.getTickProgress(false)
+			true -> this.usingTime + tickCounter.getTickProgress(false)
+			false -> this.usingTime - tickCounter.getTickProgress(false)
 		}
 		return (raw / 10f).coerceIn(0f, 1f)
 	}

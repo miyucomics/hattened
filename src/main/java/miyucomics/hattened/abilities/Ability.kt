@@ -11,6 +11,7 @@ import java.util.*
 abstract class Ability(val type: AbilityType<*>, val uuid: UUID) {
 	var leftClickHeld = false
 	var rightClickHeld = false
+	var removable = false
 
 	abstract fun getTitle(): Text
 	abstract fun getPose(): HatPose
