@@ -27,7 +27,7 @@ class ItemStackAbility(uuid: UUID, val stack: ItemStack) : Ability(TYPE, uuid) {
 	}
 
 	companion object {
-		var TYPE: AbilityType<ItemStackAbility> = object : AbilityType<ItemStackAbility>() {
+		val TYPE: AbilityType<ItemStackAbility> = object : AbilityType<ItemStackAbility>() {
 			override val id = HattenedMain.id("item_stack")
 			override val codec: MapCodec<ItemStackAbility> = RecordCodecBuilder.mapCodec { builder -> commonCodec(builder).and(ItemStack.CODEC.fieldOf("stack").forGetter(ItemStackAbility::stack)).apply(builder, ::ItemStackAbility) }
 		}

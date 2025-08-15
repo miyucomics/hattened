@@ -1,14 +1,11 @@
-package miyucomics.hattened.attach
+package miyucomics.hattened.structure
 
 import com.mojang.datafixers.Products
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import io.netty.buffer.ByteBuf
-import miyucomics.hattened.HattenedHelper
 import miyucomics.hattened.HattenedMain
 import miyucomics.hattened.abilities.Ability
-import miyucomics.hattened.structure.HatPose
-import miyucomics.hattened.structure.UserInput
 import net.minecraft.item.ItemStack
 import net.minecraft.network.codec.PacketCodec
 import net.minecraft.network.codec.PacketCodecs
@@ -79,11 +76,12 @@ data class HatDataAttachment(val hasHat: Boolean = false, val index: Int = 0, va
 			return builder.group(
 				Codec.BOOL.fieldOf("hasHat").forGetter(HatDataAttachment::hasHat),
 				Codec.INT.fieldOf("index").forGetter(HatDataAttachment::index),
-				Ability.CODEC.listOf().fieldOf("abilities").forGetter(HatDataAttachment::abilities)
+				Ability.Companion.CODEC.listOf().fieldOf("abilities").forGetter(HatDataAttachment::abilities)
 			)
 		}
 
 		var CODEC: Codec<HatDataAttachment> = RecordCodecBuilder.create { commonFields(it).apply(it, ::HatDataAttachment) }
-		var PACKET_CODEC: PacketCodec<ByteBuf, HatDataAttachment> = PacketCodecs.codec(RecordCodecBuilder.create { commonFields(it).and(Codec.BOOL.fieldOf("usingHat").forGetter(HatDataAttachment::usingHat)).apply(it, ::HatDataAttachment) })
+		var PACKET_CODEC: PacketCodec<ByteBuf, HatDataAttachment> = PacketCodecs.codec(RecordCodecBuilder.create { commonFields(it).and(
+			Codec.BOOL.fieldOf("usingHat").forGetter(HatDataAttachment::usingHat)).apply(it, ::HatDataAttachment) })
 	}
 }

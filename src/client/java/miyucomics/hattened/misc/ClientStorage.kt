@@ -1,9 +1,9 @@
 package miyucomics.hattened.misc
 
 import miyucomics.hattened.abilities.Ability
-import miyucomics.hattened.attach.HatDataAttachment
 import miyucomics.hattened.misc.PeripheralManager.HAT_KEYBIND
 import miyucomics.hattened.render.Card
+import miyucomics.hattened.structure.HatDataAttachment
 import net.minecraft.client.render.RenderTickCounter
 import java.util.*
 

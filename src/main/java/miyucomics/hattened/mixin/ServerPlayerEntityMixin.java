@@ -1,7 +1,7 @@
 package miyucomics.hattened.mixin;
 
-import miyucomics.hattened.HattenedHelper;
-import miyucomics.hattened.attach.HatDataAttachment;
+import miyucomics.hattened.structure.HatDataAttachment;
+import miyucomics.hattened.structure.HattenedHelper;
 import net.minecraft.server.network.ServerPlayerEntity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;

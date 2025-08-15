@@ -2,10 +2,10 @@ package miyucomics.hattened.inits
 
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
-import miyucomics.hattened.HattenedHelper
 import miyucomics.hattened.HattenedMain
-import miyucomics.hattened.attach.HatDataAttachment
+import miyucomics.hattened.structure.HatDataAttachment
 import miyucomics.hattened.structure.HatPose
+import miyucomics.hattened.structure.HattenedHelper
 import net.fabricmc.fabric.api.attachment.v1.AttachmentRegistry
 import net.fabricmc.fabric.api.attachment.v1.AttachmentSyncPredicate
 import net.fabricmc.fabric.api.attachment.v1.AttachmentType

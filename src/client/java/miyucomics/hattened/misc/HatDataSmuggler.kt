@@ -1,6 +1,6 @@
 package miyucomics.hattened.misc
 
-import miyucomics.hattened.attach.HatDataAttachment
+import miyucomics.hattened.structure.HatDataAttachment
 import miyucomics.hattened.structure.HatPose
 
 interface HatDataSmuggler {

@@ -16,7 +16,7 @@ class Card(var index: Int, var ability: Ability) {
 	var targetScale = 1f
 
 	fun tick() {
-		this.position = this.position.lerp(targetPosition, LERP_SPEED)
+		this.position = this.position.lerp(this.targetPosition, LERP_SPEED)
 		this.angle = MathHelper.lerp(LERP_SPEED, this.angle, this.targetAngle)
 		if (this.removing)
 			this.targetScale = 0f
@@ -28,10 +28,14 @@ class Card(var index: Int, var ability: Ability) {
 		context.matrices.translate(this.position.x, this.position.y)
 		context.matrices.rotate(this.angle / 180f * MathHelper.PI)
 		context.matrices.scale(this.scale)
-		val text = ability.getTitle()
-		context.drawText(MinecraftClient.getInstance().textRenderer, text, MinecraftClient.getInstance().textRenderer.getWidth(text) / -2, -CARD_HEIGHT / 2 - 14, 0xffffffff.toInt(), true)
 		context.matrices.translate(-CARD_WIDTH / 2f, -CARD_HEIGHT / 2f)
 		context.fill(0, 0, CARD_WIDTH, CARD_HEIGHT, 0xff000022.toInt())
+		context.matrices.translate(CARD_WIDTH / 2f, CARD_HEIGHT / 2f)
+		val text = this.ability.getTitle()
+		context.drawText(MinecraftClient.getInstance().textRenderer, text, MinecraftClient.getInstance().textRenderer.getWidth(text) / -2, -CARD_HEIGHT / 2 - 14, 0xffffffff.toInt(), true)
+		context.matrices.pushMatrix()
+		CardRendererRegistry.render(context, this.ability)
+		context.matrices.popMatrix()
 		context.matrices.popMatrix()
 	}
 
