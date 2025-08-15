@@ -23,7 +23,6 @@ class ConfettiAbility(uuid: UUID) : Ability(TYPE, uuid) {
 
 	companion object {
 		var TYPE: AbilityType<ConfettiAbility> = object : AbilityType<ConfettiAbility>() {
-			override val argc: Int = 0
 			override val id = HattenedMain.id("confetti")
 			override val codec: MapCodec<ConfettiAbility> = RecordCodecBuilder.mapCodec { builder -> commonCodec(builder).apply(builder, ::ConfettiAbility) }
 		}

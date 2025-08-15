@@ -7,6 +7,7 @@ import miyucomics.hattened.attach.HatDataAttachment
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
+import net.minecraft.server.network.ServerPlayerEntity
 import net.minecraft.util.ActionResult
 import net.minecraft.util.Hand
 import net.minecraft.world.World
@@ -21,7 +22,7 @@ class HatItem(settings: Settings) : Item(settings) {
 			stack.set(HattenedMain.ABILITY_COMPONENT, listOf(
 				VacuumAbility(UUID.randomUUID())
 			))
-			HattenedHelper.setHatData(user, HatDataAttachment(true, 0, stack.getOrDefault(HattenedMain.ABILITY_COMPONENT, listOf())))
+			HattenedHelper.setHatData(user as ServerPlayerEntity, HatDataAttachment(true, 0, stack.getOrDefault(HattenedMain.ABILITY_COMPONENT, listOf())))
 			user.setStackInHand(hand, existingStack)
 		}
 		return ActionResult.SUCCESS

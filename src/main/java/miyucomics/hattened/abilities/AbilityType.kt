@@ -8,7 +8,6 @@ import net.minecraft.util.Uuids
 import java.util.*
 
 abstract class AbilityType<T : Ability> {
-	abstract val argc: Int
 	abstract val id: Identifier
 	abstract val codec: MapCodec<T>
 

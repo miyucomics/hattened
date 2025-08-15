@@ -18,7 +18,9 @@ object HattenedNetworking {
 		ServerPlayNetworking.registerGlobalReceiver(HatInputPayload.ID) { payload, context ->
 			val player = context.player()
 			val before = HattenedHelper.getHatData(player)
-			HattenedHelper.setHatData(player, before.transition(player, payload.input))
+			val newHat = before.transition(player, payload.input)
+			if (newHat != null)
+				HattenedHelper.setHatData(player, newHat)
 		}
 
 		ServerPlayNetworking.registerGlobalReceiver(DequipHatPayload.ID) { _, context ->

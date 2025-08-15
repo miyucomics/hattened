@@ -19,7 +19,6 @@ object PeripheralManager {
 	}
 
 	fun tick() {
-		ClientStorage.usingTime = (ClientStorage.usingTime + if (HAT_KEYBIND.isPressed) 1 else -1).coerceIn(0, 10)
 		if (DEQUIP_HAT_KEYBIND.isPressed)
 			ClientPlayNetworking.send(DequipHatPayload())
 

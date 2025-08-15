@@ -12,6 +12,8 @@ import net.minecraft.text.Text
 import java.util.*
 
 class ItemStackAbility(uuid: UUID, val stack: ItemStack) : Ability(TYPE, uuid) {
+	constructor(stack: ItemStack) : this(UUID.randomUUID(), stack)
+
 	override fun getPose() = HatPose.SearchingHat
 	override fun getTitle(): Text = Text.translatable("ability.hattened.item_stack", stack.name)
 
@@ -21,11 +23,11 @@ class ItemStackAbility(uuid: UUID, val stack: ItemStack) : Ability(TYPE, uuid) {
 		world.spawnEntity(ItemEntity(world, position.x, position.y, position.z, stack, velocity.x, velocity.y, velocity.z).apply {
 			setPickupDelay(10)
 		})
+		this.removable = true
 	}
 
 	companion object {
 		var TYPE: AbilityType<ItemStackAbility> = object : AbilityType<ItemStackAbility>() {
-			override val argc: Int = 0
 			override val id = HattenedMain.id("item_stack")
 			override val codec: MapCodec<ItemStackAbility> = RecordCodecBuilder.mapCodec { builder -> commonCodec(builder).and(ItemStack.CODEC.fieldOf("stack").forGetter(ItemStackAbility::stack)).apply(builder, ::ItemStackAbility) }
 		}

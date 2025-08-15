@@ -4,9 +4,9 @@ import com.mojang.datafixers.Products
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import io.netty.buffer.ByteBuf
+import miyucomics.hattened.HattenedHelper
 import miyucomics.hattened.HattenedMain
 import miyucomics.hattened.abilities.Ability
-import miyucomics.hattened.inits.HattenedAttachments
 import miyucomics.hattened.structure.HatPose
 import miyucomics.hattened.structure.UserInput
 import net.minecraft.item.ItemStack
@@ -22,41 +22,53 @@ data class HatDataAttachment(val hasHat: Boolean = false, val index: Int = 0, va
 
 	fun toItemStack() = ItemStack(HattenedMain.HAT_ITEM).apply { set(HattenedMain.ABILITY_COMPONENT, abilities) }
 
-	fun tick(player: ServerPlayerEntity) {
-		player.setAttached(HattenedAttachments.HAT_POSE, HatPose.OnHead)
-		if (this.usingHat) {
-			this.ability?.tick(player.world, player)
-			player.setAttached(HattenedAttachments.HAT_POSE, this.ability?.getPose())
+	fun tick(player: ServerPlayerEntity): HatDataAttachment {
+		HattenedHelper.setPose(player, HatPose.OnHead)
+		val selectedAbility = this.ability
+		if (this.usingHat && selectedAbility != null) {
+			selectedAbility.tick(player.world, player)
+			HattenedHelper.setPose(player, selectedAbility.getPose())
 		}
+		val remainingAbilities = abilities.filterNot { it.removable }
+		val newIndex = if (remainingAbilities.isEmpty()) 0 else index % remainingAbilities.size
+		return this.copy(abilities = remainingAbilities, index = newIndex)
 	}
 
-	fun transition(player: ServerPlayerEntity, event: UserInput): HatDataAttachment {
-		var newHat = this
-
+	fun transition(player: ServerPlayerEntity, event: UserInput): HatDataAttachment? {
 		when (event) {
 			UserInput.LeftAltPressed -> {
 				this.ability?.switchOff(player.world, player)
-				newHat = newHat.copy(usingHat = true)
+				return this.copy(usingHat = true)
 			}
 			UserInput.LeftAltReleased -> {
 				this.ability?.switchOff(player.world, player)
-				newHat = newHat.copy(usingHat = false)
+				return this.copy(usingHat = false)
 			}
-			UserInput.LeftMousePressed -> this.ability?.onLeftClick(player.world, player)
-			UserInput.LeftMouseReleased -> this.ability?.onLeftClickReleased(player.world, player)
-			UserInput.RightMousePressed -> this.ability?.onRightClick(player.world, player)
-			UserInput.RightMouseReleased -> this.ability?.onRightClickReleased(player.world, player)
 			UserInput.ScrollUp -> {
 				this.ability?.switchOff(player.world, player)
-				newHat = newHat.copy(index = (newHat.index - 1).mod(abilities.size))
+				return this.copy(index = (this.index - 1).mod(abilities.size))
 			}
 			UserInput.ScrollDown ->  {
 				this.ability?.switchOff(player.world, player)
-				newHat = newHat.copy(index = (newHat.index + 1).mod(abilities.size))
+				return this.copy(index = (this.index + 1).mod(abilities.size))
+			}
+			UserInput.LeftMousePressed -> {
+				this.ability?.onLeftClick(player.world, player)
+				return null
+			}
+			UserInput.LeftMouseReleased -> {
+				this.ability?.onLeftClickReleased(player.world, player)
+				return null
+			}
+			UserInput.RightMousePressed -> {
+				this.ability?.onRightClick(player.world, player)
+				return null
+			}
+			UserInput.RightMouseReleased -> {
+				this.ability?.onRightClickReleased(player.world, player)
+				return null
 			}
 		}
-
-		return newHat
 	}
 
 	companion object {
