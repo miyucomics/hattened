@@ -1,7 +1,7 @@
 package miyucomics.hattened.mixin;
 
 import miyucomics.hattened.HattenedHelper;
-import miyucomics.hattened.misc.PlayerEntityRenderStateMinterface;
+import miyucomics.hattened.misc.HatDataSmuggler;
 import miyucomics.hattened.render.HatFeatureRenderer;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.render.entity.EntityRendererFactory;
@@ -23,7 +23,7 @@ class PlayerEntityRendererMixin {
 
 	@Inject(method = "updateRenderState(Lnet/minecraft/client/network/AbstractClientPlayerEntity;Lnet/minecraft/client/render/entity/state/PlayerEntityRenderState;F)V", at = @At("TAIL"))
 	void addExtraPose(AbstractClientPlayerEntity player, PlayerEntityRenderState state, float tickDelta, CallbackInfo ci) {
-		((PlayerEntityRenderStateMinterface) state).setHat(HattenedHelper.getHatData(player));
-		((PlayerEntityRenderStateMinterface) state).setPose(HattenedHelper.getPose(player));
+		((HatDataSmuggler) state).setHat(HattenedHelper.getHatData(player));
+		((HatDataSmuggler) state).setPose(HattenedHelper.getPose(player));
 	}
 }

@@ -1,6 +1,6 @@
 package miyucomics.hattened.render
 
-import miyucomics.hattened.misc.PlayerEntityRenderStateMinterface
+import miyucomics.hattened.misc.HatDataSmuggler
 import miyucomics.hattened.misc.transformHat
 import net.minecraft.client.render.VertexConsumerProvider
 import net.minecraft.client.render.entity.feature.FeatureRenderer
@@ -13,12 +13,12 @@ class HatFeatureRenderer(context: FeatureRendererContext<PlayerEntityRenderState
 	private val hatModel = HatModel()
 
 	override fun render(matrices: MatrixStack, vertexConsumers: VertexConsumerProvider, light: Int, state: PlayerEntityRenderState, limbAngle: Float, limbDistance: Float) {
-		val hat = (state as PlayerEntityRenderStateMinterface).getHat()
+		val hat = (state as HatDataSmuggler).getHat()
 		if (!hat.hasHat)
 			return
 
 		matrices.push()
-		(state as PlayerEntityRenderStateMinterface).getPose().transformHat(matrices, contextModel)
+		(state as HatDataSmuggler).getPose().transformHat(matrices, contextModel)
 		hatModel.render(matrices, vertexConsumers, light)
 		matrices.pop()
 	}

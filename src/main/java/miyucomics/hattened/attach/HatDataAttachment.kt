@@ -1,5 +1,6 @@
 package miyucomics.hattened.attach
 
+import com.mojang.datafixers.Products
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import io.netty.buffer.ByteBuf
@@ -13,8 +14,8 @@ import net.minecraft.network.codec.PacketCodec
 import net.minecraft.network.codec.PacketCodecs
 import net.minecraft.server.network.ServerPlayerEntity
 
-data class HatDataAttachment(val hasHat: Boolean, val usingHat: Boolean, val index: Int, val abilities: List<Ability>) {
-	constructor(hasHat: Boolean, index: Int, abilities: List<Ability>) : this(hasHat = hasHat, usingHat = false, index, abilities)
+data class HatDataAttachment(val hasHat: Boolean = false, val index: Int = 0, val abilities: List<Ability> = listOf(), val usingHat: Boolean = false) {
+	constructor(hasHat: Boolean, index: Int, abilities: List<Ability>) : this(hasHat = hasHat, index, abilities, usingHat = false)
 
 	val ability: Ability?
 		get() = abilities.getOrNull(index)
@@ -23,7 +24,7 @@ data class HatDataAttachment(val hasHat: Boolean, val usingHat: Boolean, val ind
 
 	fun tick(player: ServerPlayerEntity) {
 		player.setAttached(HattenedAttachments.HAT_POSE, HatPose.OnHead)
-		if (usingHat) {
+		if (this.usingHat) {
 			this.ability?.tick(player.world, player)
 			player.setAttached(HattenedAttachments.HAT_POSE, this.ability?.getPose())
 		}
@@ -60,21 +61,17 @@ data class HatDataAttachment(val hasHat: Boolean, val usingHat: Boolean, val ind
 
 	companion object {
 		@JvmField
-		var DEFAULT = HatDataAttachment(hasHat = false, usingHat = false, index = 0, abilities = listOf())
-		var CODEC: Codec<HatDataAttachment> = RecordCodecBuilder.create {
-			it.group(
+		var DEFAULT = HatDataAttachment()
+
+		private fun commonFields(builder: RecordCodecBuilder.Instance<HatDataAttachment>): Products.P3<RecordCodecBuilder.Mu<HatDataAttachment>, Boolean, Int, List<Ability>> {
+			return builder.group(
 				Codec.BOOL.fieldOf("hasHat").forGetter(HatDataAttachment::hasHat),
 				Codec.INT.fieldOf("index").forGetter(HatDataAttachment::index),
 				Ability.CODEC.listOf().fieldOf("abilities").forGetter(HatDataAttachment::abilities)
-			).apply(it, ::HatDataAttachment)
+			)
 		}
-		var PACKET_CODEC: PacketCodec<ByteBuf, HatDataAttachment> = PacketCodecs.codec(RecordCodecBuilder.create {
-			it.group(
-				Codec.BOOL.fieldOf("hasHat").forGetter(HatDataAttachment::hasHat),
-				Codec.BOOL.fieldOf("usingHat").forGetter(HatDataAttachment::usingHat),
-				Codec.INT.fieldOf("index").forGetter(HatDataAttachment::index),
-				Ability.CODEC.listOf().fieldOf("abilities").forGetter(HatDataAttachment::abilities)
-			).apply(it, ::HatDataAttachment)
-		})
+
+		var CODEC: Codec<HatDataAttachment> = RecordCodecBuilder.create { commonFields(it).apply(it, ::HatDataAttachment) }
+		var PACKET_CODEC: PacketCodec<ByteBuf, HatDataAttachment> = PacketCodecs.codec(RecordCodecBuilder.create { commonFields(it).and(Codec.BOOL.fieldOf("usingHat").forGetter(HatDataAttachment::usingHat)).apply(it, ::HatDataAttachment) })
 	}
 }
