@@ -32,7 +32,7 @@ object ClientStorage {
 			if (card.canRemove())
 				keysToRemove.add(uuid)
 		}
-		keysToRemove.forEach { ClientStorage.cards.remove(it) }
+		keysToRemove.forEach { cards.remove(it) }
 	}
 
 	@JvmStatic
