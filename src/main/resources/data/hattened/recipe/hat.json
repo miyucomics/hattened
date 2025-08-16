@@ -1,0 +1,16 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"#",
+		"R",
+		"B"
+	],
+	"key": {
+		"#": "minecraft:black_wool",
+		"R": "minecraft:red_dye",
+		"B": "minecraft:black_carpet"
+	},
+	"result": {
+		"id": "hattened:hat"
+	}
+}
