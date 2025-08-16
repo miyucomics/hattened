@@ -3,17 +3,17 @@ package miyucomics.hattened.misc
 import miyucomics.hattened.abilities.Ability
 import miyucomics.hattened.misc.PeripheralManager.HAT_KEYBIND
 import miyucomics.hattened.render.Card
-import miyucomics.hattened.structure.HatDataAttachment
+import miyucomics.hattened.structure.HatData
 import net.minecraft.client.render.RenderTickCounter
 import java.util.*
 
 object ClientStorage {
 	var ticks = 0
 	private var usingTime = 0
-	var hat = HatDataAttachment.DEFAULT
+	var hat = HatData.DEFAULT
 	val cards: HashMap<UUID, Card> = HashMap()
 
-	fun tick(hat: HatDataAttachment) {
+	fun tick(hat: HatData) {
 		this.hat = hat
 		this.usingTime = (this.usingTime + if (HAT_KEYBIND.isPressed) 1 else -1).coerceIn(0, 10)
 
@@ -21,6 +21,7 @@ object ClientStorage {
 			if (!cards.containsKey(ability.uuid))
 				cards[ability.uuid] = Card(index, ability)
 			cards[ability.uuid]!!.ability = ability
+			cards[ability.uuid]!!.index = index
 		}
 
 		val hatUUIDs = hat.abilities.map(Ability::uuid).toHashSet()

@@ -1,11 +1,11 @@
 package miyucomics.hattened.misc
 
-import miyucomics.hattened.structure.HatDataAttachment
+import miyucomics.hattened.structure.HatData
 import miyucomics.hattened.structure.HatPose
 
 interface HatDataSmuggler {
-	fun setHat(hat: HatDataAttachment)
-	fun getHat(): HatDataAttachment
+	fun setHat(hat: HatData)
+	fun getHat(): HatData
 	fun setPose(pose: HatPose)
 	fun getPose(): HatPose
 }

@@ -1,6 +1,5 @@
 package miyucomics.hattened.mixin;
 
-import miyucomics.hattened.structure.HatDataAttachment;
 import miyucomics.hattened.structure.HattenedHelper;
 import net.minecraft.server.network.ServerPlayerEntity;
 import org.spongepowered.asm.mixin.Mixin;
@@ -13,7 +12,6 @@ public class ServerPlayerEntityMixin {
 	@Inject(method = "tick", at = @At("TAIL"))
 	void tick(CallbackInfo ci) {
 		ServerPlayerEntity player = (ServerPlayerEntity) (Object) this;
-		HatDataAttachment newHat = HattenedHelper.getHatData(player).tick(player);
-		HattenedHelper.setHatData(player, newHat);
+		HattenedHelper.setHatData(player, HattenedHelper.getHatData(player).tick(player));
 	}
 }

@@ -1,7 +1,7 @@
 package miyucomics.hattened.misc
 
-import miyucomics.hattened.networking.DequipHatPayload
 import miyucomics.hattened.networking.HatInputPayload
+import miyucomics.hattened.networking.HatKeybindPayload
 import miyucomics.hattened.structure.UserInput
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking
@@ -20,7 +20,7 @@ object PeripheralManager {
 
 	fun tick() {
 		if (DEQUIP_HAT_KEYBIND.isPressed)
-			ClientPlayNetworking.send(DequipHatPayload())
+			ClientPlayNetworking.send(HatKeybindPayload())
 
 		if (!previousState && HAT_KEYBIND.isPressed) {
 			ClientPlayNetworking.send(HatInputPayload(UserInput.LeftAltPressed))

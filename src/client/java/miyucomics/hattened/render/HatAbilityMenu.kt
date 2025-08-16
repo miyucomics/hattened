@@ -6,6 +6,7 @@ import net.minecraft.client.MinecraftClient
 import net.minecraft.client.gui.DrawContext
 import org.joml.Vector2f
 import kotlin.math.abs
+import kotlin.math.pow
 
 object HatAbilityMenu {
 	@JvmStatic
@@ -21,13 +22,13 @@ object HatAbilityMenu {
 		val client = MinecraftClient.getInstance()
 		matrices.translate(client.window.scaledWidth / 2f, client.window.scaledHeight.toFloat())
 
-		ClientStorage.cards.forEach { (uuid, card) ->
-			var relativeIndex = (card.index - ClientStorage.hat.index).mod(cardCount)
+		ClientStorage.cards.values.forEach { card ->
+			var relativeIndex = card.index
 			if (relativeIndex >= cardCount / 2f)
 				relativeIndex -= cardCount
 			card.targetPosition = Vector2f(spreadProgress * relativeIndex * 70, CARD_HEIGHT.toFloat() + -150f * riseProgress)
 			card.targetAngle = spreadProgress * relativeIndex * 10f
-			card.targetScale = 1f / (abs(relativeIndex) + 1)
+			card.targetScale = 0.75.pow(abs(relativeIndex)).toFloat()
 
 			card.tick()
 			card.render(context)
