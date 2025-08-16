@@ -1,5 +1,6 @@
 package miyucomics.hattened.render
 
+import miyucomics.hattened.HattenedMain
 import miyucomics.hattened.abilities.Ability
 import net.minecraft.client.MinecraftClient
 import net.minecraft.client.gui.DrawContext
@@ -29,7 +30,7 @@ class Card(var index: Int, var ability: Ability) {
 		context.matrices.rotate(this.angle / 180f * MathHelper.PI)
 		context.matrices.scale(this.scale)
 		context.matrices.translate(-CARD_WIDTH / 2f, -CARD_HEIGHT / 2f)
-		context.fill(0, 0, CARD_WIDTH, CARD_HEIGHT, 0xff000022.toInt())
+		context.drawTexturedQuad(HattenedMain.id("textures/cards/base.png"), 0, 0, CARD_WIDTH, CARD_HEIGHT, 0f, 1f, 0f, 1f)
 		context.matrices.translate(CARD_WIDTH / 2f, CARD_HEIGHT / 2f)
 		val text = this.ability.getTitle()
 		context.drawText(MinecraftClient.getInstance().textRenderer, text, MinecraftClient.getInstance().textRenderer.getWidth(text) / -2, -CARD_HEIGHT / 2 - 14, 0xffffffff.toInt(), true)

@@ -3,7 +3,7 @@ package miyucomics.hattened.inits
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import miyucomics.hattened.HattenedMain
-import miyucomics.hattened.structure.HatDataAttachment
+import miyucomics.hattened.structure.HatData
 import miyucomics.hattened.structure.HatPose
 import miyucomics.hattened.structure.HattenedHelper
 import net.fabricmc.fabric.api.attachment.v1.AttachmentRegistry
@@ -16,11 +16,11 @@ import net.minecraft.network.codec.PacketCodecs
 
 @Suppress("UnstableAPIUsage")
 object HattenedAttachments {
-	val HAT_DATA: AttachmentType<HatDataAttachment> = AttachmentRegistry.create(HattenedMain.id("hat")) { builder ->
+	val HAT_DATA: AttachmentType<HatData> = AttachmentRegistry.create(HattenedMain.id("hat")) { builder ->
 		builder
-			.initializer { -> HatDataAttachment.DEFAULT }
-			.persistent(HatDataAttachment.CODEC)
-			.syncWith(HatDataAttachment.PACKET_CODEC, AttachmentSyncPredicate.all())
+			.initializer { -> HatData.DEFAULT }
+			.persistent(HatData.CODEC)
+			.syncWith(HatData.PACKET_CODEC, AttachmentSyncPredicate.all())
 	}
 
 	val HAT_POSE: AttachmentType<HatPose> = AttachmentRegistry.create(HattenedMain.id("hat_pose")) { builder ->
