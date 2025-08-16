@@ -15,7 +15,7 @@ data class HatData(val hasHat: Boolean = false, val abilities: List<Ability> = l
 	val ability: Ability?
 		get() = abilities.getOrNull(0)
 
-	fun toItemStack() = ItemStack(HattenedMain.HAT_ITEM).apply { set(HattenedMain.ABILITY_COMPONENT, abilities) }
+	fun toItemStack() = ItemStack(HattenedMain.HAT_ITEM).apply { set(HattenedMain.ABILITIES_COMPONENT, abilities) }
 
 	fun tick(player: ServerPlayerEntity) {
 		HattenedHelper.setPose(player, HatPose.OnHead)

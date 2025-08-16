@@ -9,11 +9,11 @@ import net.minecraft.server.world.ServerWorld
 import net.minecraft.text.Text
 import java.util.*
 
-abstract class Ability(val type: AbilityType<*>, val uuid: UUID) {
+abstract class Ability(val type: AbilityType<*>, var uuid: UUID) {
 	var mutated = false
 	var replacement: Ability? = null
 
-	abstract fun getTitle(): Text
+	abstract fun getText(): Text
 	open fun getPose(hat: HatData): HatPose = HatPose.SearchingHat
 
 	open fun tick(world: ServerWorld, player: ServerPlayerEntity) {}
