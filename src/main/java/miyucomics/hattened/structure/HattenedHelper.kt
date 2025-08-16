@@ -1,8 +1,10 @@
 package miyucomics.hattened.structure
 
+import miyucomics.hattened.abilities.Ability
 import miyucomics.hattened.inits.HattenedAttachments
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.server.network.ServerPlayerEntity
+import java.util.*
 
 @Suppress("UnstableApiUsage")
 object HattenedHelper {
@@ -11,4 +13,17 @@ object HattenedHelper {
 
 	@JvmStatic fun getPose(player: PlayerEntity): HatPose = player.getAttachedOrElse(HattenedAttachments.HAT_POSE, HatPose.OnHead)
 	fun setPose(player: ServerPlayerEntity, pose: HatPose) = player.setAttached(HattenedAttachments.HAT_POSE, pose)
+
+	@JvmStatic
+	fun mutateHat(player: ServerPlayerEntity, inputQueue: Queue<UserInput>, proposedAbilities: Queue<Ability>) {
+		var currentHatData = this.getHatData(player)
+		while (inputQueue.isNotEmpty())
+			currentHatData = currentHatData.transition(player, inputQueue.poll())
+
+		currentHatData.tick(player)
+		val newAbilities = currentHatData.abilities.mapNotNull { it -> if (it.mutated) it.replacement else it }.toMutableList()
+		while (proposedAbilities.isNotEmpty())
+			newAbilities.add(proposedAbilities.poll())
+		this.setHatData(player, currentHatData.copy(abilities = newAbilities))
+	}
 }

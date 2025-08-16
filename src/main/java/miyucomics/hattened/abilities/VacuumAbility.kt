@@ -6,6 +6,7 @@ import miyucomics.hattened.HattenedMain
 import miyucomics.hattened.structure.HatData
 import miyucomics.hattened.structure.HatPose
 import miyucomics.hattened.structure.HattenedHelper
+import miyucomics.hattened.structure.ServerPlayerEntityMinterface
 import net.minecraft.entity.ItemEntity
 import net.minecraft.item.ItemStack
 import net.minecraft.server.network.ServerPlayerEntity
@@ -41,7 +42,7 @@ class VacuumAbility(uuid: UUID) : Ability(TYPE, uuid) {
 				createdItemAbilities.add(ItemStackAbility(stack))
 		}
 
-		hat.proposedAdditions.addAll(createdItemAbilities)
+		createdItemAbilities.forEach((player as ServerPlayerEntityMinterface)::`hattened$proposeAbility`)
 	}
 
 	companion object {

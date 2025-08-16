@@ -15,11 +15,9 @@ data class HatData(val hasHat: Boolean = false, val abilities: List<Ability> = l
 	val ability: Ability?
 		get() = abilities.getOrNull(0)
 
-	val proposedAdditions = mutableListOf<Ability>()
-
 	fun toItemStack() = ItemStack(HattenedMain.HAT_ITEM).apply { set(HattenedMain.ABILITY_COMPONENT, abilities) }
 
-	fun tick(player: ServerPlayerEntity): HatData {
+	fun tick(player: ServerPlayerEntity) {
 		HattenedHelper.setPose(player, HatPose.OnHead)
 		val selectedAbility = this.ability
 		if (this.usingHat && selectedAbility != null) {
@@ -30,42 +28,29 @@ data class HatData(val hasHat: Boolean = false, val abilities: List<Ability> = l
 				selectedAbility.onRightClickHold(player.world, player)
 			HattenedHelper.setPose(player, selectedAbility.getPose(this))
 		}
-
-		var newAbilities = mutableListOf<Ability>()
-		this.abilities.forEach { ability ->
-			if (!ability.mutated) {
-				newAbilities.add(ability)
-				return@forEach
-			}
-			if (ability.replacement == null)
-				return@forEach
-			newAbilities.add(ability.replacement!!)
-		}
-		newAbilities.addAll(proposedAdditions)
-		return this.copy(abilities = newAbilities)
 	}
 
 	fun transition(player: ServerPlayerEntity, event: UserInput): HatData {
-		when (event) {
-			UserInput.LeftAltPressed -> return this.copy(usingHat = true, leftClickHeld = false, rightClickHeld = false)
-			UserInput.LeftAltReleased -> return this.copy(usingHat = false, leftClickHeld = false, rightClickHeld = false)
-			UserInput.ScrollUp -> return this.copy(abilities = this.abilities.rotateLeft(), leftClickHeld = false, rightClickHeld = false)
-			UserInput.ScrollDown -> return this.copy(abilities = this.abilities.rotateRight(), leftClickHeld = false, rightClickHeld = false)
+		return when (event) {
+			UserInput.LeftAltPressed -> this.copy(usingHat = true, leftClickHeld = false, rightClickHeld = false)
+			UserInput.LeftAltReleased -> this.copy(usingHat = false, leftClickHeld = false, rightClickHeld = false)
+			UserInput.ScrollUp -> this.copy(abilities = this.abilities.rotateLeft(), leftClickHeld = false, rightClickHeld = false)
+			UserInput.ScrollDown -> this.copy(abilities = this.abilities.rotateRight(), leftClickHeld = false, rightClickHeld = false)
 			UserInput.LeftMousePressed -> {
 				this.ability?.onLeftClick(player.world, player)
-				return this.copy(leftClickHeld = true)
+				this.copy(leftClickHeld = true)
 			}
 			UserInput.LeftMouseReleased -> {
 				this.ability?.onLeftClickReleased(player.world, player)
-				return this.copy(leftClickHeld = false)
+				this.copy(leftClickHeld = false)
 			}
 			UserInput.RightMousePressed -> {
 				this.ability?.onRightClick(player.world, player)
-				return this.copy(rightClickHeld = true)
+				this.copy(rightClickHeld = true)
 			}
 			UserInput.RightMouseReleased -> {
 				this.ability?.onRightClickReleased(player.world, player)
-				return this.copy(rightClickHeld = false)
+				this.copy(rightClickHeld = false)
 			}
 		}
 	}
