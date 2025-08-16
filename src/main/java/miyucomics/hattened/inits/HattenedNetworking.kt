@@ -5,6 +5,7 @@ import miyucomics.hattened.networking.HatInputPayload
 import miyucomics.hattened.networking.HatKeybindPayload
 import miyucomics.hattened.structure.HatData
 import miyucomics.hattened.structure.HattenedHelper
+import miyucomics.hattened.structure.ServerPlayerEntityMinterface
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking
 import net.minecraft.util.Hand
@@ -16,9 +17,7 @@ object HattenedNetworking {
 		PayloadTypeRegistry.playC2S().register(HatKeybindPayload.ID, HatKeybindPayload.CODEC)
 
 		ServerPlayNetworking.registerGlobalReceiver(HatInputPayload.ID) { payload, context ->
-			val player = context.player()
-			val old = HattenedHelper.getHatData(player)
-			HattenedHelper.setHatData(player, old.transition(player, payload.input))
+			(context.player() as ServerPlayerEntityMinterface).`hattened$queueUserInput`(payload.input)
 		}
 
 		ServerPlayNetworking.registerGlobalReceiver(HatKeybindPayload.ID) { _, context ->
