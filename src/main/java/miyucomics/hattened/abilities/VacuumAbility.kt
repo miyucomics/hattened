@@ -17,7 +17,7 @@ import kotlin.math.min
 
 class VacuumAbility(uuid: UUID) : Ability(TYPE, uuid) {
 	override fun getPose(hat: HatData): HatPose = if (hat.rightClickHeld) HatPose.Vacuuming else HatPose.SearchingHat
-	override fun getTitle(): Text = Text.translatable("ability.hattened.vacuum")
+	override fun getText(): Text = Text.translatable("ability.hattened.vacuum")
 
 	override fun onRightClick(world: ServerWorld, player: ServerPlayerEntity) {
 		val hat = HattenedHelper.getHatData(player)

@@ -11,7 +11,8 @@ import net.minecraft.text.Text
 import java.util.*
 
 class ConfettiAbility(uuid: UUID) : Ability(TYPE, uuid) {
-	override fun getTitle(): Text = Text.translatable("ability.hattened.confetti")
+	constructor() : this(UUID.randomUUID())
+	override fun getText(): Text = Text.translatable("ability.hattened.confetti")
 
 	override fun onRightClick(world: ServerWorld, player: ServerPlayerEntity) {
 		world.players.forEach { player ->

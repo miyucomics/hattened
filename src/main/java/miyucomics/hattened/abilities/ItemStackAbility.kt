@@ -16,7 +16,7 @@ class ItemStackAbility(uuid: UUID, val stack: ItemStack) : Ability(TYPE, uuid) {
 	constructor(stack: ItemStack) : this(UUID.randomUUID(), stack)
 	private var cooldown = 0
 
-	override fun getTitle(): Text = Text.translatable("ability.hattened.item_stack", stack.name)
+	override fun getText(): Text = Text.translatable("ability.hattened.item_stack", stack.name)
 
 	override fun tick(world: ServerWorld, player: ServerPlayerEntity) {
 		this.cooldown--

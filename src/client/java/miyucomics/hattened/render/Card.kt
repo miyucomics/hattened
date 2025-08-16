@@ -32,7 +32,7 @@ class Card(var index: Int, var ability: Ability) {
 		context.matrices.translate(-CARD_WIDTH / 2f, -CARD_HEIGHT / 2f)
 		context.drawTexturedQuad(HattenedMain.id("textures/cards/base.png"), 0, 0, CARD_WIDTH, CARD_HEIGHT, 0f, 1f, 0f, 1f)
 		context.matrices.translate(CARD_WIDTH / 2f, CARD_HEIGHT / 2f)
-		val text = this.ability.getTitle()
+		val text = this.ability.getText()
 		context.drawText(MinecraftClient.getInstance().textRenderer, text, MinecraftClient.getInstance().textRenderer.getWidth(text) / -2, -CARD_HEIGHT / 2 - 14, 0xffffffff.toInt(), true)
 		context.matrices.pushMatrix()
 		CardRendererRegistry.render(context, this.ability)
