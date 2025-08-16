@@ -18,14 +18,14 @@ import net.minecraft.network.codec.PacketCodecs
 object HattenedAttachments {
 	val HAT_DATA: AttachmentType<HatData> = AttachmentRegistry.create(HattenedMain.id("hat")) { builder ->
 		builder
-			.initializer { -> HatData.DEFAULT }
+			.initializer { HatData.DEFAULT }
 			.persistent(HatData.CODEC)
 			.syncWith(HatData.PACKET_CODEC, AttachmentSyncPredicate.all())
 	}
 
 	val HAT_POSE: AttachmentType<HatPose> = AttachmentRegistry.create(HattenedMain.id("hat_pose")) { builder ->
 		builder
-			.initializer { -> HatPose.OnHead }
+			.initializer { HatPose.OnHead }
 			.syncWith(PacketCodecs.codec(RecordCodecBuilder.create { builder ->
 				builder.group(Codec.INT.fieldOf("pose").forGetter { it.ordinal }).apply(builder) { enumValues<HatPose>()[it] }
 			}), AttachmentSyncPredicate.all())

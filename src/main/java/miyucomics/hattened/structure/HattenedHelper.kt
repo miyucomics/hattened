@@ -21,7 +21,7 @@ object HattenedHelper {
 			currentHatData = currentHatData.transition(player, inputQueue.poll())
 
 		currentHatData.tick(player)
-		val newAbilities = currentHatData.abilities.mapNotNull { it -> if (it.mutated) it.replacement else it }.toMutableList()
+		val newAbilities = currentHatData.abilities.mapNotNull { if (it.mutated) it.replacement else it }.toMutableList()
 		while (proposedAbilities.isNotEmpty())
 			newAbilities.add(proposedAbilities.poll())
 		this.setHatData(player, currentHatData.copy(abilities = newAbilities))

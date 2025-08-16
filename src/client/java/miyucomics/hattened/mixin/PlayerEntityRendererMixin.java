@@ -22,7 +22,7 @@ class PlayerEntityRendererMixin {
 	}
 
 	@Inject(method = "updateRenderState(Lnet/minecraft/client/network/AbstractClientPlayerEntity;Lnet/minecraft/client/render/entity/state/PlayerEntityRenderState;F)V", at = @At("TAIL"))
-	void addExtraPose(AbstractClientPlayerEntity player, PlayerEntityRenderState state, float tickDelta, CallbackInfo ci) {
+	void smuggleHatData(AbstractClientPlayerEntity player, PlayerEntityRenderState state, float tickDelta, CallbackInfo ci) {
 		((HatDataSmuggler) state).setHat(HattenedHelper.getHatData(player));
 		((HatDataSmuggler) state).setPose(HattenedHelper.getPose(player));
 	}

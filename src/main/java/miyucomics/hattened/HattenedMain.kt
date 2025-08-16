@@ -9,7 +9,6 @@ import net.fabricmc.api.ModInitializer
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents
 import net.fabricmc.fabric.api.particle.v1.FabricParticleTypes
 import net.minecraft.component.ComponentType
-import net.minecraft.item.Item
 import net.minecraft.item.Item.Settings
 import net.minecraft.item.ItemGroups
 import net.minecraft.particle.SimpleParticleType
@@ -25,21 +24,15 @@ object HattenedMain : ModInitializer {
 	fun id(path: String): Identifier = Identifier.of("hattened", path)
 
 	val ABILITY_COMPONENT: ComponentType<List<Ability>> = Registry.register(Registries.DATA_COMPONENT_TYPE, id("abilities"), ComponentType.builder<List<Ability>>().codec(Ability.CODEC.listOf()).build())
-
-	val HAT_ITEM = register("hat", ::HatItem, Settings().maxCount(1).component(ABILITY_COMPONENT, listOf()))
 	val CONFETTI_PARTICLE: SimpleParticleType = Registry.register(Registries.PARTICLE_TYPE, id("confetti"), FabricParticleTypes.simple(true))
+
+	private val HAT_ITEM_KEY = RegistryKey.of(RegistryKeys.ITEM, id("hat"))
+	val HAT_ITEM: HatItem = Registry.register(Registries.ITEM, HAT_ITEM_KEY, HatItem(Settings().maxCount(1).component(ABILITY_COMPONENT, listOf()).registryKey(HAT_ITEM_KEY)))
 
 	override fun onInitialize() {
 		HattenedAbilities.init()
 		HattenedAttachments.init()
 		HattenedNetworking.init()
 		ItemGroupEvents.modifyEntriesEvent(ItemGroups.TOOLS).register { it.add(HAT_ITEM) }
-	}
-
-	private fun register(name: String, itemFactory: (Settings) -> Item, settings: Settings): Item {
-		val itemKey = RegistryKey.of(RegistryKeys.ITEM, id(name))
-		val item = itemFactory(settings.registryKey(itemKey))
-		Registry.register(Registries.ITEM, itemKey, item)
-		return item
 	}
 }
