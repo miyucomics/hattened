@@ -5,7 +5,6 @@ import dev.kosmx.playerAnim.minecraftApi.PlayerAnimationAccess
 import miyucomics.hattened.misc.ClientStorage
 import miyucomics.hattened.misc.ConfettiParticle
 import miyucomics.hattened.misc.PeripheralManager
-import miyucomics.hattened.render.CardRendererRegistry
 import miyucomics.hattened.render.HatPlayerModel
 import miyucomics.hattened.structure.HattenedHelper
 import net.fabricmc.api.ClientModInitializer
@@ -15,7 +14,6 @@ import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry
 object HattenedClient : ClientModInitializer {
 	override fun onInitializeClient() {
 		HattenedClientNetworking.init()
-		CardRendererRegistry.init()
 		PeripheralManager.init()
 
 		ParticleFactoryRegistry.getInstance().register(HattenedMain.CONFETTI_PARTICLE, ConfettiParticle::Factory)

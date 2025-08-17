@@ -7,7 +7,7 @@ import org.joml.Vector2f
 import kotlin.math.abs
 import kotlin.math.pow
 
-object HatAbilityMenu {
+object HatGUI {
 	@JvmStatic
 	fun render(context: DrawContext, progress: Float) {
 		if (ClientStorage.cards.isEmpty())

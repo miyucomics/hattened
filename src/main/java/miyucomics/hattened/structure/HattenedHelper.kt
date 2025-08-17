@@ -1,10 +1,11 @@
 package miyucomics.hattened.structure
 
-import miyucomics.hattened.abilities.Ability
 import miyucomics.hattened.inits.HattenedAttachments
 import net.minecraft.entity.player.PlayerEntity
+import net.minecraft.item.ItemStack
 import net.minecraft.server.network.ServerPlayerEntity
 import java.util.*
+import kotlin.math.max
 
 @Suppress("UnstableApiUsage")
 object HattenedHelper {
@@ -15,15 +16,17 @@ object HattenedHelper {
 	fun setPose(player: ServerPlayerEntity, pose: HatPose) = player.setAttached(HattenedAttachments.HAT_POSE, pose)
 
 	@JvmStatic
-	fun mutateHat(player: ServerPlayerEntity, inputQueue: Queue<UserInput>, proposedAbilities: Queue<Ability>) {
-		var currentHatData = this.getHatData(player)
+	fun updateHat(player: ServerPlayerEntity, inputQueue: Queue<UserInput>, proposedAdditions: Queue<ItemStack>, setCooldown: Optional<Int>) {
+		var hat = this.getHatData(player)
 		while (inputQueue.isNotEmpty())
-			currentHatData = currentHatData.transition(player, inputQueue.poll())
+			hat = hat.transition(inputQueue.poll())
 
-		currentHatData.tick(player)
-		val newAbilities = currentHatData.abilities.mapNotNull { if (it.mutated) it.replacement else it }.toMutableList()
-		while (proposedAbilities.isNotEmpty())
-			newAbilities.add(proposedAbilities.poll())
-		this.setHatData(player, currentHatData.copy(abilities = newAbilities))
+		hat = hat.copy(cooldown = max(0, setCooldown.orElse(hat.cooldown - 1)))
+		hat.tick(player)
+
+		val newStorage = hat.storage.mapNotNull { if (it.mutated) it.replacement else it }.toMutableList()
+		while (proposedAdditions.isNotEmpty())
+			newStorage.add(ServerCard(proposedAdditions.poll()))
+		this.setHatData(player, hat.copy(storage = newStorage))
 	}
 }
