@@ -5,7 +5,6 @@ import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.ItemStack
 import net.minecraft.server.network.ServerPlayerEntity
 import java.util.*
-import kotlin.math.max
 import kotlin.math.min
 
 @Suppress("UnstableApiUsage")
@@ -32,12 +31,11 @@ object HattenedHelper {
 	}
 
 	@JvmStatic
-	fun updateHat(player: ServerPlayerEntity, inputQueue: Queue<UserInput>, proposedAdditions: Queue<ItemStack>, setCooldown: Optional<Int>) {
+	fun updateHat(player: ServerPlayerEntity, inputQueue: Queue<UserInput>, proposedAdditions: Queue<ItemStack>) {
 		var hat = this.getHatData(player)
 		while (inputQueue.isNotEmpty())
-			hat = hat.transition(inputQueue.poll())
+			hat = hat.updateInternalState(inputQueue.poll())
 
-		hat = hat.copy(cooldown = max(0, setCooldown.orElse(hat.cooldown - 1)))
 		hat.tick(player)
 
 		var newStorage = hat.storage.mapNotNull { if (it.mutated) it.replacement else it }
