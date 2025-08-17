@@ -27,7 +27,7 @@ data class HatData(val hasHat: Boolean = false, val storage: List<ServerCard> = 
 		var pose = HatPose.SearchingHat
 
 		if (!this.isVacuuming && this.isThrowingItems && selectedCard != null) {
-			val pos = player.pos.add(0.0, 0.5, 0.0)
+			val pos = player.pos.add(0.0, 0.75, 0.0)
 			val vel = player.rotationVector
 			world.spawnEntity(ItemEntity(world, pos.x, pos.y, pos.z, selectedCard.stack.split(1), vel.x, vel.y, vel.z).apply { setPickupDelay(10) })
 			world.playSound(null, pos.x, pos.y, pos.z, HattenedSounds.THROW_ITEM, SoundCategory.PLAYERS, 0.5f, 1f)
