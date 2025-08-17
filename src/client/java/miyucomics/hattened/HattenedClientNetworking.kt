@@ -1,5 +1,6 @@
 package miyucomics.hattened
 
+import miyucomics.hattened.inits.HattenedSounds
 import miyucomics.hattened.networking.ConfettiPayload
 import miyucomics.hattened.networking.SuckItemPayload
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking
@@ -19,7 +20,7 @@ object HattenedClientNetworking {
 			val dir = payload.direction
 			val client = context.client()
 			client.execute {
-				client.world!!.playSoundClient(pos.x, pos.y, pos.z, SoundEvents.ENTITY_FIREWORK_ROCKET_BLAST, SoundCategory.MASTER, 1f, 1f, true)
+				client.world!!.playSoundClient(pos.x, pos.y, pos.z, HattenedSounds.HAT_CONFETTI, SoundCategory.MASTER, 1f, 1f, true)
 				(0..99).forEach { _ ->
 					val velocity = dir.add(
 						random.nextDouble(-1.0, 1.0) / 5.0,

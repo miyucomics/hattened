@@ -3,6 +3,7 @@
 	"key.hattened.hat": "Control Hat",
 	"key.hattened.dequip": "Dequip Hat",
 	"item.hattened.hat": "Hat",
+	"subtitles.item.hat.confetti": "Hat blasts",
 	"subtitles.item.hat.equip":  "Hat rustles",
 	"subtitles.item.hat.insert": "Item vanished",
 	"subtitles.item.hat.remove":  "Item conjured",
