@@ -35,13 +35,12 @@ object HattenedClientNetworking {
 			val world = context.player().clientWorld
 			val item = world.getEntityById(payload.item)!! as ItemEntity
 			val collector = world.getEntityById(payload.collector)!!
-			val amount = payload.amount
 			context.client().execute {
 				val client = MinecraftClient.getInstance()
-				client.particleManager.addParticle(ItemPickupParticle(client.entityRenderDispatcher, world, item, collector))
+				client.particleManager.addParticle(ItemPickupParticle(client.entityRenderDispatcher, world, item.copy().also { it.stack.copyWithCount(1) }, collector))
 				world.playSoundClient(collector.x, collector.y, collector.z, SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.PLAYERS, 0.2F, (HattenedMain.RANDOM.nextFloat() - HattenedMain.RANDOM.nextFloat()) * 1.4F + 2.0F, false)
 				if (!item.stack.isEmpty)
-					item.stack.decrement(amount)
+					item.stack.decrement(1)
 				if (item.stack.isEmpty)
 					world.removeEntity(item.id, Entity.RemovalReason.DISCARDED)
 			}
