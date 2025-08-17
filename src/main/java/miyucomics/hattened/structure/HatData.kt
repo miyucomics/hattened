@@ -36,7 +36,10 @@ data class HatData(val hasHat: Boolean = false, val storage: List<ServerCard> = 
 
 		if (this.isVacuuming) {
 			pose = HatPose.Vacuuming
-			world.getEntitiesByClass(ItemEntity::class.java, player.boundingBox.expand(10.0)) { player.canSee(it) && !it.cannotPickup() }.firstOrNull()?.let {
+			world.getEntitiesByClass(ItemEntity::class.java, player.boundingBox.expand(24.0)) {
+				val toItem = it.pos.subtract(player.pos).normalize()
+				player.canSee(it) && !it.cannotPickup() && toItem.dotProduct(player.rotationVector) > 0.9f
+			}.firstOrNull()?.let {
 				(player as ServerPlayerEntityMinterface).proposeItemStack(it.stack.split(1))
 				player.sendPickup(it, 1)
 			}
