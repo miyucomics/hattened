@@ -6,6 +6,8 @@ import com.mojang.serialization.codecs.RecordCodecBuilder
 import io.netty.buffer.ByteBuf
 import miyucomics.hattened.HattenedMain
 import miyucomics.hattened.inits.HattenedSounds
+import miyucomics.hattened.networking.SuckItemPayload
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking
 import net.minecraft.entity.ItemEntity
 import net.minecraft.item.ItemStack
 import net.minecraft.network.codec.PacketCodec
@@ -43,7 +45,7 @@ data class HatData(val hasHat: Boolean = false, val storage: List<ServerCard> = 
 				player.canSee(it) && !it.cannotPickup() && toItem.dotProduct(player.rotationVector) > 0.9f
 			}.firstOrNull()?.let {
 				(player as ServerPlayerEntityMinterface).proposeItemStack(it.stack.split(1))
-				player.sendPickup(it, 1)
+				world.players.forEach { other -> world.sendToPlayerIfNearby(other, true, player.x, player.y, player.z, ServerPlayNetworking.createS2CPacket(SuckItemPayload(it.id, player.id, 1))) }
 			}
 		}
 

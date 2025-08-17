@@ -3,11 +3,9 @@ package miyucomics.hattened.misc
 import dev.kosmx.playerAnim.api.PartKey
 import dev.kosmx.playerAnim.core.util.MathHelper.lerp
 import dev.kosmx.playerAnim.core.util.Vec3f
-import miyucomics.hattened.structure.HatData
 import miyucomics.hattened.structure.HatPose
 import net.minecraft.client.render.entity.model.PlayerEntityModel
 import net.minecraft.client.util.math.MatrixStack
-import net.minecraft.command.argument.EntityArgumentType.player
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.util.math.RotationAxis
 import kotlin.math.cos

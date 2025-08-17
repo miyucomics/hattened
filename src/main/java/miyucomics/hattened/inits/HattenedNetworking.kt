@@ -3,6 +3,7 @@ package miyucomics.hattened.inits
 import miyucomics.hattened.networking.ConfettiPayload
 import miyucomics.hattened.networking.HatInputPayload
 import miyucomics.hattened.networking.HatKeybindPayload
+import miyucomics.hattened.networking.SuckItemPayload
 import miyucomics.hattened.structure.HatData
 import miyucomics.hattened.structure.HattenedHelper
 import miyucomics.hattened.structure.ServerPlayerEntityMinterface
@@ -15,6 +16,7 @@ import net.minecraft.util.Hand
 object HattenedNetworking {
 	fun init() {
 		PayloadTypeRegistry.playS2C().register(ConfettiPayload.ID, ConfettiPayload.CODEC)
+		PayloadTypeRegistry.playS2C().register(SuckItemPayload.ID, SuckItemPayload.CODEC)
 		PayloadTypeRegistry.playC2S().register(HatInputPayload.ID, HatInputPayload.CODEC)
 		PayloadTypeRegistry.playC2S().register(HatKeybindPayload.ID, HatKeybindPayload.CODEC)
 

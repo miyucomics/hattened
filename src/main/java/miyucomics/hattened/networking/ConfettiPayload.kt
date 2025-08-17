@@ -15,9 +15,9 @@ data class ConfettiPayload(val seed: Long, val position: Vec3d, val direction: V
 		val ID: CustomPayload.Id<ConfettiPayload> = CustomPayload.Id(HattenedMain.id("confetti"))
 		val CODEC: PacketCodec<RegistryByteBuf, ConfettiPayload> = PacketCodecs.registryCodec(RecordCodecBuilder.create { builder ->
 			builder.group(
-				Codec.LONG.fieldOf("seed").forGetter { it.seed },
-				Vec3d.CODEC.fieldOf("position").forGetter { it.position },
-				Vec3d.CODEC.fieldOf("direction").forGetter { it.direction }
+				Codec.LONG.fieldOf("seed").forGetter(ConfettiPayload::seed),
+				Vec3d.CODEC.fieldOf("position").forGetter(ConfettiPayload::position),
+				Vec3d.CODEC.fieldOf("direction").forGetter(ConfettiPayload::direction)
 			).apply(builder, ::ConfettiPayload)
 		})
 	}
