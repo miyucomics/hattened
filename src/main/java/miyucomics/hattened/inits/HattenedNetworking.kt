@@ -23,7 +23,7 @@ object HattenedNetworking {
 			val world = player.world
 			(context.player() as ServerPlayerEntityMinterface).queueUserInput(payload.input)
 			if (payload.input == UserInput.MiddleMousePressed)
-				world.players.forEach { world.sendToPlayerIfNearby(it, false, player.x, player.y, player.z, ServerPlayNetworking.createS2CPacket(ConfettiPayload(0L, player.pos.add(0.0, 0.5, 0.0), player.rotationVector))) }
+				world.players.forEach { world.sendToPlayerIfNearby(it, false, player.x, player.y, player.z, ServerPlayNetworking.createS2CPacket(ConfettiPayload(0L, player.pos.add(0.0, 0.75, 0.0), player.rotationVector))) }
 		}
 
 		ServerPlayNetworking.registerGlobalReceiver(HatKeybindPayload.ID) { _, context ->
