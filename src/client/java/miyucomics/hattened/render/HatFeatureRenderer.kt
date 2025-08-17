@@ -1,7 +1,7 @@
 package miyucomics.hattened.render
 
 import miyucomics.hattened.misc.HatDataSmuggler
-import miyucomics.hattened.misc.transformHat
+import miyucomics.hattened.misc.Poser
 import net.minecraft.client.render.VertexConsumerProvider
 import net.minecraft.client.render.entity.feature.FeatureRenderer
 import net.minecraft.client.render.entity.feature.FeatureRendererContext
@@ -18,7 +18,7 @@ class HatFeatureRenderer(context: FeatureRendererContext<PlayerEntityRenderState
 			return
 
 		matrices.push()
-		(state as HatDataSmuggler).getPose().transformHat(matrices, contextModel)
+		Poser.transformHat((state as HatDataSmuggler).getPose(), matrices, contextModel)
 		hatModel.render(matrices, vertexConsumers, light)
 		matrices.pop()
 	}

@@ -12,7 +12,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import java.util.Optional;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
@@ -20,22 +19,18 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 public class ServerPlayerEntityMixin implements ServerPlayerEntityMinterface {
 	@Unique private Queue<UserInput> inputQueue;
 	@Unique private Queue<ItemStack> proposedAdditions;
-	@Unique private Optional<Integer> cooldown;
 
 	@Override public void queueUserInput(@NotNull UserInput input) { this.inputQueue.add(input); }
 	@Override public void proposeItemStack(@NotNull ItemStack stack) { this.proposedAdditions.add(stack); }
-	@Override public void setCooldown(int cooldown) { this.cooldown = Optional.of(cooldown); }
 
 	@Inject(method = "<init>", at = @At("TAIL"))
 	private void init(CallbackInfo ci) {
 		this.inputQueue = new ConcurrentLinkedQueue<>();
 		this.proposedAdditions = new ConcurrentLinkedQueue<>();
-		this.cooldown = Optional.empty();
 	}
-	
+
 	@Inject(method = "tick", at = @At("TAIL"))
 	private void tick(CallbackInfo ci) {
-		HattenedHelper.updateHat((ServerPlayerEntity) (Object) this, this.inputQueue, this.proposedAdditions, this.cooldown);
-		this.cooldown = Optional.empty();
+		HattenedHelper.updateHat((ServerPlayerEntity) (Object) this, this.inputQueue, this.proposedAdditions);
 	}
 }

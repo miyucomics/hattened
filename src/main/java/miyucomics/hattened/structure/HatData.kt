@@ -13,33 +13,35 @@ import net.minecraft.server.network.ServerPlayerEntity
 import net.minecraft.sound.SoundCategory
 import net.minecraft.sound.SoundEvents
 
-data class HatData(val hasHat: Boolean = false, val storage: List<ServerCard> = listOf(), val usingHat: Boolean = false, val leftClickHeld: Boolean = false, val rightClickHeld: Boolean = false, val cooldown: Int = 0) {
+data class HatData(val hasHat: Boolean = false, val storage: List<ServerCard> = listOf(), val usingHat: Boolean = false, val isThrowingItems: Boolean = false, val isVacuuming: Boolean = false) {
 	fun toItemStack() = ItemStack(HattenedMain.HAT_ITEM).apply { set(HattenedMain.HAT_STORAGE_COMPONENT, storage) }
 
 	fun tick(player: ServerPlayerEntity) {
 		HattenedHelper.setPose(player, HatPose.OnHead)
 		val world = player.world
 		val selectedCard = storage.firstOrNull()
-		if (this.usingHat && selectedCard != null && leftClickHeld && this.cooldown <= 0) {
-			val pos = player.eyePos
+		if (this.usingHat)
+			HattenedHelper.setPose(player, HatPose.SearchingHat)
+
+		if (this.usingHat && this.isThrowingItems && selectedCard != null) {
+			val pos = player.pos.add(0.0, 0.5, 0.0)
 			val vel = player.rotationVector
 			world.spawnEntity(ItemEntity(world, pos.x, pos.y, pos.z, selectedCard.stack.split(1), vel.x, vel.y, vel.z).apply { setPickupDelay(10) })
 			world.playSound(null, pos.x, pos.y, pos.z, SoundEvents.ENTITY_SNOWBALL_THROW, SoundCategory.PLAYERS)
-			(player as ServerPlayerEntityMinterface).setCooldown(5)
 			selectedCard.markDirty()
 		}
 	}
 
-	fun transition(event: UserInput): HatData {
+	fun updateInternalState(event: UserInput): HatData {
 		return when (event) {
-			UserInput.LeftAltPressed -> this.copy(usingHat = true, leftClickHeld = false, rightClickHeld = false)
-			UserInput.LeftAltReleased -> this.copy(usingHat = false, leftClickHeld = false, rightClickHeld = false)
-			UserInput.ScrollUp -> this.copy(storage = this.storage.rotateLeft(), leftClickHeld = false, rightClickHeld = false)
-			UserInput.ScrollDown -> this.copy(storage = this.storage.rotateRight(), leftClickHeld = false, rightClickHeld = false)
-			UserInput.LeftMousePressed -> this.copy(leftClickHeld = true)
-			UserInput.LeftMouseReleased -> this.copy(leftClickHeld = false)
-			UserInput.RightMousePressed -> this.copy(rightClickHeld = true)
-			UserInput.RightMouseReleased -> this.copy(rightClickHeld = false)
+			UserInput.LeftAltPressed -> this.copy(usingHat = true, isThrowingItems = false, isVacuuming = false)
+			UserInput.LeftAltReleased -> this.copy(usingHat = false, isThrowingItems = false, isVacuuming = false)
+			UserInput.ScrollUp -> this.copy(storage = this.storage.rotateLeft(), isThrowingItems = false, isVacuuming = false)
+			UserInput.ScrollDown -> this.copy(storage = this.storage.rotateRight(), isThrowingItems = false, isVacuuming = false)
+			UserInput.LeftMousePressed -> this.copy(isThrowingItems = true)
+			UserInput.LeftMouseReleased -> this.copy(isThrowingItems = false)
+			UserInput.RightMousePressed -> this.copy(isVacuuming = true)
+			UserInput.RightMouseReleased -> this.copy(isVacuuming = false)
 		}
 	}
 
@@ -58,9 +60,8 @@ data class HatData(val hasHat: Boolean = false, val storage: List<ServerCard> = 
 		var PACKET_CODEC: PacketCodec<ByteBuf, HatData> = PacketCodecs.codec(RecordCodecBuilder.create {
 			commonFields(it)
 				.and(Codec.BOOL.fieldOf("usingHat").forGetter(HatData::usingHat))
-				.and(Codec.BOOL.fieldOf("leftClickHeld").forGetter(HatData::leftClickHeld))
-				.and(Codec.BOOL.fieldOf("rightClickHeld").forGetter(HatData::rightClickHeld))
-				.and(Codec.INT.fieldOf("cooldown").forGetter(HatData::cooldown))
+				.and(Codec.BOOL.fieldOf("throwing").forGetter(HatData::isThrowingItems))
+				.and(Codec.BOOL.fieldOf("vacuuming").forGetter(HatData::isVacuuming))
 				.apply(it, ::HatData)
 		})
 	}
