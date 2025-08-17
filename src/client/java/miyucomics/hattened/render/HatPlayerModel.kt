@@ -16,6 +16,6 @@ class HatPlayerModel(val player: PlayerEntity) : IAnimation {
 	override fun get3DTransform(modelKey: PartKey, type: TransformType, tickDelta: Float, original: Vec3f): Vec3f {
 		if (type != TransformType.ROTATION)
 			return original
-		return Poser.rotateBody(HattenedHelper.getPose(player), modelKey, tickDelta, HattenedHelper.getHatData(player))?.scale(MathHelper.RADIANS_PER_DEGREE) ?: original
+		return Poser.rotateBody(HattenedHelper.getPose(player), modelKey, tickDelta, player)?.scale(MathHelper.RADIANS_PER_DEGREE) ?: original
 	}
 }
