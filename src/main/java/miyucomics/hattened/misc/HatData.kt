@@ -45,7 +45,7 @@ data class HatData(val hasHat: Boolean = false, val storage: List<Card> = listOf
 				player.canSee(it) && !it.cannotPickup() && toItem.dotProduct(player.rotationVector) > 0.9f
 			}.firstOrNull()?.let {
 				(player as ServerPlayerEntityMinterface).proposeItemStack(it.stack.split(1))
-				world.players.forEach { other -> world.sendToPlayerIfNearby(other, true, player.x, player.y, player.z, ServerPlayNetworking.createS2CPacket(SuckItemPayload(it.id, player.id, 1))) }
+				world.players.forEach { other -> world.sendToPlayerIfNearby(other, true, player.x, player.y, player.z, ServerPlayNetworking.createS2CPacket(SuckItemPayload(it.id, player.id))) }
 			}
 		}
 
