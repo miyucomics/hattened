@@ -18,18 +18,24 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 
 @Mixin(ServerPlayerEntity.class)
 public class ServerPlayerEntityMixin implements ServerPlayerEntityMinterface {
-	@Unique private final Queue<UserInput> hattened$inputQueue = new ConcurrentLinkedQueue<>();
-	@Override public void hattened$queueUserInput(@NotNull UserInput input) { hattened$inputQueue.add(input); }
+	@Unique private Queue<UserInput> inputQueue;
+	@Unique private Queue<ItemStack> proposedAdditions;
+	@Unique private Optional<Integer> cooldown;
 
-	@Unique private final Queue<ItemStack> hattened$proposedAdditions = new ConcurrentLinkedQueue<>();
-	@Override public void hattened$proposeItemStack(@NotNull ItemStack stack) { hattened$proposedAdditions.add(stack); }
+	@Override public void queueUserInput(@NotNull UserInput input) { this.inputQueue.add(input); }
+	@Override public void proposeItemStack(@NotNull ItemStack stack) { this.proposedAdditions.add(stack); }
+	@Override public void setCooldown(int cooldown) { this.cooldown = Optional.of(cooldown); }
 
-	@Unique private Optional<Integer> hattened$cooldown = Optional.empty();
-	@Override public void hattened$setCooldown(int cooldown) { hattened$cooldown = Optional.of(cooldown); }
-
+	@Inject(method = "<init>", at = @At("TAIL"))
+	private void init(CallbackInfo ci) {
+		this.inputQueue = new ConcurrentLinkedQueue<>();
+		this.proposedAdditions = new ConcurrentLinkedQueue<>();
+		this.cooldown = Optional.empty();
+	}
+	
 	@Inject(method = "tick", at = @At("TAIL"))
-	void tick(CallbackInfo ci) {
-		HattenedHelper.updateHat((ServerPlayerEntity) (Object) this, hattened$inputQueue, hattened$proposedAdditions, hattened$cooldown);
-		hattened$cooldown = Optional.empty();
+	private void tick(CallbackInfo ci) {
+		HattenedHelper.updateHat((ServerPlayerEntity) (Object) this, this.inputQueue, this.proposedAdditions, this.cooldown);
+		this.cooldown = Optional.empty();
 	}
 }

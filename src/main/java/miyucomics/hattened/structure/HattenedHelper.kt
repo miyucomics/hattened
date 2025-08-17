@@ -6,6 +6,7 @@ import net.minecraft.item.ItemStack
 import net.minecraft.server.network.ServerPlayerEntity
 import java.util.*
 import kotlin.math.max
+import kotlin.math.min
 
 @Suppress("UnstableApiUsage")
 object HattenedHelper {
@@ -14,6 +15,21 @@ object HattenedHelper {
 
 	@JvmStatic fun getPose(player: PlayerEntity): HatPose = player.getAttachedOrElse(HattenedAttachments.HAT_POSE, HatPose.OnHead)
 	fun setPose(player: ServerPlayerEntity, pose: HatPose) = player.setAttached(HattenedAttachments.HAT_POSE, pose)
+
+	fun insertStack(storage: List<ServerCard>, stack: ItemStack): List<ServerCard> {
+		for (card in storage) {
+			if (ItemStack.areItemsAndComponentsEqual(card.stack, stack)) {
+				val transferAmount = min(card.stack.maxCount - card.stack.count, stack.count)
+				stack.split(transferAmount)
+				card.stack.increment(transferAmount)
+				card.markDirty()
+				if (stack.isEmpty)
+					return storage.toList()
+			}
+		}
+
+		return storage.plus(ServerCard(stack))
+	}
 
 	@JvmStatic
 	fun updateHat(player: ServerPlayerEntity, inputQueue: Queue<UserInput>, proposedAdditions: Queue<ItemStack>, setCooldown: Optional<Int>) {
@@ -24,9 +40,9 @@ object HattenedHelper {
 		hat = hat.copy(cooldown = max(0, setCooldown.orElse(hat.cooldown - 1)))
 		hat.tick(player)
 
-		val newStorage = hat.storage.mapNotNull { if (it.mutated) it.replacement else it }.toMutableList()
+		var newStorage = hat.storage.mapNotNull { if (it.mutated) it.replacement else it }
 		while (proposedAdditions.isNotEmpty())
-			newStorage.add(ServerCard(proposedAdditions.poll()))
+			newStorage = insertStack(newStorage, proposedAdditions.poll())
 		this.setHatData(player, hat.copy(storage = newStorage))
 	}
 }
