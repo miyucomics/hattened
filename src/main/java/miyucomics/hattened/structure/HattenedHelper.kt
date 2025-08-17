@@ -37,6 +37,9 @@ object HattenedHelper {
 			hat = hat.updateInternalState(inputQueue.poll())
 
 		hat.tick(player)
+		val firstCard = hat.storage.firstOrNull()
+		if (firstCard != null && firstCard.mutated && firstCard.replacement == null)
+			hat = hat.copy(isThrowingItems = false)
 
 		var newStorage = hat.storage.mapNotNull { if (it.mutated) it.replacement else it }
 		while (proposedAdditions.isNotEmpty())
