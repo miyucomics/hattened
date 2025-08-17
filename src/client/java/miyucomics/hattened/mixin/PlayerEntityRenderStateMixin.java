@@ -1,7 +1,7 @@
 package miyucomics.hattened.mixin;
 
-import miyucomics.hattened.misc.HatDataSmuggler;
 import miyucomics.hattened.misc.HatData;
+import miyucomics.hattened.misc.HatDataSmuggler;
 import miyucomics.hattened.misc.HatPose;
 import net.minecraft.client.render.entity.state.PlayerEntityRenderState;
 import org.jetbrains.annotations.NotNull;

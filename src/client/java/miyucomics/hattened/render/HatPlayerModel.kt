@@ -4,8 +4,8 @@ import dev.kosmx.playerAnim.api.PartKey
 import dev.kosmx.playerAnim.api.TransformType
 import dev.kosmx.playerAnim.api.layered.IAnimation
 import dev.kosmx.playerAnim.core.util.Vec3f
-import miyucomics.hattened.misc.Poser
 import miyucomics.hattened.misc.HattenedHelper
+import miyucomics.hattened.misc.Poser
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.util.math.MathHelper
 
