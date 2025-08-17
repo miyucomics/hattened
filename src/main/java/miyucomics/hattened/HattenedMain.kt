@@ -3,8 +3,8 @@ package miyucomics.hattened
 import miyucomics.hattened.inits.HattenedAttachments
 import miyucomics.hattened.inits.HattenedNetworking
 import miyucomics.hattened.inits.HattenedSounds
-import miyucomics.hattened.misc.HatItem
 import miyucomics.hattened.misc.Card
+import miyucomics.hattened.misc.HatItem
 import net.fabricmc.api.ModInitializer
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents
 import net.fabricmc.fabric.api.particle.v1.FabricParticleTypes

@@ -16,6 +16,7 @@ import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 @Mixin(ServerPlayerEntity.class)
+@SuppressWarnings("AddedMixinMembersNamePattern")
 public class ServerPlayerEntityMixin implements ServerPlayerEntityMinterface {
 	@Unique private Queue<UserInput> inputQueue;
 	@Unique private Queue<ItemStack> proposedAdditions;

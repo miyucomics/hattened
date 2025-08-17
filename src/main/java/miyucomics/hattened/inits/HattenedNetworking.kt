@@ -1,13 +1,13 @@
 package miyucomics.hattened.inits
 
-import miyucomics.hattened.networking.ConfettiPayload
-import miyucomics.hattened.networking.HatInputPayload
-import miyucomics.hattened.networking.HatKeybindPayload
-import miyucomics.hattened.networking.SuckItemPayload
 import miyucomics.hattened.misc.HatData
 import miyucomics.hattened.misc.HattenedHelper
 import miyucomics.hattened.misc.ServerPlayerEntityMinterface
 import miyucomics.hattened.misc.UserInput
+import miyucomics.hattened.networking.ConfettiPayload
+import miyucomics.hattened.networking.HatInputPayload
+import miyucomics.hattened.networking.HatKeybindPayload
+import miyucomics.hattened.networking.SuckItemPayload
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking
 import net.minecraft.sound.SoundCategory

@@ -6,12 +6,17 @@ import net.minecraft.registry.Registry
 import net.minecraft.sound.SoundEvent
 
 object HattenedSounds {
-	val HAT_EQUIP = register("item.hat.equip")
-	val INSERT_ITEM = register("item.hat.insert")
-	val REMOVE_ITEM = register("item.hat.remove")
-	val THROW_ITEM = register("item.hat.throw")
+	lateinit var HAT_EQUIP: SoundEvent
+	lateinit var INSERT_ITEM: SoundEvent
+	lateinit var REMOVE_ITEM: SoundEvent
+	lateinit var THROW_ITEM: SoundEvent
 
-	fun init() {}
+	fun init() {
+		HAT_EQUIP = register("item.hat.equip")
+		INSERT_ITEM = register("item.hat.insert")
+		REMOVE_ITEM = register("item.hat.remove")
+		THROW_ITEM = register("item.hat.throw")
+	}
 
 	fun register(name: String): SoundEvent {
 		val id = HattenedMain.id(name)
