@@ -1,4 +1,4 @@
-package miyucomics.hattened.structure
+package miyucomics.hattened.misc
 
 import net.minecraft.item.ItemStack
 

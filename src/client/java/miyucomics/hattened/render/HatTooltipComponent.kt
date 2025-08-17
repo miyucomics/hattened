@@ -1,6 +1,6 @@
 package miyucomics.hattened.render
 
-import miyucomics.hattened.item.HatTooltipData
+import miyucomics.hattened.misc.HatTooltipData
 import net.minecraft.client.font.TextRenderer
 import net.minecraft.client.gui.DrawContext
 import net.minecraft.client.gui.tooltip.TooltipComponent

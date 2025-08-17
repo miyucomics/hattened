@@ -1,10 +1,7 @@
-package miyucomics.hattened.item
+package miyucomics.hattened.misc
 
 import miyucomics.hattened.HattenedMain
 import miyucomics.hattened.inits.HattenedSounds
-import miyucomics.hattened.structure.HatData
-import miyucomics.hattened.structure.HattenedHelper
-import miyucomics.hattened.structure.ServerCard
 import net.minecraft.component.DataComponentTypes
 import net.minecraft.component.type.TooltipDisplayComponent
 import net.minecraft.entity.player.PlayerEntity
@@ -98,4 +95,4 @@ object HatItem : Item(Settings().maxCount(1).component(HattenedMain.HAT_STORAGE_
 	}
 }
 
-data class HatTooltipData(val storage: List<ServerCard>) : TooltipData
+data class HatTooltipData(val storage: List<Card>) : TooltipData

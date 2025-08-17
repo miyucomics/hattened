@@ -1,8 +1,8 @@
 package miyucomics.hattened.mixin;
 
-import miyucomics.hattened.structure.HattenedHelper;
-import miyucomics.hattened.structure.ServerPlayerEntityMinterface;
-import miyucomics.hattened.structure.UserInput;
+import miyucomics.hattened.misc.HattenedHelper;
+import miyucomics.hattened.misc.ServerPlayerEntityMinterface;
+import miyucomics.hattened.misc.UserInput;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
 import org.jetbrains.annotations.NotNull;

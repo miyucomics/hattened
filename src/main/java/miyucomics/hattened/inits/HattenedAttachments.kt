@@ -3,9 +3,9 @@ package miyucomics.hattened.inits
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import miyucomics.hattened.HattenedMain
-import miyucomics.hattened.structure.HatData
-import miyucomics.hattened.structure.HatPose
-import miyucomics.hattened.structure.HattenedHelper
+import miyucomics.hattened.misc.HatData
+import miyucomics.hattened.misc.HatPose
+import miyucomics.hattened.misc.HattenedHelper
 import net.fabricmc.fabric.api.attachment.v1.AttachmentRegistry
 import net.fabricmc.fabric.api.attachment.v1.AttachmentSyncPredicate
 import net.fabricmc.fabric.api.attachment.v1.AttachmentType

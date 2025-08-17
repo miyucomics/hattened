@@ -2,7 +2,7 @@ package miyucomics.hattened.mixin;
 
 import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
-import miyucomics.hattened.item.HatTooltipData;
+import miyucomics.hattened.misc.HatTooltipData;
 import miyucomics.hattened.render.HatTooltipComponent;
 import net.minecraft.client.gui.tooltip.TooltipComponent;
 import net.minecraft.item.tooltip.TooltipData;

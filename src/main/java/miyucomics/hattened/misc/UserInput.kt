@@ -1,4 +1,4 @@
-package miyucomics.hattened.structure
+package miyucomics.hattened.misc
 
 enum class UserInput {
 	LeftAltPressed,

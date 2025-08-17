@@ -2,8 +2,8 @@ package miyucomics.hattened.mixin;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
-import miyucomics.hattened.structure.HattenedHelper;
-import miyucomics.hattened.structure.ServerPlayerEntityMinterface;
+import miyucomics.hattened.misc.HattenedHelper;
+import miyucomics.hattened.misc.ServerPlayerEntityMinterface;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;

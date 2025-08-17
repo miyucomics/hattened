@@ -1,13 +1,13 @@
 package miyucomics.hattened.render
 
 import miyucomics.hattened.HattenedMain
-import miyucomics.hattened.structure.ServerCard
+import miyucomics.hattened.misc.Card
 import net.minecraft.client.MinecraftClient
 import net.minecraft.client.font.TextRenderer
 import net.minecraft.client.gui.DrawContext
 
 object CardRenderer {
-	fun render(context: DrawContext, textRenderer: TextRenderer, card: ServerCard, scale: Float, drawText: Boolean) {
+	fun render(context: DrawContext, textRenderer: TextRenderer, card: Card, scale: Float, drawText: Boolean) {
 		if (drawText) {
 			val text = card.stack.name
 			context.drawText(textRenderer, text, -textRenderer.getWidth(text) / 2, -14 * scale.toInt() - 5, 0xffffffff.toInt(), true)

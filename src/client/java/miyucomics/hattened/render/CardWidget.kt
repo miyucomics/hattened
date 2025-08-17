@@ -1,12 +1,12 @@
 package miyucomics.hattened.render
 
-import miyucomics.hattened.structure.ServerCard
+import miyucomics.hattened.misc.Card
 import net.minecraft.client.MinecraftClient
 import net.minecraft.client.gui.DrawContext
 import net.minecraft.util.math.MathHelper
 import org.joml.Vector2f
 
-class CardWidget(var index: Int, var card: ServerCard) {
+class CardWidget(var index: Int, var card: Card) {
 	private var angle = 0f
 	private var position = Vector2f(0f, 75f)
 	private var scale = 1f
