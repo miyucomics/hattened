@@ -12,6 +12,7 @@ import net.minecraft.network.codec.PacketCodec
 import net.minecraft.network.codec.PacketCodecs
 import net.minecraft.server.network.ServerPlayerEntity
 import net.minecraft.sound.SoundCategory
+import net.minecraft.util.Hand
 
 data class HatData(val hasHat: Boolean = false, val storage: List<ServerCard> = listOf(), val usingHat: Boolean = false, val isThrowingItems: Boolean = false, val isVacuuming: Boolean = false) {
 	fun toItemStack() = ItemStack(HattenedMain.HAT_ITEM).apply { set(HattenedMain.HAT_STORAGE_COMPONENT, storage) }
@@ -31,6 +32,7 @@ data class HatData(val hasHat: Boolean = false, val storage: List<ServerCard> = 
 			val vel = player.rotationVector
 			world.spawnEntity(ItemEntity(world, pos.x, pos.y, pos.z, selectedCard.stack.split(1), vel.x, vel.y, vel.z).apply { setPickupDelay(10) })
 			world.playSound(null, pos.x, pos.y, pos.z, HattenedSounds.THROW_ITEM, SoundCategory.PLAYERS, 0.5f, 1f)
+			player.swingHand(Hand.MAIN_HAND, true)
 			selectedCard.markDirty()
 		}
 

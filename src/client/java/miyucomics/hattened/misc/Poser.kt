@@ -7,6 +7,8 @@ import miyucomics.hattened.structure.HatData
 import miyucomics.hattened.structure.HatPose
 import net.minecraft.client.render.entity.model.PlayerEntityModel
 import net.minecraft.client.util.math.MatrixStack
+import net.minecraft.command.argument.EntityArgumentType.player
+import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.util.math.RotationAxis
 import kotlin.math.cos
 import kotlin.math.sin
@@ -32,13 +34,13 @@ object Poser {
 		}
 	}
 
-	fun rotateBody(pose: HatPose, key: PartKey, tickDelta: Float, hat: HatData): Vec3f? = when (pose) {
+	fun rotateBody(pose: HatPose, key: PartKey, tickDelta: Float, player: PlayerEntity): Vec3f? = when (pose) {
 		HatPose.OnHead -> null
 		HatPose.SearchingHat -> when (key) {
 			PartKey.LEFT_ARM  -> Vec3f(-50f, 45f, 0f)
 			PartKey.RIGHT_ARM -> {
-				if (hat.isThrowingItems && hat.storage.isNotEmpty()) {
-					Vec3f(lerp(tickDelta, -50f, -110f), lerp(tickDelta, -25f, -20f), 0f)
+				if (player.handSwinging) {
+					Vec3f(lerp(player.getHandSwingProgress(tickDelta), -50f, -110f), lerp(player.getHandSwingProgress(tickDelta), -25f, -20f), 0f)
 				} else {
 					val pitch = sin((ClientStorage.ticks + tickDelta) / 3f) * 2f
 					val yaw = cos((ClientStorage.ticks + tickDelta) / 2f) * 2f
