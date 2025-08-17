@@ -25,7 +25,7 @@ data class HatData(val hasHat: Boolean = false, val storage: List<ServerCard> = 
 			val vel = player.rotationVector
 			world.spawnEntity(ItemEntity(world, pos.x, pos.y, pos.z, selectedCard.stack.split(1), vel.x, vel.y, vel.z).apply { setPickupDelay(10) })
 			world.playSound(null, pos.x, pos.y, pos.z, SoundEvents.ENTITY_SNOWBALL_THROW, SoundCategory.PLAYERS)
-			(player as ServerPlayerEntityMinterface).`hattened$setCooldown`(5)
+			(player as ServerPlayerEntityMinterface).setCooldown(5)
 			selectedCard.markDirty()
 		}
 	}

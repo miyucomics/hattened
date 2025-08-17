@@ -16,7 +16,7 @@ public class ItemEntityMixin {
 	boolean addToHat(PlayerInventory instance, ItemStack stack, Operation<Boolean> original) {
 		if (!HattenedHelper.getHatData(instance.player).getUsingHat())
 			return original.call(instance, stack);
-		((ServerPlayerEntityMinterface) instance.player).hattened$proposeItemStack(stack.copyAndEmpty());
+		((ServerPlayerEntityMinterface) instance.player).proposeItemStack(stack.copyAndEmpty());
 		return true;
 	}
 }

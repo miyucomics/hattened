@@ -17,7 +17,7 @@ object HattenedNetworking {
 		PayloadTypeRegistry.playC2S().register(HatKeybindPayload.ID, HatKeybindPayload.CODEC)
 
 		ServerPlayNetworking.registerGlobalReceiver(HatInputPayload.ID) { payload, context ->
-			(context.player() as ServerPlayerEntityMinterface).`hattened$queueUserInput`(payload.input)
+			(context.player() as ServerPlayerEntityMinterface).queueUserInput(payload.input)
 		}
 
 		ServerPlayNetworking.registerGlobalReceiver(HatKeybindPayload.ID) { _, context ->

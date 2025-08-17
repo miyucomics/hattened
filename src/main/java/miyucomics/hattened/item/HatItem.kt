@@ -79,7 +79,7 @@ object HatItem : Item(Settings().maxCount(1).component(HattenedMain.HAT_STORAGE_
 	}
 
 	fun insertItem(hat: ItemStack, stack: ItemStack) {
-		hat.set(HattenedMain.HAT_STORAGE_COMPONENT, hat.getOrDefault(HattenedMain.HAT_STORAGE_COMPONENT, emptyList()).plus(ServerCard(stack)))
+		hat.set(HattenedMain.HAT_STORAGE_COMPONENT, HattenedHelper.insertStack(hat.getOrDefault(HattenedMain.HAT_STORAGE_COMPONENT, emptyList()), stack))
 	}
 
 	fun removeItem(hat: ItemStack): ItemStack? {
