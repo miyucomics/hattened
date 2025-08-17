@@ -6,7 +6,8 @@
 		"InGameHudMixin",
 		"MouseMixin",
 		"PlayerEntityRendererMixin",
-		"PlayerEntityRenderStateMixin"
+		"PlayerEntityRenderStateMixin",
+		"TooltipComponentMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

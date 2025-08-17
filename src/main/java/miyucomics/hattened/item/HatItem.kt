@@ -1,21 +1,25 @@
 package miyucomics.hattened.item
 
 import miyucomics.hattened.HattenedMain
+import miyucomics.hattened.abilities.Ability
 import miyucomics.hattened.abilities.ConfettiAbility
 import miyucomics.hattened.abilities.ItemStackAbility
 import miyucomics.hattened.structure.HatData
 import miyucomics.hattened.structure.HattenedHelper
+import net.minecraft.component.DataComponentTypes
+import net.minecraft.component.type.TooltipDisplayComponent
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.inventory.StackReference
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
+import net.minecraft.item.tooltip.TooltipData
 import net.minecraft.screen.slot.Slot
 import net.minecraft.server.network.ServerPlayerEntity
 import net.minecraft.util.ActionResult
 import net.minecraft.util.ClickType
 import net.minecraft.util.Hand
 import net.minecraft.world.World
-import java.util.UUID
+import java.util.*
 
 object HatItem : Item(Settings().maxCount(1).component(HattenedMain.ABILITIES_COMPONENT, listOf()).registryKey(HattenedMain.HAT_ITEM_KEY)) {
 	override fun use(world: World, user: PlayerEntity, hand: Hand): ActionResult {
@@ -69,6 +73,13 @@ object HatItem : Item(Settings().maxCount(1).component(HattenedMain.ABILITIES_CO
 		return false
 	}
 
+	override fun getTooltipData(stack: ItemStack): Optional<TooltipData> {
+		val displayHandler = stack.getOrDefault(DataComponentTypes.TOOLTIP_DISPLAY, TooltipDisplayComponent.DEFAULT)
+		if (displayHandler.shouldDisplay(HattenedMain.ABILITIES_COMPONENT))
+			return Optional.ofNullable(stack.get(HattenedMain.ABILITIES_COMPONENT)).map(::HatTooltipData)
+		return Optional.empty()
+	}
+
 	fun insertItem(hat: ItemStack, stack: ItemStack) {
 		val newAbilities = hat.getOrDefault(HattenedMain.ABILITIES_COMPONENT, emptyList()).toMutableList()
 		if (stack.isOf(HattenedMain.CARD_ITEM))
@@ -89,3 +100,5 @@ object HatItem : Item(Settings().maxCount(1).component(HattenedMain.ABILITIES_CO
 		return ItemStack(HattenedMain.CARD_ITEM).apply { set(HattenedMain.ABILITY_COMPONENT, extracted) }
 	}
 }
+
+data class HatTooltipData(val abilities: List<Ability>) : TooltipData

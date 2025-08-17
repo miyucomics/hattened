@@ -6,12 +6,14 @@ import miyucomics.hattened.render.Card
 import miyucomics.hattened.structure.HatData
 import net.minecraft.client.render.RenderTickCounter
 import java.util.*
+import kotlin.math.abs
 
 object ClientStorage {
 	var ticks = 0
 	private var usingTime = 0
 	var hat = HatData.DEFAULT
 	val cards: HashMap<UUID, Card> = HashMap()
+	var orderedCards: List<Pair<Card, Int>> = listOf()
 
 	fun tick(hat: HatData) {
 		this.hat = hat
@@ -33,6 +35,14 @@ object ClientStorage {
 				keysToRemove.add(uuid)
 		}
 		keysToRemove.forEach { cards.remove(it) }
+
+		val cardCount = cards.size
+		orderedCards = cards.values.map {
+			var relativeIndex = it.index
+			if (relativeIndex > cardCount / 2)
+				relativeIndex -= cardCount
+			it to relativeIndex
+		}.sortedBy { -abs(it.second) }
 	}
 
 	@JvmStatic
