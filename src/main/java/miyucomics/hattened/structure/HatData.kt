@@ -5,6 +5,7 @@ import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import io.netty.buffer.ByteBuf
 import miyucomics.hattened.HattenedMain
+import miyucomics.hattened.inits.HattenedSounds
 import net.minecraft.advancement.criterion.InventoryChangedCriterion.Conditions.items
 import net.minecraft.entity.ItemEntity
 import net.minecraft.item.ItemStack
@@ -31,16 +32,15 @@ data class HatData(val hasHat: Boolean = false, val storage: List<ServerCard> = 
 			val pos = player.pos.add(0.0, 0.5, 0.0)
 			val vel = player.rotationVector
 			world.spawnEntity(ItemEntity(world, pos.x, pos.y, pos.z, selectedCard.stack.split(1), vel.x, vel.y, vel.z).apply { setPickupDelay(10) })
-			world.playSound(null, pos.x, pos.y, pos.z, SoundEvents.ENTITY_SNOWBALL_THROW, SoundCategory.PLAYERS)
+			world.playSound(null, pos.x, pos.y, pos.z, HattenedSounds.THROW_ITEM, SoundCategory.PLAYERS, 0.5f, 1f)
 			selectedCard.markDirty()
 		}
 
 		if (this.isVacuuming) {
 			pose = HatPose.Vacuuming
 			world.getEntitiesByClass(ItemEntity::class.java, player.boundingBox.expand(10.0)) { player.canSee(it) && !it.cannotPickup() }.firstOrNull()?.let {
-				val new = it.stack.copyAndEmpty()
-				(player as ServerPlayerEntityMinterface).proposeItemStack(new)
-				player.sendPickup(it, new.count)
+				(player as ServerPlayerEntityMinterface).proposeItemStack(it.stack.split(1))
+				player.sendPickup(it, 1)
 			}
 		}
 
