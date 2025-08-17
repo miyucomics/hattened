@@ -1,4 +1,4 @@
-package miyucomics.hattened.structure
+package miyucomics.hattened.misc
 
 import miyucomics.hattened.inits.HattenedAttachments
 import net.minecraft.entity.player.PlayerEntity
@@ -15,7 +15,7 @@ object HattenedHelper {
 	@JvmStatic fun getPose(player: PlayerEntity): HatPose = player.getAttachedOrElse(HattenedAttachments.HAT_POSE, HatPose.OnHead)
 	fun setPose(player: ServerPlayerEntity, pose: HatPose) = player.setAttached(HattenedAttachments.HAT_POSE, pose)
 
-	fun insertStack(storage: List<ServerCard>, stack: ItemStack): List<ServerCard> {
+	fun insertStack(storage: List<Card>, stack: ItemStack): List<Card> {
 		for (card in storage) {
 			if (ItemStack.areItemsAndComponentsEqual(card.stack, stack)) {
 				val transferAmount = min(card.stack.maxCount - card.stack.count, stack.count)
@@ -27,7 +27,7 @@ object HattenedHelper {
 			}
 		}
 
-		return storage.plus(ServerCard(stack))
+		return storage.plus(Card(stack))
 	}
 
 	@JvmStatic

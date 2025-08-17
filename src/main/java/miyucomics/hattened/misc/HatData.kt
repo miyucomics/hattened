@@ -1,4 +1,4 @@
-package miyucomics.hattened.structure
+package miyucomics.hattened.misc
 
 import com.mojang.datafixers.Products
 import com.mojang.serialization.Codec
@@ -16,7 +16,7 @@ import net.minecraft.server.network.ServerPlayerEntity
 import net.minecraft.sound.SoundCategory
 import net.minecraft.util.Hand
 
-data class HatData(val hasHat: Boolean = false, val storage: List<ServerCard> = listOf(), val usingHat: Boolean = false, val isThrowingItems: Boolean = false, val isVacuuming: Boolean = false) {
+data class HatData(val hasHat: Boolean = false, val storage: List<Card> = listOf(), val usingHat: Boolean = false, val isThrowingItems: Boolean = false, val isVacuuming: Boolean = false) {
 	fun toItemStack() = ItemStack(HattenedMain.HAT_ITEM).apply { set(HattenedMain.HAT_STORAGE_COMPONENT, storage) }
 
 	fun tick(player: ServerPlayerEntity) {
@@ -70,10 +70,10 @@ data class HatData(val hasHat: Boolean = false, val storage: List<ServerCard> = 
 		@JvmField
 		var DEFAULT = HatData()
 
-		private fun commonFields(builder: RecordCodecBuilder.Instance<HatData>): Products.P2<RecordCodecBuilder.Mu<HatData>, Boolean, List<ServerCard>> {
+		private fun commonFields(builder: RecordCodecBuilder.Instance<HatData>): Products.P2<RecordCodecBuilder.Mu<HatData>, Boolean, List<Card>> {
 			return builder.group(
 				Codec.BOOL.fieldOf("hasHat").forGetter(HatData::hasHat),
-				ServerCard.CODEC.listOf().fieldOf("storage").forGetter(HatData::storage)
+				Card.CODEC.listOf().fieldOf("storage").forGetter(HatData::storage)
 			)
 		}
 

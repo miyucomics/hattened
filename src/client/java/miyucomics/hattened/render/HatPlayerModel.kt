@@ -5,7 +5,7 @@ import dev.kosmx.playerAnim.api.TransformType
 import dev.kosmx.playerAnim.api.layered.IAnimation
 import dev.kosmx.playerAnim.core.util.Vec3f
 import miyucomics.hattened.misc.Poser
-import miyucomics.hattened.structure.HattenedHelper
+import miyucomics.hattened.misc.HattenedHelper
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.util.math.MathHelper
 

@@ -2,7 +2,6 @@ package miyucomics.hattened.misc
 
 import miyucomics.hattened.networking.HatInputPayload
 import miyucomics.hattened.networking.HatKeybindPayload
-import miyucomics.hattened.structure.UserInput
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking
 import net.minecraft.client.option.KeyBinding

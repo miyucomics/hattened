@@ -6,7 +6,7 @@ import miyucomics.hattened.misc.ClientStorage
 import miyucomics.hattened.misc.ConfettiParticle
 import miyucomics.hattened.misc.PeripheralManager
 import miyucomics.hattened.render.HatPlayerModel
-import miyucomics.hattened.structure.HattenedHelper
+import miyucomics.hattened.misc.HattenedHelper
 import net.fabricmc.api.ClientModInitializer
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry

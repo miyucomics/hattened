@@ -2,7 +2,7 @@ package miyucomics.hattened.networking
 
 import com.mojang.serialization.Codec
 import miyucomics.hattened.HattenedMain
-import miyucomics.hattened.structure.UserInput
+import miyucomics.hattened.misc.UserInput
 import net.minecraft.network.RegistryByteBuf
 import net.minecraft.network.codec.PacketCodec
 import net.minecraft.network.codec.PacketCodecs

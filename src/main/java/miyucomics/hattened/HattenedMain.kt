@@ -3,8 +3,8 @@ package miyucomics.hattened
 import miyucomics.hattened.inits.HattenedAttachments
 import miyucomics.hattened.inits.HattenedNetworking
 import miyucomics.hattened.inits.HattenedSounds
-import miyucomics.hattened.item.HatItem
-import miyucomics.hattened.structure.ServerCard
+import miyucomics.hattened.misc.HatItem
+import miyucomics.hattened.misc.Card
 import net.fabricmc.api.ModInitializer
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents
 import net.fabricmc.fabric.api.particle.v1.FabricParticleTypes
@@ -25,7 +25,7 @@ object HattenedMain : ModInitializer {
 
 	val CONFETTI_PARTICLE: SimpleParticleType = Registry.register(Registries.PARTICLE_TYPE, id("confetti"), FabricParticleTypes.simple(true))
 
-	val HAT_STORAGE_COMPONENT: ComponentType<List<ServerCard>> = Registry.register(Registries.DATA_COMPONENT_TYPE, id("hat_storage"), ComponentType.builder<List<ServerCard>>().codec(ServerCard.CODEC.listOf()).build())
+	val HAT_STORAGE_COMPONENT: ComponentType<List<Card>> = Registry.register(Registries.DATA_COMPONENT_TYPE, id("hat_storage"), ComponentType.builder<List<Card>>().codec(Card.CODEC.listOf()).build())
 	val HAT_ITEM_KEY: RegistryKey<Item> = RegistryKey.of(RegistryKeys.ITEM, id("hat"))
 	val HAT_ITEM: HatItem = Registry.register(Registries.ITEM, HAT_ITEM_KEY, HatItem)
 

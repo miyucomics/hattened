@@ -2,8 +2,6 @@ package miyucomics.hattened.misc
 
 import miyucomics.hattened.misc.PeripheralManager.HAT_KEYBIND
 import miyucomics.hattened.render.CardWidget
-import miyucomics.hattened.structure.HatData
-import miyucomics.hattened.structure.ServerCard
 import net.minecraft.client.render.RenderTickCounter
 import java.util.*
 import kotlin.math.abs
@@ -26,7 +24,7 @@ object ClientStorage {
 			cards[card.uuid]!!.index = index
 		}
 
-		val hatUUIDs = hat.storage.map(ServerCard::uuid).toHashSet()
+		val hatUUIDs = hat.storage.map(Card::uuid).toHashSet()
 		val keysToRemove = mutableListOf<UUID>()
 		cards.forEach { (uuid, card) ->
 			if (!hatUUIDs.contains(uuid))
