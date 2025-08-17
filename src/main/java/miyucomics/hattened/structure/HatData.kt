@@ -5,6 +5,7 @@ import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import io.netty.buffer.ByteBuf
 import miyucomics.hattened.HattenedMain
+import net.minecraft.advancement.criterion.InventoryChangedCriterion.Conditions.items
 import net.minecraft.entity.ItemEntity
 import net.minecraft.item.ItemStack
 import net.minecraft.network.codec.PacketCodec
@@ -17,19 +18,33 @@ data class HatData(val hasHat: Boolean = false, val storage: List<ServerCard> = 
 	fun toItemStack() = ItemStack(HattenedMain.HAT_ITEM).apply { set(HattenedMain.HAT_STORAGE_COMPONENT, storage) }
 
 	fun tick(player: ServerPlayerEntity) {
-		HattenedHelper.setPose(player, HatPose.OnHead)
+		if (!this.usingHat) {
+			HattenedHelper.setPose(player, HatPose.OnHead)
+			return
+		}
+
 		val world = player.world
 		val selectedCard = storage.firstOrNull()
-		if (this.usingHat)
-			HattenedHelper.setPose(player, HatPose.SearchingHat)
+		var pose = HatPose.SearchingHat
 
-		if (this.usingHat && this.isThrowingItems && selectedCard != null) {
+		if (!this.isVacuuming && this.isThrowingItems && selectedCard != null) {
 			val pos = player.pos.add(0.0, 0.5, 0.0)
 			val vel = player.rotationVector
 			world.spawnEntity(ItemEntity(world, pos.x, pos.y, pos.z, selectedCard.stack.split(1), vel.x, vel.y, vel.z).apply { setPickupDelay(10) })
 			world.playSound(null, pos.x, pos.y, pos.z, SoundEvents.ENTITY_SNOWBALL_THROW, SoundCategory.PLAYERS)
 			selectedCard.markDirty()
 		}
+
+		if (this.isVacuuming) {
+			pose = HatPose.Vacuuming
+			world.getEntitiesByClass(ItemEntity::class.java, player.boundingBox.expand(10.0)) { player.canSee(it) && !it.cannotPickup() }.firstOrNull()?.let {
+				val new = it.stack.copyAndEmpty()
+				(player as ServerPlayerEntityMinterface).proposeItemStack(new)
+				player.sendPickup(it, new.count)
+			}
+		}
+
+		HattenedHelper.setPose(player, pose)
 	}
 
 	fun updateInternalState(event: UserInput): HatData {
@@ -64,17 +79,17 @@ data class HatData(val hasHat: Boolean = false, val storage: List<ServerCard> = 
 				.and(Codec.BOOL.fieldOf("vacuuming").forGetter(HatData::isVacuuming))
 				.apply(it, ::HatData)
 		})
+
+		private fun <E> List<E>.rotateLeft(): List<E> {
+			if (this.isEmpty())
+				return this
+			return drop(1) + first()
+		}
+
+		private fun <E> List<E>.rotateRight(): List<E> {
+			if (this.isEmpty())
+				return this
+			return takeLast(1) + dropLast(1)
+		}
 	}
-}
-
-private fun <E> List<E>.rotateLeft(): List<E> {
-	if (this.isEmpty())
-		return this
-	return drop(1) + first()
-}
-
-private fun <E> List<E>.rotateRight(): List<E> {
-	if (this.isEmpty())
-		return this
-	return takeLast(1) + dropLast(1)
 }
