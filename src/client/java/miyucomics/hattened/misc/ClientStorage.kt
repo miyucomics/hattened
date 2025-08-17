@@ -1,9 +1,9 @@
 package miyucomics.hattened.misc
 
-import miyucomics.hattened.abilities.Ability
 import miyucomics.hattened.misc.PeripheralManager.HAT_KEYBIND
-import miyucomics.hattened.render.Card
+import miyucomics.hattened.render.CardWidget
 import miyucomics.hattened.structure.HatData
+import miyucomics.hattened.structure.ServerCard
 import net.minecraft.client.render.RenderTickCounter
 import java.util.*
 import kotlin.math.abs
@@ -12,21 +12,21 @@ object ClientStorage {
 	var ticks = 0
 	private var usingTime = 0
 	var hat = HatData.DEFAULT
-	val cards: HashMap<UUID, Card> = HashMap()
-	var orderedCards: List<Pair<Card, Int>> = listOf()
+	val cards: HashMap<UUID, CardWidget> = HashMap()
+	var orderedCards: List<Pair<CardWidget, Int>> = listOf()
 
 	fun tick(hat: HatData) {
 		this.hat = hat
 		this.usingTime = (this.usingTime + if (HAT_KEYBIND.isPressed) 1 else -1).coerceIn(0, 10)
 
-		hat.abilities.forEachIndexed { index, ability ->
-			if (!cards.containsKey(ability.uuid))
-				cards[ability.uuid] = Card(index, ability)
-			cards[ability.uuid]!!.ability = ability
-			cards[ability.uuid]!!.index = index
+		hat.storage.forEachIndexed { index, card ->
+			if (!cards.containsKey(card.uuid))
+				cards[card.uuid] = CardWidget(index, card)
+			cards[card.uuid]!!.card = card
+			cards[card.uuid]!!.index = index
 		}
 
-		val hatUUIDs = hat.abilities.map(Ability::uuid).toHashSet()
+		val hatUUIDs = hat.storage.map(ServerCard::uuid).toHashSet()
 		val keysToRemove = mutableListOf<UUID>()
 		cards.forEach { (uuid, card) ->
 			if (!hatUUIDs.contains(uuid))

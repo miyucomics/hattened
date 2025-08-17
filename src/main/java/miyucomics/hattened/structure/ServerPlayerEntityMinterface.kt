@@ -1,9 +1,10 @@
 package miyucomics.hattened.structure
 
-import miyucomics.hattened.abilities.Ability
+import net.minecraft.item.ItemStack
 
 @Suppress("FunctionName")
 interface ServerPlayerEntityMinterface {
 	fun `hattened$queueUserInput`(input: UserInput)
-	fun `hattened$proposeAbility`(ability: Ability)
+	fun `hattened$proposeItemStack`(stack: ItemStack)
+	fun `hattened$setCooldown`(cooldown: Int)
 }

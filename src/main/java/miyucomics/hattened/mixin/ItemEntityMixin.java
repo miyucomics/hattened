@@ -2,7 +2,6 @@ package miyucomics.hattened.mixin;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
-import miyucomics.hattened.abilities.ItemStackAbility;
 import miyucomics.hattened.structure.HattenedHelper;
 import miyucomics.hattened.structure.ServerPlayerEntityMinterface;
 import net.minecraft.entity.ItemEntity;
@@ -17,7 +16,7 @@ public class ItemEntityMixin {
 	boolean addToHat(PlayerInventory instance, ItemStack stack, Operation<Boolean> original) {
 		if (!HattenedHelper.getHatData(instance.player).getUsingHat())
 			return original.call(instance, stack);
-		((ServerPlayerEntityMinterface) instance.player).hattened$proposeAbility(new ItemStackAbility(stack.copyAndEmpty()));
+		((ServerPlayerEntityMinterface) instance.player).hattened$proposeItemStack(stack.copyAndEmpty());
 		return true;
 	}
 }

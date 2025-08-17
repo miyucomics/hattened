@@ -3,7 +3,7 @@ package miyucomics.hattened.mixin;
 import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import miyucomics.hattened.misc.ClientStorage;
-import miyucomics.hattened.render.HatAbilityMenu;
+import miyucomics.hattened.render.HatGUI;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.hud.InGameHud;
 import net.minecraft.client.render.RenderTickCounter;
@@ -22,6 +22,6 @@ class InGameHudMixin {
 		original.call(context, tickCounter);
 		matrices.popMatrix();
 
-		HatAbilityMenu.render(context, progress);
+		HatGUI.render(context, progress);
 	}
 }
