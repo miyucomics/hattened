@@ -15,7 +15,7 @@ object CardRenderer {
 
 		context.matrices.pushMatrix()
 		context.matrices.scale(scale)
-		context.drawTexturedQuad(HattenedMain.id("textures/cards/base.png"), -8, -12, 8, 12, 0f, 1f, 0f, 1f)
+		context.drawTexturedQuad(HattenedMain.id("textures/card.png"), -8, -12, 8, 12, 0f, 1f, 0f, 1f)
 		context.matrices.pushMatrix()
 		context.matrices.scale(0.6f)
 		context.matrices.translate(-8f, -8f)
