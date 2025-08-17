@@ -1,4 +1,10 @@
 {
+	"item.hat.confetti": {
+		"sounds": [
+			"fireworks/blast1"
+		],
+		"subtitle": "subtitles.item.hat.confetti"
+	},
 	"item.hat.equip": {
 		"sounds": [
 			"item/armor/equip_leather1",
