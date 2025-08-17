@@ -5,8 +5,6 @@ import miyucomics.hattened.inits.HattenedSounds
 import miyucomics.hattened.structure.HatData
 import miyucomics.hattened.structure.HattenedHelper
 import miyucomics.hattened.structure.ServerCard
-import net.minecraft.command.argument.EntityArgumentType.entity
-import net.minecraft.command.argument.EntityArgumentType.player
 import net.minecraft.component.DataComponentTypes
 import net.minecraft.component.type.TooltipDisplayComponent
 import net.minecraft.entity.player.PlayerEntity
@@ -16,7 +14,6 @@ import net.minecraft.item.ItemStack
 import net.minecraft.item.tooltip.TooltipData
 import net.minecraft.screen.slot.Slot
 import net.minecraft.server.network.ServerPlayerEntity
-import net.minecraft.sound.SoundEvents
 import net.minecraft.util.ActionResult
 import net.minecraft.util.ClickType
 import net.minecraft.util.Hand

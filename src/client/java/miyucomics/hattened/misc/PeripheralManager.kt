@@ -41,6 +41,7 @@ object PeripheralManager {
 	@JvmStatic
 	fun onClick(button: Int, action: Int) {
 		when (Pair(button, action)) {
+			Pair(GLFW.GLFW_MOUSE_BUTTON_MIDDLE, GLFW.GLFW_PRESS) -> ClientPlayNetworking.send(HatInputPayload(UserInput.MiddleMousePressed))
 			Pair(GLFW.GLFW_MOUSE_BUTTON_LEFT, GLFW.GLFW_PRESS) -> ClientPlayNetworking.send(HatInputPayload(UserInput.LeftMousePressed))
 			Pair(GLFW.GLFW_MOUSE_BUTTON_RIGHT, GLFW.GLFW_PRESS) -> ClientPlayNetworking.send(HatInputPayload(UserInput.RightMousePressed))
 			Pair(GLFW.GLFW_MOUSE_BUTTON_LEFT, GLFW.GLFW_RELEASE) -> ClientPlayNetworking.send(HatInputPayload(UserInput.LeftMouseReleased))

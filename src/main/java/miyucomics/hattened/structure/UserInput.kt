@@ -7,6 +7,7 @@ enum class UserInput {
 	LeftMouseReleased,
 	RightMousePressed,
 	RightMouseReleased,
+	MiddleMousePressed,
 	ScrollUp,
 	ScrollDown
 }
