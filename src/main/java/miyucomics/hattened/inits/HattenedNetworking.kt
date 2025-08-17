@@ -6,6 +6,7 @@ import miyucomics.hattened.networking.HatKeybindPayload
 import miyucomics.hattened.structure.HatData
 import miyucomics.hattened.structure.HattenedHelper
 import miyucomics.hattened.structure.ServerPlayerEntityMinterface
+import miyucomics.hattened.structure.UserInput
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking
 import net.minecraft.sound.SoundCategory
@@ -18,7 +19,11 @@ object HattenedNetworking {
 		PayloadTypeRegistry.playC2S().register(HatKeybindPayload.ID, HatKeybindPayload.CODEC)
 
 		ServerPlayNetworking.registerGlobalReceiver(HatInputPayload.ID) { payload, context ->
+			val player = context.player()
+			val world = player.world
 			(context.player() as ServerPlayerEntityMinterface).queueUserInput(payload.input)
+			if (payload.input == UserInput.MiddleMousePressed)
+				world.players.forEach { world.sendToPlayerIfNearby(it, false, player.x, player.y, player.z, ServerPlayNetworking.createS2CPacket(ConfettiPayload(0L, player.pos.add(0.0, 0.5, 0.0), player.rotationVector))) }
 		}
 
 		ServerPlayNetworking.registerGlobalReceiver(HatKeybindPayload.ID) { _, context ->

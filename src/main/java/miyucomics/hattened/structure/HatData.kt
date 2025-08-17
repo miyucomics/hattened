@@ -6,14 +6,12 @@ import com.mojang.serialization.codecs.RecordCodecBuilder
 import io.netty.buffer.ByteBuf
 import miyucomics.hattened.HattenedMain
 import miyucomics.hattened.inits.HattenedSounds
-import net.minecraft.advancement.criterion.InventoryChangedCriterion.Conditions.items
 import net.minecraft.entity.ItemEntity
 import net.minecraft.item.ItemStack
 import net.minecraft.network.codec.PacketCodec
 import net.minecraft.network.codec.PacketCodecs
 import net.minecraft.server.network.ServerPlayerEntity
 import net.minecraft.sound.SoundCategory
-import net.minecraft.sound.SoundEvents
 
 data class HatData(val hasHat: Boolean = false, val storage: List<ServerCard> = listOf(), val usingHat: Boolean = false, val isThrowingItems: Boolean = false, val isVacuuming: Boolean = false) {
 	fun toItemStack() = ItemStack(HattenedMain.HAT_ITEM).apply { set(HattenedMain.HAT_STORAGE_COMPONENT, storage) }
@@ -57,6 +55,7 @@ data class HatData(val hasHat: Boolean = false, val storage: List<ServerCard> = 
 			UserInput.LeftMouseReleased -> this.copy(isThrowingItems = false)
 			UserInput.RightMousePressed -> this.copy(isVacuuming = true)
 			UserInput.RightMouseReleased -> this.copy(isVacuuming = false)
+			else -> this
 		}
 	}
 
