@@ -1,9 +1,12 @@
 package miyucomics.hattened.item
 
 import miyucomics.hattened.HattenedMain
+import miyucomics.hattened.inits.HattenedSounds
 import miyucomics.hattened.structure.HatData
 import miyucomics.hattened.structure.HattenedHelper
 import miyucomics.hattened.structure.ServerCard
+import net.minecraft.command.argument.EntityArgumentType.entity
+import net.minecraft.command.argument.EntityArgumentType.player
 import net.minecraft.component.DataComponentTypes
 import net.minecraft.component.type.TooltipDisplayComponent
 import net.minecraft.entity.player.PlayerEntity
@@ -13,6 +16,7 @@ import net.minecraft.item.ItemStack
 import net.minecraft.item.tooltip.TooltipData
 import net.minecraft.screen.slot.Slot
 import net.minecraft.server.network.ServerPlayerEntity
+import net.minecraft.sound.SoundEvents
 import net.minecraft.util.ActionResult
 import net.minecraft.util.ClickType
 import net.minecraft.util.Hand
@@ -23,6 +27,7 @@ object HatItem : Item(Settings().maxCount(1).component(HattenedMain.HAT_STORAGE_
 	override fun use(world: World, user: PlayerEntity, hand: Hand): ActionResult {
 		val hat = HattenedHelper.getHatData(user)
 		val oldHat = if (hat.hasHat) hat.toItemStack() else ItemStack.EMPTY
+		user.playSound(HattenedSounds.HAT_EQUIP, 1f, 1f)
 		if (!world.isClient) {
 			val newHat = user.getStackInHand(hand)
 			HattenedHelper.setHatData(user as ServerPlayerEntity, HatData(true, newHat.getOrDefault(HattenedMain.HAT_STORAGE_COMPONENT, listOf())))
@@ -35,13 +40,13 @@ object HatItem : Item(Settings().maxCount(1).component(HattenedMain.HAT_STORAGE_
 		val clickedStack = slot.stack
 
 		if (clickType == ClickType.LEFT && !clickedStack.isEmpty) {
-			insertItem(hat, clickedStack)
+			insertItem(hat, clickedStack, player)
 			slot.stack = ItemStack.EMPTY
 			return true
 		}
 
 		if (clickType == ClickType.RIGHT && clickedStack.isEmpty && hat.getOrDefault(HattenedMain.HAT_STORAGE_COMPONENT, listOf()).isNotEmpty()) {
-			val extracted = removeItem(hat)
+			val extracted = removeItem(hat, player)
 			if (extracted != null) {
 				slot.stack = extracted
 				return true
@@ -55,13 +60,13 @@ object HatItem : Item(Settings().maxCount(1).component(HattenedMain.HAT_STORAGE_
 		val existing = hat.getOrDefault(HattenedMain.HAT_STORAGE_COMPONENT, emptyList())
 
 		if (clickType == ClickType.LEFT && !clickedStack.isEmpty) {
-			insertItem(hat, clickedStack)
+			insertItem(hat, clickedStack, player)
 			cursorStackReference.set(ItemStack.EMPTY)
 			return true
 		}
 
 		if (clickType == ClickType.RIGHT && clickedStack.isEmpty && existing.isNotEmpty()) {
-			val extracted = removeItem(hat)
+			val extracted = removeItem(hat, player)
 			if (extracted != null) {
 				cursorStackReference.set(extracted)
 				return true
@@ -78,15 +83,17 @@ object HatItem : Item(Settings().maxCount(1).component(HattenedMain.HAT_STORAGE_
 		return Optional.empty()
 	}
 
-	fun insertItem(hat: ItemStack, stack: ItemStack) {
+	fun insertItem(hat: ItemStack, stack: ItemStack, player: PlayerEntity) {
 		hat.set(HattenedMain.HAT_STORAGE_COMPONENT, HattenedHelper.insertStack(hat.getOrDefault(HattenedMain.HAT_STORAGE_COMPONENT, emptyList()), stack))
+		player.playSound(HattenedSounds.INSERT_ITEM, 0.8f, 0.8f + player.world.random.nextFloat() * 0.4f)
 	}
 
-	fun removeItem(hat: ItemStack): ItemStack? {
+	fun removeItem(hat: ItemStack, player: PlayerEntity): ItemStack? {
 		val storage = hat.getOrDefault(HattenedMain.HAT_STORAGE_COMPONENT, emptyList())
 		if (storage.isEmpty())
 			return null
 
+		player.playSound(HattenedSounds.REMOVE_ITEM, 0.8f, 0.8f + player.world.random.nextFloat() * 0.4f)
 		val new = storage.toMutableList()
 		val extracted = new.removeFirst()
 		hat.set(HattenedMain.HAT_STORAGE_COMPONENT, new)

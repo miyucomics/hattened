@@ -8,6 +8,7 @@ import miyucomics.hattened.structure.HattenedHelper
 import miyucomics.hattened.structure.ServerPlayerEntityMinterface
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking
+import net.minecraft.sound.SoundCategory
 import net.minecraft.util.Hand
 
 object HattenedNetworking {
@@ -27,6 +28,7 @@ object HattenedNetworking {
 				player.swingHand(Hand.MAIN_HAND, true)
 				player.setStackInHand(Hand.MAIN_HAND, hat.toItemStack())
 				HattenedHelper.setHatData(player, HatData(false, listOf()))
+				player.world.playSound(null, player.x, player.y, player.z, HattenedSounds.HAT_EQUIP, SoundCategory.PLAYERS, 1f, 1f)
 			}
 		}
 	}

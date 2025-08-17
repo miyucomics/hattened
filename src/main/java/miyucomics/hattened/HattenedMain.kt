@@ -2,6 +2,7 @@ package miyucomics.hattened
 
 import miyucomics.hattened.inits.HattenedAttachments
 import miyucomics.hattened.inits.HattenedNetworking
+import miyucomics.hattened.inits.HattenedSounds
 import miyucomics.hattened.item.HatItem
 import miyucomics.hattened.structure.ServerCard
 import net.fabricmc.api.ModInitializer
@@ -31,6 +32,7 @@ object HattenedMain : ModInitializer {
 	override fun onInitialize() {
 		HattenedAttachments.init()
 		HattenedNetworking.init()
+		HattenedSounds.init()
 
 		ItemGroupEvents.modifyEntriesEvent(ItemGroups.TOOLS).register { it.add(HAT_ITEM) }
 	}
